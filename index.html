@@ -1059,6 +1059,601 @@ textarea.form-control { min-height: 70px; resize: vertical; }
   display: flex; align-items: center; gap: 6px;
 }
 .terr-section-title i { font-size: 13px; }
+/* ════════════════════════════════════════
+   MOBILE UI PREMIUM — FES
+   PEGAR AL FINAL DEL CSS
+════════════════════════════════════════ */
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ═══════════ MOBILE ═══════════ */
+@media (max-width: 720px) {
+
+  /* ===== MAIN ===== */
+
+  .main {
+    margin-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom));
+  }
+
+  .content {
+    padding: 12px 12px 24px;
+  }
+
+  /* ===== TOPBAR ===== */
+
+  .topbar {
+    padding: 0 12px;
+    height: 54px;
+
+    background: rgba(13,33,55,.82);
+    backdrop-filter: blur(18px);
+
+    border-bottom: 1px solid rgba(255,255,255,.05);
+
+    box-shadow:
+      0 4px 20px rgba(0,0,0,.18);
+  }
+
+  .topbar-title {
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .topbar-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+  }
+
+  .search-input {
+    width: 115px;
+    height: 38px;
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,.03);
+
+    border: 1px solid rgba(255,255,255,.05);
+  }
+
+  /* ===== BOTONES ===== */
+
+  .btn,
+  .btn-primary,
+  .btn-orange,
+  .btn-green,
+  .btn-pink,
+  .btn-danger {
+    min-height: 42px;
+
+    border-radius: 12px;
+
+    font-weight: 700;
+
+    transition:
+      transform .15s ease,
+      box-shadow .15s ease,
+      background .15s ease;
+  }
+
+  .btn:active {
+    transform: scale(.97);
+  }
+
+  .btn-sm {
+    min-height: 34px;
+    padding: 6px 10px;
+  }
+
+  /* ===== STATS ===== */
+
+  .stats-grid {
+    gap: 10px;
+  }
+
+  .stat-card {
+    position: relative;
+
+    border-radius: 20px;
+
+    padding: 15px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255,255,255,.04);
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255,255,255,.03),
+        rgba(255,255,255,0)
+      ),
+      var(--surface2);
+
+    box-shadow:
+      0 8px 24px rgba(0,0,0,.28),
+      inset 0 1px 0 rgba(255,255,255,.03);
+
+    backdrop-filter: blur(14px);
+
+    transition:
+      transform .18s ease,
+      box-shadow .18s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 13px;
+
+    margin-bottom: 12px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+    letter-spacing: -.03em;
+  }
+
+  .stat-label {
+    font-size: 9px;
+  }
+
+  /* ===== CARDS GENERALES ===== */
+
+  .card,
+  .territorio-card,
+  .day-col,
+  .nota-card,
+  .visita-card,
+  .centro-card-mobile {
+
+    border-radius: 20px;
+
+    border: 1px solid rgba(255,255,255,.04);
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255,255,255,.025),
+        rgba(255,255,255,0)
+      ),
+      var(--surface2);
+
+    box-shadow:
+      0 8px 24px rgba(0,0,0,.24),
+      inset 0 1px 0 rgba(255,255,255,.03);
+
+    backdrop-filter: blur(14px);
+
+    transition:
+      transform .18s ease,
+      box-shadow .18s ease,
+      border-color .18s ease,
+      background .18s ease;
+  }
+
+  /* ===== CENTROS VECINALES ===== */
+
+  .centros-table-wrap {
+    display: none !important;
+  }
+
+  .centro-cards-grid {
+    display: flex !important;
+    gap: 12px;
+  }
+
+  .centro-card-mobile {
+    padding: 15px 16px;
+  }
+
+  .centro-card-mobile:active {
+    transform: scale(.985);
+  }
+
+  .ccm-accent {
+    width: 4px;
+  }
+
+  .ccm-nombre {
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  .ccm-row2 {
+    gap: 7px;
+    margin-bottom: 12px;
+  }
+
+  .ccm-info-item {
+    font-size: 11.5px;
+  }
+
+  .ccm-dia-pill {
+    min-height: 24px;
+
+    border-radius: 30px;
+
+    padding: 4px 10px;
+
+    font-size: 9.5px;
+  }
+
+  .ccm-footer {
+    margin-top: 12px;
+
+    padding-top: 12px;
+  }
+
+  .ccm-actions {
+    gap: 6px;
+  }
+
+  .ccm-actions .btn {
+    min-width: 38px;
+    min-height: 38px;
+
+    border-radius: 11px;
+  }
+
+  /* ===== TERRITORIO ===== */
+
+  .territorio-card {
+    overflow: hidden;
+  }
+
+  .territorio-zona-header {
+    padding: 12px 14px;
+
+    font-size: 10px;
+
+    letter-spacing: .12em;
+  }
+
+  .terr-centro-row {
+    padding: 13px 14px;
+
+    gap: 12px;
+  }
+
+  .terr-num {
+    width: 28px;
+    height: 28px;
+
+    border-radius: 8px;
+  }
+
+  .terr-nombre {
+    font-size: 13px;
+  }
+
+  .terr-barrio {
+    font-size: 10px;
+  }
+
+  .terr-fort-pill {
+    padding: 4px 10px;
+
+    border-radius: 30px;
+
+    min-height: 28px;
+  }
+
+  .terr-fort-chip {
+    border-radius: 12px;
+
+    padding: 6px 10px;
+  }
+
+  /* ===== TABS ===== */
+
+  .zona-tabs,
+  .mes-nav,
+  .visitas-semana-nav {
+    gap: 7px;
+
+    overflow-x: auto;
+
+    padding-bottom: 2px;
+
+    scrollbar-width: none;
+  }
+
+  .zona-tabs::-webkit-scrollbar,
+  .mes-nav::-webkit-scrollbar,
+  .visitas-semana-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .zona-tab,
+  .mes-pill,
+  .semana-pill {
+    white-space: nowrap;
+
+    min-height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 14px;
+
+    border-radius: 30px;
+  }
+
+  /* ===== VISITAS ===== */
+
+  .week-grid {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+  }
+
+  .day-header {
+    padding: 11px 12px;
+  }
+
+  .day-body {
+    padding: 8px;
+  }
+
+  .visita-card {
+    border-radius: 14px;
+
+    padding: 10px 11px;
+  }
+
+  .visita-nombre {
+    font-size: 11.5px;
+  }
+
+  .visita-actions {
+    display: flex;
+  }
+
+  .day-add-btn {
+    min-height: 38px;
+
+    border-radius: 12px;
+  }
+
+  /* ===== MODAL ===== */
+
+  .modal-overlay {
+    backdrop-filter: blur(10px);
+  }
+
+  .modal {
+    border: none;
+
+    border-radius: 24px 24px 0 0;
+
+    overflow: hidden;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255,255,255,.03),
+        rgba(255,255,255,0)
+      ),
+      var(--dark2);
+  }
+
+  .modal-header {
+    padding: 16px 18px;
+
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+
+  .modal-title {
+    font-size: 15px;
+  }
+
+  .modal-body {
+    padding: 16px;
+  }
+
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  .form-control {
+    min-height: 48px;
+
+    border-radius: 14px;
+
+    background: rgba(255,255,255,.03);
+
+    border: 1px solid rgba(255,255,255,.05);
+
+    padding: 10px 12px;
+  }
+
+  textarea.form-control {
+    min-height: 90px;
+  }
+
+  .form-actions {
+    gap: 10px;
+  }
+
+  /* ===== DRAWER ===== */
+
+  .cv-drawer {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255,255,255,.03),
+        rgba(255,255,255,0)
+      ),
+      var(--dark2);
+  }
+
+  .cv-drawer-header {
+    padding: 18px;
+  }
+
+  .cv-fort-card {
+    border-radius: 16px;
+  }
+
+  /* ===== NOTAS ===== */
+
+  .nota-card {
+    padding: 14px 15px;
+  }
+
+  .nota-asunto {
+    font-size: 13px;
+  }
+
+  .nota-body {
+    font-size: 11.5px;
+  }
+
+  .notas-stats {
+    grid-template-columns: 1fr;
+  }
+
+  /* ===== BOTTOM NAV ===== */
+
+  .bottom-nav {
+    display: flex;
+
+    background: rgba(10,25,41,.96);
+
+    backdrop-filter: blur(22px);
+
+    border-top: 1px solid rgba(255,255,255,.06);
+
+    box-shadow:
+      0 -10px 30px rgba(0,0,0,.35);
+  }
+
+  .bottom-nav-inner {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .bottom-nav-item {
+    gap: 4px;
+
+    transition:
+      transform .18s ease,
+      color .18s ease;
+  }
+
+  .bottom-nav-item i {
+    font-size: 22px;
+
+    transition:
+      transform .18s ease,
+      opacity .18s ease;
+  }
+
+  .bottom-nav-item span {
+    font-size: 8px;
+    font-weight: 700;
+  }
+
+  .bottom-nav-item.active {
+    color: var(--cyan2);
+  }
+
+  .bottom-nav-item.active i {
+    transform: translateY(-2px) scale(1.08);
+  }
+
+  .bottom-nav-item.active::after {
+    width: 34px;
+    height: 3px;
+
+    border-radius: 0 0 6px 6px;
+  }
+
+  /* ===== TOP SPACING ===== */
+
+  .card-header {
+    padding: 14px 15px;
+  }
+
+  .card-title {
+    font-size: 12px;
+  }
+
+  /* ===== TABLES ===== */
+
+  .table-wrap {
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  /* ===== ANIMACIONES ===== */
+
+  .card,
+  .stat-card,
+  .centro-card-mobile,
+  .nota-card,
+  .visita-card,
+  .territorio-card {
+
+    animation: fadeInMobile .22s ease;
+  }
+
+  @keyframes fadeInMobile {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+}
+
+/* ═══════════ PANTALLAS MUY CHICAS ═══════════ */
+
+@media (max-width: 400px) {
+
+  .search-input {
+    width: 90px;
+  }
+
+  .topbar-title {
+    font-size: 12px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .week-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ccm-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ccm-actions {
+    justify-content: flex-end;
+  }
+
+}
 </style>
 </head>
 <style>
