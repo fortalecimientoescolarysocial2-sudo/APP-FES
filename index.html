@@ -784,111 +784,281 @@ textarea.form-control { min-height: 70px; resize: vertical; }
 }
 .confirm-actions .btn-confirm-ok:hover { opacity: .9; transform: translateY(-1px); }
 
-/* ═══════════ TERRITORY PREMIUM CARDS ═══════════ */
-.terr-centro-card {
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--radius); overflow: hidden; margin-bottom: 12px;
-  transition: transform .2s, box-shadow .2s; position: relative;
-  animation: fadeIn .25s ease both;
-}
-.terr-centro-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-.terr-centro-card-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 16px; cursor: pointer; transition: background .15s;
-  border-bottom: 1px solid transparent; gap: 10px;
-}
-.terr-centro-card-header:hover { background: rgba(26,184,232,.04); }
-.terr-centro-card.expanded .terr-centro-card-header { border-bottom-color: var(--border); }
-.terr-centro-card-body { display: none; padding: 16px; animation: fadeIn .2s ease; }
-.terr-centro-card.expanded .terr-centro-card-body { display: block; }
-.terr-centro-accent {
-  position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
-  border-radius: var(--radius) 0 0 var(--radius);
-}
-.terr-centro-name { font-size: 13.5px; font-weight: 700; color: var(--text); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.terr-centro-badges { display: flex; gap: 5px; flex-shrink: 0; flex-wrap: wrap; align-items: center; }
+/* ═══════════ TERRITORY PREMIUM CARDS — REDESIGN ═══════════ */
 
-/* Schedule display */
-.terr-schedule { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
-.terr-schedule-block {
-  background: var(--dark3); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); padding: 12px 14px; flex: 1; min-width: 180px;
+/* Zona header */
+.terr-zona-block { margin-bottom: 28px; }
+.terr-zona-label {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 14px; position: relative;
 }
-.terr-schedule-label {
-  font-size: 9px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .08em; color: var(--text3); margin-bottom: 6px;
-  display: flex; align-items: center; gap: 5px;
+.terr-zona-label-text {
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .18em; display: flex; align-items: center; gap: 8px;
+  padding: 5px 12px 5px 10px; border-radius: 20px;
+  border: 1px solid; white-space: nowrap; flex-shrink: 0;
 }
-.terr-schedule-label i { font-size: 12px; }
-.terr-schedule-time { font-family: var(--font-mono); font-size: 20px; font-weight: 800; color: var(--cyan); line-height: 1; }
-.terr-schedule-days { font-size: 11px; color: var(--text2); margin-top: 6px; display: flex; gap: 4px; flex-wrap: wrap; }
+.terr-zona-label-text i { font-size: 14px; }
+.terr-zona-label-line { flex: 1; height: 1px; opacity: .25; }
+.terr-zona-count {
+  font-size: 9px; font-weight: 700; letter-spacing: .06em;
+  color: var(--text3); text-transform: uppercase; flex-shrink: 0;
+}
+
+/* Centro card */
+.terr-centro-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 8px;
+  transition: box-shadow .25s ease;
+  position: relative;
+  animation: cvCardIn .3s cubic-bezier(.22,1,.36,1) both;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+}
+@keyframes cvCardIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.terr-centro-card:hover { box-shadow: 0 6px 28px rgba(0,0,0,.45); }
+.terr-centro-card.expanded { border-color: var(--zona-color, var(--border)); box-shadow: 0 0 0 1px var(--zona-color, transparent), 0 8px 32px rgba(0,0,0,.4); }
+
+/* Left accent bar */
+.terr-centro-accent {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  border-radius: var(--radius) 0 0 var(--radius);
+  background: var(--zona-color, var(--cyan));
+  opacity: .7; transition: opacity .2s;
+}
+.terr-centro-card.expanded .terr-centro-accent { opacity: 1; }
+
+/* Card header */
+.terr-centro-card-header {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 14px 13px 18px;
+  cursor: pointer;
+  transition: background .15s;
+  user-select: none;
+}
+.terr-centro-card-header:hover { background: rgba(255,255,255,.02); }
+.terr-centro-card.expanded .terr-centro-card-header { border-bottom: 1px solid var(--border); }
+
+/* Número */
+.terr-cv-num {
+  width: 28px; height: 28px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; font-family: var(--font-mono);
+  background: rgba(255,255,255,.05); color: var(--text3);
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+
+/* Nombre + barrio */
+.terr-cv-info { min-width: 0; }
+.terr-centro-name {
+  font-size: 13px; font-weight: 700; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  line-height: 1.3;
+}
+.terr-cv-sub {
+  font-size: 10px; color: var(--text3); margin-top: 2px;
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+}
+
+/* Right badges area */
+.terr-centro-badges {
+  display: flex; gap: 5px; flex-shrink: 0;
+  align-items: center; flex-wrap: wrap; justify-content: flex-end;
+}
+.terr-cv-forts-count {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 700; font-family: var(--font-mono);
+  background: rgba(255,255,255,.06); color: var(--text2);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 3px 9px;
+}
+.terr-cv-forts-count i { font-size: 12px; }
+.terr-cv-chevron {
+  font-size: 15px; color: var(--text3);
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1), color .2s;
+  margin-left: 4px;
+}
+.terr-centro-card.expanded .terr-cv-chevron {
+  transform: rotate(180deg);
+  color: var(--zona-color, var(--cyan));
+}
+
+/* Card body */
+.terr-centro-card-body {
+  display: grid; grid-template-rows: 0fr;
+  transition: grid-template-rows .28s cubic-bezier(.4,0,.2,1);
+}
+.terr-centro-card.expanded .terr-centro-card-body {
+  grid-template-rows: 1fr;
+}
+.terr-cv-body-inner {
+  overflow: hidden; padding: 0;
+}
+.terr-centro-card.expanded .terr-cv-body-inner {
+  padding: 16px 18px 18px;
+  animation: fadeIn .2s ease;
+}
+
+/* Info pills row */
+.terr-cv-pills {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px;
+}
+.terr-cv-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 600;
+  padding: 4px 10px; border-radius: 20px;
+  background: rgba(255,255,255,.05); border: 1px solid var(--border);
+  color: var(--text2); white-space: nowrap;
+}
+.terr-cv-pill i { font-size: 12px; opacity: .7; }
+.terr-cv-pill.highlight { background: rgba(26,184,232,.08); color: var(--cyan); border-color: var(--cyan-border); }
+
+/* Two-column content */
+.terr-cv-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-bottom: 14px;
+}
+@media(max-width:600px) { .terr-cv-grid { grid-template-columns: 1fr; } }
+
+.terr-cv-block {
+  background: rgba(255,255,255,.03); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 12px 14px; position: relative;
+}
+.terr-cv-block-label {
+  font-size: 9px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .1em; margin-bottom: 9px;
+  display: flex; align-items: center; gap: 6px;
+}
+.terr-cv-block-label i { font-size: 13px; }
+
+/* Horarios days */
+.terr-dias-row { display: flex; gap: 4px; flex-wrap: wrap; }
 .terr-dia-pill {
-  display: inline-flex; padding: 3px 8px; border-radius: 20px;
-  font-size: 10px; font-weight: 700; background: var(--cyan-dim);
-  color: var(--cyan); border: 1px solid var(--cyan-border);
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 4px 9px; border-radius: 20px;
+  font-size: 10px; font-weight: 700;
+  border: 1px solid;
 }
+.terr-dia-pill.activo {
+  background: rgba(26,184,232,.1); color: var(--cyan);
+  border-color: rgba(26,184,232,.3);
+}
+.terr-dia-pill.inactivo {
+  background: transparent; color: var(--text3);
+  border-color: var(--border); opacity: .5;
+}
+.terr-dia-hora { font-size: 9px; font-family: var(--font-mono); opacity: .8; }
 
 /* Referente */
-.terr-referente {
-  background: var(--dark3); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); padding: 12px 14px;
-  display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+.terr-referente-row {
+  display: flex; align-items: center; gap: 10px;
 }
 .terr-referente-avatar {
-  width: 40px; height: 40px; border-radius: 50%;
-  background: var(--orange-dim); border: 2px solid rgba(245,135,31,.3);
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  color: var(--orange); font-size: 16px; flex-shrink: 0;
+  font-size: 14px; font-weight: 800;
+  background: var(--orange-dim); color: var(--orange);
+  border: 2px solid rgba(245,135,31,.25);
+  text-transform: uppercase;
 }
-.terr-referente-name { font-size: 12.5px; font-weight: 700; color: var(--text); }
-.terr-referente-contact { font-size: 11px; color: var(--text2); display: flex; align-items: center; gap: 5px; margin-top: 3px; }
+.terr-referente-name { font-size: 12px; font-weight: 700; color: var(--text); }
+.terr-referente-contact { font-size: 10.5px; color: var(--text3); margin-top: 2px; display: flex; align-items: center; gap: 4px; }
 
-/* Info grid */
-.terr-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-@media(max-width:600px) { .terr-info-grid { grid-template-columns: 1fr; } }
-.terr-info-item { background: var(--dark3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; }
-.terr-info-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text3); margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
-.terr-info-label i { font-size: 12px; }
-.terr-info-value { font-size: 12px; font-weight: 600; color: var(--text); }
+/* Fortalecedores list */
+.terr-fort-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.05);
+}
+.terr-fort-row:last-child { border-bottom: none; }
+.terr-fort-name { font-size: 11.5px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 7px; }
+.terr-fort-name i { font-size: 13px; color: var(--text3); }
+.terr-fort-badges { display: flex; gap: 4px; flex-wrap: wrap; }
 
 /* Materia badges */
 .badge-lengua { background: var(--pink-dim); color: var(--pink); border: 1px solid rgba(232,40,110,.25); }
 .badge-matematica { background: var(--cyan-dim); color: var(--cyan); border: 1px solid rgba(26,184,232,.25); }
-
-/* WhatsApp button */
-.btn-whatsapp {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 5px 10px; border-radius: 20px;
-  background: rgba(37,211,102,.12); color: #25d366;
-  border: 1px solid rgba(37,211,102,.3);
-  font-family: 'Poppins', sans-serif; font-size: 10px;
-  font-weight: 700; cursor: pointer; text-decoration: none; transition: all .15s;
-}
-.btn-whatsapp:hover { background: rgba(37,211,102,.22); }
-
-/* Fortalecedores section in card */
-.terr-forts-section { margin-top: 14px; }
-.terr-section-title {
-  font-size: 9.5px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .1em; color: var(--text3); margin-bottom: 8px;
-  display: flex; align-items: center; gap: 6px;
-}
-.terr-section-title i { font-size: 13px; }
 
 /* Alert banner */
 .alert-banner {
   background: var(--amber-dim); border: 1px solid rgba(245,197,24,.3);
   border-radius: var(--radius-sm); padding: 8px 14px;
   font-size: 11px; color: var(--amber); font-weight: 600;
-  display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
 }
 .alert-banner i { font-size: 14px; }
+
+/* Footer actions */
+.terr-cv-footer {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding-top: 12px; border-top: 1px dashed rgba(255,255,255,.08);
+  margin-top: 2px;
+}
+.terr-cv-footer-left { flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+/* WhatsApp button */
+.btn-whatsapp {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 12px; border-radius: 20px;
+  background: rgba(37,211,102,.1); color: #25d366;
+  border: 1px solid rgba(37,211,102,.25);
+  font-family: 'Poppins', sans-serif; font-size: 10.5px;
+  font-weight: 700; cursor: pointer; text-decoration: none; transition: all .15s;
+}
+.btn-whatsapp:hover { background: rgba(37,211,102,.2); }
+.btn-whatsapp i { font-size: 14px; }
+
+/* Maps button */
+.btn-maps-sm {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 12px; border-radius: 20px;
+  background: rgba(66,133,244,.1); color: #6aa0f5;
+  border: 1px solid rgba(66,133,244,.25);
+  font-family: 'Poppins', sans-serif; font-size: 10.5px;
+  font-weight: 700; cursor: pointer; text-decoration: none; transition: all .15s;
+}
+.btn-maps-sm:hover { background: rgba(66,133,244,.2); }
+.btn-maps-sm i { font-size: 14px; }
 
 /* Glassmorphism stat card variant */
 .stat-card.glass {
   background: rgba(13,33,55,.6); backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px); border-color: rgba(26,184,232,.12);
 }
+
+/* Zona stats bar */
+.terr-zona-stats {
+  display: flex; gap: 0; margin-bottom: 12px;
+  border-radius: var(--radius-sm); overflow: hidden;
+  border: 1px solid var(--border);
+}
+.terr-zona-stat {
+  flex: 1; padding: 8px 12px; text-align: center;
+  background: rgba(255,255,255,.02);
+  border-right: 1px solid var(--border);
+}
+.terr-zona-stat:last-child { border-right: none; }
+.terr-zona-stat-num {
+  font-family: var(--font-mono); font-size: 18px; font-weight: 900;
+  line-height: 1; color: var(--text);
+}
+.terr-zona-stat-label { font-size: 8.5px; color: var(--text3); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; }
+
+/* Fortalecedores section label */
+.terr-forts-section { }
+.terr-section-title {
+  font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--text3); margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.terr-section-title i { font-size: 13px; }
 </style>
 </head>
 <style>
@@ -1243,8 +1413,12 @@ textarea.form-control { min-height: 70px; resize: vertical; }
       </div>
 
       <div class="nav-section-label">Territorio</div>
+      <div class="nav-item nav-teal" id="nav-centros" onclick="showTab('centros')">
+        <i class="ti ti-building-community"></i> Centros Vecinales
+        <span class="nav-count" id="badge-centros">0</span>
+      </div>
       <div class="nav-item nav-teal" id="nav-territorio" onclick="showTab('territorio')">
-        <i class="ti ti-map-2"></i> Centros Vecinales
+        <i class="ti ti-map-2"></i> Vista Territorial
         <span class="nav-count" id="badge-territorio">0</span>
       </div>
       <div class="nav-item nav-purple" id="nav-visitas" onclick="showTab('visitas')">
@@ -1388,6 +1562,45 @@ textarea.form-control { min-height: 70px; resize: vertical; }
             <table><thead><tr><th>Departamento / Localidad</th><th style="text-align:center">Centros</th><th style="text-align:center">Marzo</th><th style="text-align:center">Abril</th><th style="text-align:center">Var.</th><th style="text-align:center">Fortals.</th><th>Acc.</th></tr></thead>
             <tbody id="body-interior"></tbody></table>
           </div>
+        </div>
+      </div>
+
+      <!-- ══ CENTROS VECINALES (Capital) ══ -->
+      <div class="section-tab" id="tab-centros">
+        <span class="section-eyebrow">Centros Vecinales Capital · Gestión y horarios</span>
+        <div class="stats-grid" id="stats-centros"></div>
+
+        <!-- Filtro por zona -->
+        <div class="zona-tabs" id="zona-tabs" style="margin-bottom:12px">
+          <div class="zona-tab active" data-zona="" onclick="filtrarZona(this,'')">Todas las zonas</div>
+          <div class="zona-tab" data-zona="Norte" onclick="filtrarZona(this,'Norte')"><i class="ti ti-map-2" style="font-size:11px"></i> Norte</div>
+          <div class="zona-tab" data-zona="Este"  onclick="filtrarZona(this,'Este')"><i class="ti ti-map-2" style="font-size:11px"></i> Este</div>
+          <div class="zona-tab" data-zona="Sur"   onclick="filtrarZona(this,'Sur')"><i class="ti ti-map-2" style="font-size:11px"></i> Sur</div>
+          <div class="zona-tab" data-zona="Oeste" onclick="filtrarZona(this,'Oeste')"><i class="ti ti-map-2" style="font-size:11px"></i> Oeste</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title"><i class="ti ti-building-community"></i><span id="centros-title">Centros Vecinales — Capital</span></span>
+            <button class="btn btn-sm btn-primary" id="btn-add-centro" onclick="currentTab='centros';openModal()"><i class="ti ti-plus"></i> Nuevo Centro</button>
+          </div>
+          <div class="centros-table-wrap table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Centro / Barrio</th>
+                  <th>Zona</th>
+                  <th style="text-align:center">Forts.</th>
+                  <th>Estado</th>
+                  <th>Acc.</th>
+                </tr>
+              </thead>
+              <tbody id="body-centros"></tbody>
+            </table>
+          </div>
+          <!-- Vista tarjetas para mobile -->
+          <div id="centros-cards" style="padding:10px;display:none"></div>
         </div>
       </div>
 
@@ -1603,7 +1816,8 @@ textarea.form-control { min-height: 70px; resize: vertical; }
   <div class="bottom-nav-inner">
     <div class="bottom-nav-item active" id="bnav-resumen" onclick="showTab('resumen')"><i class="ti ti-chart-bar"></i><span>Inicio</span></div>
     <div class="bottom-nav-item" id="bnav-actividades" onclick="showTab('actividades')"><i class="ti ti-calendar-event"></i><span>Agenda</span></div>
-    <div class="bottom-nav-item" id="bnav-territorio" onclick="showTab('territorio')"><i class="ti ti-map-2"></i><span>Centros</span></div>
+    <div class="bottom-nav-item" id="bnav-centros" onclick="showTab('centros')"><i class="ti ti-building-community"></i><span>Centros</span></div>
+    <div class="bottom-nav-item" id="bnav-territorio" onclick="showTab('territorio')"><i class="ti ti-map-2"></i><span>Mapa</span></div>
     <div class="bottom-nav-item" id="bnav-visitas" onclick="showTab('visitas')"><i class="ti ti-calendar-week"></i><span>Visitas</span></div>
     <div class="bottom-nav-item" id="bnav-fortalecedores" onclick="showTab('fortalecedores')"><i class="ti ti-users"></i><span>Fortals.</span></div>
     <div class="bottom-nav-item" id="bnav-notas" onclick="showTab('notas')"><i class="ti ti-notes"></i><span>Notas</span></div>
@@ -2493,45 +2707,94 @@ function deleteVisita(id) {
 // ═══════════════════════════════════════════════
 // CENTROS
 // ═══════════════════════════════════════════════
+function centroHorResumen(c) {
+  let horResumen='';
+  if(c.dias && Object.keys(c.dias).length){
+    const activos=DIAS_SEMANA.filter(d=>c.dias[d.toLowerCase()]?.activo);
+    if(activos.length){
+      const primero=c.dias[activos[0].toLowerCase()];
+      horResumen=activos.length===1
+        ? `${activos[0].substring(0,3)} ${primero.horaInicio}–${primero.horaFin}`
+        : `${activos.map(d=>d.substring(0,3)).join('/')} ${primero.horaInicio}–${primero.horaFin}`;
+    }
+  }
+  return horResumen||c.horario||'–';
+}
+
 function renderCentros(filtro='') {
   const tbody = document.getElementById('body-centros');
-  if(!tbody) return;
+  const cardsEl = document.getElementById('centros-cards');
+  if(!tbody && !cardsEl) return;
   let data = state.centros;
   if(zonaFiltro) data = data.filter(c=>c.zona===zonaFiltro);
-  if(filtro) data = data.filter(c=>c.nombre.toLowerCase().includes(filtro)||c.zona.toLowerCase().includes(filtro));
-  if(!data.length){ tbody.innerHTML=`<tr><td colspan="8"><div class="empty-state"><i class="ti ti-building-community"></i><p>No hay centros</p></div></td></tr>`; return; }
-  tbody.innerHTML = data.map((c,i)=>{
-    // Construir horario resumido desde c.dias
-    let horResumen='';
-    if(c.dias && Object.keys(c.dias).length){
-      const activos=DIAS_SEMANA.filter(d=>c.dias[d.toLowerCase()]?.activo);
-      if(activos.length){
-        const primero=c.dias[activos[0].toLowerCase()];
-        horResumen=activos.length===1
-          ? `${activos[0].substring(0,3)} ${primero.horaInicio}–${primero.horaFin}`
-          : `${activos.map(d=>d.substring(0,3)).join('/')} ${primero.horaInicio}–${primero.horaFin}`;
-      }
+  if(filtro) data = data.filter(c=>c.nombre.toLowerCase().includes(filtro.toLowerCase())||c.zona.toLowerCase().includes(filtro.toLowerCase())||((c.barrio||'').toLowerCase().includes(filtro.toLowerCase())));
+
+  const emptyHtml = `<div class="empty-state"><i class="ti ti-building-community"></i><p>No hay centros registrados</p></div>`;
+
+  // ── Tabla (desktop) ──
+  if(tbody){
+    if(!data.length){
+      tbody.innerHTML=`<tr><td colspan="6">${emptyHtml}</td></tr>`;
+    } else {
+      tbody.innerHTML = data.map((c,i)=>{
+        const horResumen = centroHorResumen(c);
+        return`<tr style="cursor:pointer" onclick="openCvDrawer(${c.id})">
+          <td style="color:var(--text3);font-size:11px;font-weight:700;font-family:var(--font-mono)">${i+1}</td>
+          <td>
+            <div style="font-weight:700;font-size:12px;line-height:1.3">${c.nombre}</div>
+            <div style="display:flex;align-items:center;gap:5px;margin-top:3px;flex-wrap:wrap">
+              ${c.barrio?`<span style="font-size:10px;color:var(--text3)">${c.barrio}</span>`:''}
+              <span style="font-size:10px;font-family:var(--font-mono);color:var(--cyan);background:var(--cyan-dim);padding:1px 7px;border-radius:20px;border:1px solid var(--cyan-border)">${horResumen}</span>
+              ${c.cambioHorario?`<span style="font-size:9px;background:var(--amber-dim);color:var(--amber);padding:1px 6px;border-radius:20px;border:1px solid rgba(245,197,24,.3)"><i class="ti ti-alert-triangle" style="font-size:9px"></i> ${c.nuevoHorario||'Cambio'}</span>`:''}
+            </div>
+          </td>
+          <td><span class="zona-chip ${zonaClass(c.zona)}">${c.zona}</span></td>
+          <td style="text-align:center"><span class="badge badge-cyan">${getFortCount(c.id)}</span></td>
+          <td>${c.activo?'<span class="badge badge-green">Activo</span>':'<span class="badge badge-amber">Refacc.</span>'}</td>
+          <td onclick="event.stopPropagation()"><div style="display:flex;gap:4px">
+            <button class="btn btn-sm" onclick="openEdit('centros',${c.id})"><i class="ti ti-edit"></i></button>
+            <button class="btn btn-sm btn-danger" onclick="deleteCentro(${c.id})"><i class="ti ti-trash"></i></button>
+          </div></td>
+        </tr>`;
+      }).join('');
     }
-    if(!horResumen) horResumen=c.horario||'–';
-    return`<tr style="cursor:pointer" onclick="openCvDrawer(${c.id})">
-      <td style="color:var(--text3);font-size:11px;font-weight:700;font-family:var(--font-mono)">${i+1}</td>
-      <td>
-        <div style="font-weight:700;font-size:12px;line-height:1.3">${c.nombre}</div>
-        <div style="display:flex;align-items:center;gap:5px;margin-top:3px;flex-wrap:wrap">
-          ${c.barrio?`<span style="font-size:10px;color:var(--text3)">${c.barrio}</span>`:''}
-          <span style="font-size:10px;font-family:var(--font-mono);color:var(--cyan);background:var(--cyan-dim);padding:1px 7px;border-radius:20px;border:1px solid var(--cyan-border)">${horResumen}</span>
-          ${c.cambioHorario?`<span style="font-size:9px;background:var(--amber-dim);color:var(--amber);padding:1px 6px;border-radius:20px;border:1px solid rgba(245,197,24,.3)"><i class="ti ti-alert-triangle" style="font-size:9px"></i> ${c.nuevoHorario||'Cambio'}</span>`:''}
-        </div>
-      </td>
-      <td><span class="zona-chip ${zonaClass(c.zona)}">${c.zona}</span></td>
-      <td style="text-align:center"><span class="badge badge-cyan">${getFortCount(c.id)}</span></td>
-      <td>${c.activo?'<span class="badge badge-green">Activo</span>':'<span class="badge badge-amber">Refacc.</span>'}</td>
-      <td onclick="event.stopPropagation()"><div style="display:flex;gap:4px">
-        <button class="btn btn-sm" onclick="openEdit('centros',${c.id})"><i class="ti ti-edit"></i></button>
-        <button class="btn btn-sm btn-danger" onclick="deleteCentro(${c.id})"><i class="ti ti-trash"></i></button>
-      </div></td>
-    </tr>`;
-  }).join('');
+  }
+
+  // ── Tarjetas (mobile) ──
+  if(cardsEl){
+    if(!data.length){
+      cardsEl.innerHTML = emptyHtml;
+    } else {
+      cardsEl.innerHTML = data.map((c,i)=>{
+        const horResumen = centroHorResumen(c);
+        const forts = getFortCount(c.id);
+        const zonaC = {Norte:'var(--cyan)',Este:'var(--amber)',Sur:'var(--green)',Oeste:'var(--orange)'}[c.zona]||'var(--text3)';
+        return`<div style="background:var(--dark3);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;cursor:pointer" onclick="openCvDrawer(${c.id})">
+          <div style="display:flex;align-items:center;gap:10px;padding:12px 14px">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--dark4);border:2px solid ${zonaC};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:${zonaC};flex-shrink:0">${i+1}</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-weight:700;font-size:13px;color:var(--text);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.nombre}</div>
+              <div style="display:flex;align-items:center;gap:5px;margin-top:3px;flex-wrap:wrap">
+                <span class="zona-chip ${zonaClass(c.zona)}" style="font-size:9px">${c.zona}</span>
+                ${c.barrio?`<span style="font-size:10px;color:var(--text3)">${c.barrio}</span>`:''}
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">
+              ${c.activo?'<span class="badge badge-green" style="font-size:9px">Activo</span>':'<span class="badge badge-amber" style="font-size:9px">Refacc.</span>'}
+              <span style="font-size:9px;color:var(--text3)"><i class="ti ti-users" style="font-size:10px"></i> ${forts}</span>
+            </div>
+          </div>
+          <div style="padding:8px 14px 10px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:10px;font-family:var(--font-mono);color:var(--cyan)">${horResumen}</span>
+            <div style="display:flex;gap:6px" onclick="event.stopPropagation()">
+              <button class="btn btn-sm" onclick="openEdit('centros',${c.id})" style="padding:4px 8px"><i class="ti ti-edit"></i></button>
+              <button class="btn btn-sm btn-danger" onclick="deleteCentro(${c.id})" style="padding:4px 8px"><i class="ti ti-trash"></i></button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+  }
 }
 
 function renderInterior(filtro='') {
@@ -3011,7 +3274,7 @@ const TAB_META = {
   actividades:    {title:'Actividades y Calendario',    icon:'ti-calendar-event',     add:null},
   centros:        {title:'Centros Vecinales — Capital', icon:'ti-building-community', add:'Centro'},
   interior:       {title:'Departamentos — Interior',    icon:'ti-map-pin',            add:'Departamento'},
-  territorio:     {title:'Territorio — Centros y Fortalecedores', icon:'ti-map-2',   add:null},
+  territorio:     {title:'Vista Territorial — Centros y Fortalecedores', icon:'ti-map-2', add:null},
   visitas:        {title:'Cronograma de Visitas por Semana',       icon:'ti-calendar-week', add:'Visita'},
   fortalecedores: {title:'Fortalecedores',              icon:'ti-users',              add:'Fortalecedor/a'},
   chicos:         {title:'Estudiantes por Centro',      icon:'ti-school',             add:'Registro'},
