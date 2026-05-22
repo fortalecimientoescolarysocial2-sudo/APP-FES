@@ -1413,12 +1413,8 @@ textarea.form-control { min-height: 70px; resize: vertical; }
       </div>
 
       <div class="nav-section-label">Territorio</div>
-      <div class="nav-item nav-teal" id="nav-centros" onclick="showTab('centros')">
-        <i class="ti ti-building-community"></i> Centros Vecinales
-        <span class="nav-count" id="badge-centros">0</span>
-      </div>
       <div class="nav-item nav-teal" id="nav-territorio" onclick="showTab('territorio')">
-        <i class="ti ti-map-2"></i> Vista Territorial
+        <i class="ti ti-map-2"></i> Centros Vecinales
         <span class="nav-count" id="badge-territorio">0</span>
       </div>
       <div class="nav-item nav-purple" id="nav-visitas" onclick="showTab('visitas')">
@@ -1562,45 +1558,6 @@ textarea.form-control { min-height: 70px; resize: vertical; }
             <table><thead><tr><th>Departamento / Localidad</th><th style="text-align:center">Centros</th><th style="text-align:center">Marzo</th><th style="text-align:center">Abril</th><th style="text-align:center">Var.</th><th style="text-align:center">Fortals.</th><th>Acc.</th></tr></thead>
             <tbody id="body-interior"></tbody></table>
           </div>
-        </div>
-      </div>
-
-      <!-- ══ CENTROS VECINALES (Capital) ══ -->
-      <div class="section-tab" id="tab-centros">
-        <span class="section-eyebrow">Centros Vecinales Capital · Gestión y horarios</span>
-        <div class="stats-grid" id="stats-centros"></div>
-
-        <!-- Filtro por zona -->
-        <div class="zona-tabs" id="zona-tabs" style="margin-bottom:12px">
-          <div class="zona-tab active" data-zona="" onclick="filtrarZona(this,'')">Todas las zonas</div>
-          <div class="zona-tab" data-zona="Norte" onclick="filtrarZona(this,'Norte')"><i class="ti ti-map-2" style="font-size:11px"></i> Norte</div>
-          <div class="zona-tab" data-zona="Este"  onclick="filtrarZona(this,'Este')"><i class="ti ti-map-2" style="font-size:11px"></i> Este</div>
-          <div class="zona-tab" data-zona="Sur"   onclick="filtrarZona(this,'Sur')"><i class="ti ti-map-2" style="font-size:11px"></i> Sur</div>
-          <div class="zona-tab" data-zona="Oeste" onclick="filtrarZona(this,'Oeste')"><i class="ti ti-map-2" style="font-size:11px"></i> Oeste</div>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title"><i class="ti ti-building-community"></i><span id="centros-title">Centros Vecinales — Capital</span></span>
-            <button class="btn btn-sm btn-primary" id="btn-add-centro" onclick="currentTab='centros';openModal()"><i class="ti ti-plus"></i> Nuevo Centro</button>
-          </div>
-          <div class="centros-table-wrap table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Centro / Barrio</th>
-                  <th>Zona</th>
-                  <th style="text-align:center">Forts.</th>
-                  <th>Estado</th>
-                  <th>Acc.</th>
-                </tr>
-              </thead>
-              <tbody id="body-centros"></tbody>
-            </table>
-          </div>
-          <!-- Vista tarjetas para mobile -->
-          <div id="centros-cards" style="padding:10px;display:none"></div>
         </div>
       </div>
 
@@ -1816,8 +1773,7 @@ textarea.form-control { min-height: 70px; resize: vertical; }
   <div class="bottom-nav-inner">
     <div class="bottom-nav-item active" id="bnav-resumen" onclick="showTab('resumen')"><i class="ti ti-chart-bar"></i><span>Inicio</span></div>
     <div class="bottom-nav-item" id="bnav-actividades" onclick="showTab('actividades')"><i class="ti ti-calendar-event"></i><span>Agenda</span></div>
-    <div class="bottom-nav-item" id="bnav-centros" onclick="showTab('centros')"><i class="ti ti-building-community"></i><span>Centros</span></div>
-    <div class="bottom-nav-item" id="bnav-territorio" onclick="showTab('territorio')"><i class="ti ti-map-2"></i><span>Mapa</span></div>
+    <div class="bottom-nav-item" id="bnav-territorio" onclick="showTab('territorio')"><i class="ti ti-map-2"></i><span>Centros</span></div>
     <div class="bottom-nav-item" id="bnav-visitas" onclick="showTab('visitas')"><i class="ti ti-calendar-week"></i><span>Visitas</span></div>
     <div class="bottom-nav-item" id="bnav-fortalecedores" onclick="showTab('fortalecedores')"><i class="ti ti-users"></i><span>Fortals.</span></div>
     <div class="bottom-nav-item" id="bnav-notas" onclick="showTab('notas')"><i class="ti ti-notes"></i><span>Notas</span></div>
@@ -2429,97 +2385,122 @@ function renderTerritorio() {
     if(!centros.length) return '';
 
     const zonaC = {Norte:'var(--cyan)',Este:'var(--amber)',Sur:'var(--green)',Oeste:'var(--orange)'}[zona];
+    const zonaChipC = {Norte:'zona-norte',Este:'zona-este',Sur:'zona-sur',Oeste:'zona-oeste'}[zona];
 
     return `
-    <div style="margin-bottom:24px">
-      <div class="territorio-zona-header" style="color:${zonaC};margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px">
-        <i class="ti ti-map-2"></i> Zona ${zona} <span style="font-size:10px;color:var(--text3);margin-left:8px">${centros.length} centros</span>
+    <div class="terr-zona-block">
+      <div class="terr-zona-label">
+        <span class="terr-zona-label-text ${zonaChipC}" style="border-color:${zonaC};color:${zonaC};background:color-mix(in srgb,${zonaC} 12%,transparent)">
+          <i class="ti ti-map-2"></i> Zona ${zona}
+        </span>
+        <div class="terr-zona-label-line" style="background:${zonaC}"></div>
+        <span class="terr-zona-count">${centros.length} centros</span>
       </div>
       ${centros.map((c,i)=>{
         const forts = state.fortalecedores.filter(f=>f.centroId===c.id);
-        const profes = c.profesores || [];
         const isExpanded = terrExpandedCentros.has(c.id);
-        
-        let fortsMateria = '';
-        if(forts.length) {
-          fortsMateria = forts.map(f=>{
-            const mat = f.materia || 'Lengua';
-            const matBadge = mat==='Matemática'?'badge-matematica':mat==='Lengua'?'badge-lengua':'badge-gray';
-            return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:rgba(255,255,255,0.03);border-radius:var(--radius-sm);margin-bottom:4px"><div style="display:flex;align-items:center;gap:8px"><i class="ti ti-user" style="font-size:14px;opacity:0.6"></i><span style="font-size:11px;font-weight:600">${f.nombre}</span></div><div style="display:flex;gap:4px"><span class="badge ${matBadge}" style="font-size:9px">${mat}</span><span class="badge badge-gray" style="font-size:9px">${f.turno||'Tarde'}</span></div></div>`;
-          }).join('');
-        } else {
-          fortsMateria = '<div style="font-size:11px;color:var(--text3);padding:8px">Sin profesores/fortalecedores asignados.</div>';
-        }
 
-        let diasHtml = '';
+        // Días y horarios pills
+        let diasPills = '';
         if(c.dias && Object.keys(c.dias).length) {
           DIAS_SEMANA.forEach(dia => {
             const dObj = c.dias[dia.toLowerCase()];
-            if(dObj && dObj.activo) diasHtml += `<span class="terr-dia-pill">${dia.substring(0,3)} ${dObj.horaInicio}-${dObj.horaFin}</span>`;
+            if(dObj && dObj.activo) {
+              diasPills += `<span class="terr-dia-pill activo"><span>${dia.substring(0,3)}</span><span class="terr-dia-hora">${dObj.horaInicio}–${dObj.horaFin}</span></span>`;
+            }
           });
         }
-        if(!diasHtml) diasHtml = `<span style="font-size:11px;color:var(--text3)">${c.horario||'Horario no especificado'}</span>`;
+        if(!diasPills) diasPills = `<span style="font-size:11px;color:var(--text3)">${c.horario||'Horario no especificado'}</span>`;
+
+        // Fortalecedores list
+        let fortsHtml = '';
+        if(forts.length) {
+          fortsHtml = forts.map(f=>{
+            const mat = f.materia || 'Lengua';
+            const matBadge = mat==='Matemática'?'badge-matematica':mat==='Lengua'?'badge-lengua':'badge-gray';
+            return `<div class="terr-fort-row">
+              <div class="terr-fort-name"><i class="ti ti-user"></i>${f.nombre}</div>
+              <div class="terr-fort-badges">
+                <span class="badge ${matBadge}" style="font-size:9px">${mat}</span>
+                <span class="badge badge-gray" style="font-size:9px">${f.turno||'Tarde'}</span>
+              </div>
+            </div>`;
+          }).join('');
+        } else {
+          fortsHtml = '<div style="font-size:11px;color:var(--text3);padding:4px 0">Sin fortalecedores asignados.</div>';
+        }
+
+        // Referente
+        let refHtml = c.referenteNombre
+          ? `<div class="terr-referente-row">
+              <div class="terr-referente-avatar">${c.referenteNombre.charAt(0).toUpperCase()}</div>
+              <div>
+                <div class="terr-referente-name">${c.referenteNombre}</div>
+                <div class="terr-referente-contact"><i class="ti ti-phone"></i> ${c.referenteContacto||'Sin número'}</div>
+              </div>
+            </div>`
+          : '<div style="font-size:11px;color:var(--text3)">No asignado</div>';
 
         return `
-        <div class="terr-centro-card ${isExpanded?'expanded':''}">
+        <div class="terr-centro-card ${isExpanded?'expanded':''}" style="--zona-color:${zonaC}">
           <div class="terr-centro-accent" style="background:${zonaC}"></div>
           <div class="terr-centro-card-header" onclick="toggleTerrCentro(${c.id})">
-            <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:0">
-              <div style="font-size:14px;font-family:var(--font-mono);font-weight:800;color:var(--text3);width:20px">${i+1}</div>
-              <div style="flex:1;min-width:0">
-                <div class="terr-centro-name">${c.nombre}</div>
-                ${c.barrio?`<div style="font-size:10px;color:var(--text3);margin-top:2px">${c.barrio}</div>`:''}
+            <div class="terr-cv-num">${i+1}</div>
+            <div class="terr-cv-info">
+              <div class="terr-centro-name">${c.nombre}</div>
+              <div class="terr-cv-sub">
+                ${c.barrio?`<span><i class="ti ti-home" style="font-size:10px"></i> ${c.barrio}</span>`:''}
+                ${!c.activo?'<span class="badge badge-amber" style="font-size:9px">En refacción</span>':''}
               </div>
             </div>
             <div class="terr-centro-badges">
-              ${c.activo?'':'<span class="badge badge-amber" style="font-size:9px">Refacc.</span>'}
-              <span class="badge badge-gray" style="font-size:9px"><i class="ti ti-users"></i> ${forts.length}</span>
-              <i class="ti ti-chevron-${isExpanded?'up':'down'}" style="font-size:16px;color:var(--text3);margin-left:8px" id="terr-chev-${c.id}"></i>
+              <div class="terr-cv-forts-count"><i class="ti ti-users"></i>${forts.length}</div>
+              <i class="ti ti-chevron-down terr-cv-chevron" id="terr-chev-${c.id}"></i>
             </div>
           </div>
-          
-          <div class="terr-centro-card-body" id="terr-forts-${c.id}">
-            ${!c.activo?`<div class="alert-banner"><i class="ti ti-alert-triangle"></i> Centro en refacción temporal.</div>`:''}
-            
-            <div class="terr-schedule">
-              <div class="terr-schedule-block">
-                <div class="terr-schedule-label"><i class="ti ti-clock"></i> Días y Horarios</div>
-                <div class="terr-schedule-days">${diasHtml}</div>
-              </div>
-              
-              <div class="terr-schedule-block" style="flex:1">
-                <div class="terr-schedule-label"><i class="ti ti-map-pin"></i> Ubicación</div>
-                <div style="font-size:11.5px;color:var(--text2);margin-bottom:6px">${c.direccion||'Dirección no cargada'}</div>
-                ${c.mapsUrl?`<a href="${c.mapsUrl}" target="_blank" class="btn btn-sm" style="background:var(--cyan-dim);color:var(--cyan);border-color:var(--cyan-border);font-size:10px;text-decoration:none"><i class="ti ti-map"></i> Ver en Google Maps</a>`:''}
-              </div>
-            </div>
 
-            <div class="terr-info-grid">
-              <div class="terr-info-item">
-                <div class="terr-info-label"><i class="ti ti-user-star"></i> Referente</div>
-                ${c.referenteNombre ? `
-                  <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
-                    <div class="terr-referente-avatar">${c.referenteNombre.charAt(0).toUpperCase()}</div>
-                    <div>
-                      <div class="terr-referente-name">${c.referenteNombre}</div>
-                      <div class="terr-referente-contact"><i class="ti ti-phone" style="font-size:10px"></i> ${c.referenteContacto||'Sin número'}</div>
-                    </div>
-                  </div>
-                ` : '<div class="terr-info-value" style="color:var(--text3);font-weight:400">No asignado</div>'}
+          <div class="terr-centro-card-body" id="terr-forts-${c.id}">
+            <div class="terr-cv-body-inner">
+              ${!c.activo?`<div class="alert-banner"><i class="ti ti-alert-triangle"></i> Centro en refacción temporal.</div>`:''}
+
+              <!-- Pills resumen -->
+              <div class="terr-cv-pills">
+                ${c.direccion?`<span class="terr-cv-pill"><i class="ti ti-map-pin"></i>${c.direccion}</span>`:''}
+                ${c.horario?`<span class="terr-cv-pill highlight"><i class="ti ti-clock"></i>${c.horario}</span>`:''}
+                ${c.cambioHorario?`<span class="terr-cv-pill" style="background:rgba(245,197,24,.1);color:var(--amber);border-color:rgba(245,197,24,.3)"><i class="ti ti-alert-triangle"></i>Cambio: ${c.nuevoHorario||'pendiente'}</span>`:''}
               </div>
-              
-              <div class="terr-info-item">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-                  <div class="terr-info-label" style="margin:0"><i class="ti ti-users-group"></i> Fortalecedores</div>
-                  <button class="btn btn-sm" style="padding:2px 6px;font-size:9px" onclick="openEdit('fortalecedores', null)"><i class="ti ti-plus"></i> Añadir</button>
+
+              <div class="terr-cv-grid">
+                <!-- Días y horarios -->
+                <div class="terr-cv-block">
+                  <div class="terr-cv-block-label" style="color:${zonaC}"><i class="ti ti-clock"></i> Días y Horarios</div>
+                  <div class="terr-dias-row">${diasPills}</div>
+                  ${c.mapsUrl?`<a href="${c.mapsUrl}" target="_blank" class="btn-maps-sm" style="margin-top:10px;display:inline-flex"><i class="ti ti-map-2"></i> Ver en Maps</a>`:''}
                 </div>
-                ${fortsMateria}
+
+                <!-- Referente -->
+                <div class="terr-cv-block">
+                  <div class="terr-cv-block-label" style="color:${zonaC}"><i class="ti ti-user-star"></i> Referente</div>
+                  ${refHtml}
+                </div>
               </div>
-            </div>
-            
-            <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px;padding-top:12px;border-top:1px dashed var(--border)">
-              ${c.referenteContacto ? `<a href="https://wa.me/${c.referenteContacto.replace(/\D/g,'')}" target="_blank" class="btn-whatsapp"><i class="ti ti-brand-whatsapp"></i> Contactar</a>` : ''}
-              <button class="btn btn-sm" onclick="openEdit('centros',${c.id})"><i class="ti ti-edit"></i> Editar información</button>
+
+              <!-- Fortalecedores -->
+              <div class="terr-cv-block" style="margin-bottom:14px">
+                <div class="terr-cv-block-label" style="color:${zonaC};display:flex;justify-content:space-between;align-items:center">
+                  <span><i class="ti ti-users-group"></i> Fortalecedores (${forts.length})</span>
+                  <button class="btn btn-sm" style="padding:2px 8px;font-size:9px;margin-left:auto" onclick="event.stopPropagation();openEdit('fortalecedores',null)"><i class="ti ti-plus"></i> Añadir</button>
+                </div>
+                <div class="terr-forts-section">${fortsHtml}</div>
+              </div>
+
+              <!-- Footer acciones -->
+              <div class="terr-cv-footer">
+                <div class="terr-cv-footer-left">
+                  ${c.referenteContacto?`<a href="https://wa.me/${c.referenteContacto.replace(/\D/g,'')}" target="_blank" class="btn-whatsapp"><i class="ti ti-brand-whatsapp"></i> Contactar</a>`:''}
+                </div>
+                <button class="btn btn-sm" onclick="event.stopPropagation();openEdit('centros',${c.id})"><i class="ti ti-edit"></i> Editar</button>
+              </div>
             </div>
           </div>
         </div>`;
@@ -2707,94 +2688,45 @@ function deleteVisita(id) {
 // ═══════════════════════════════════════════════
 // CENTROS
 // ═══════════════════════════════════════════════
-function centroHorResumen(c) {
-  let horResumen='';
-  if(c.dias && Object.keys(c.dias).length){
-    const activos=DIAS_SEMANA.filter(d=>c.dias[d.toLowerCase()]?.activo);
-    if(activos.length){
-      const primero=c.dias[activos[0].toLowerCase()];
-      horResumen=activos.length===1
-        ? `${activos[0].substring(0,3)} ${primero.horaInicio}–${primero.horaFin}`
-        : `${activos.map(d=>d.substring(0,3)).join('/')} ${primero.horaInicio}–${primero.horaFin}`;
-    }
-  }
-  return horResumen||c.horario||'–';
-}
-
 function renderCentros(filtro='') {
   const tbody = document.getElementById('body-centros');
-  const cardsEl = document.getElementById('centros-cards');
-  if(!tbody && !cardsEl) return;
+  if(!tbody) return;
   let data = state.centros;
   if(zonaFiltro) data = data.filter(c=>c.zona===zonaFiltro);
-  if(filtro) data = data.filter(c=>c.nombre.toLowerCase().includes(filtro.toLowerCase())||c.zona.toLowerCase().includes(filtro.toLowerCase())||((c.barrio||'').toLowerCase().includes(filtro.toLowerCase())));
-
-  const emptyHtml = `<div class="empty-state"><i class="ti ti-building-community"></i><p>No hay centros registrados</p></div>`;
-
-  // ── Tabla (desktop) ──
-  if(tbody){
-    if(!data.length){
-      tbody.innerHTML=`<tr><td colspan="6">${emptyHtml}</td></tr>`;
-    } else {
-      tbody.innerHTML = data.map((c,i)=>{
-        const horResumen = centroHorResumen(c);
-        return`<tr style="cursor:pointer" onclick="openCvDrawer(${c.id})">
-          <td style="color:var(--text3);font-size:11px;font-weight:700;font-family:var(--font-mono)">${i+1}</td>
-          <td>
-            <div style="font-weight:700;font-size:12px;line-height:1.3">${c.nombre}</div>
-            <div style="display:flex;align-items:center;gap:5px;margin-top:3px;flex-wrap:wrap">
-              ${c.barrio?`<span style="font-size:10px;color:var(--text3)">${c.barrio}</span>`:''}
-              <span style="font-size:10px;font-family:var(--font-mono);color:var(--cyan);background:var(--cyan-dim);padding:1px 7px;border-radius:20px;border:1px solid var(--cyan-border)">${horResumen}</span>
-              ${c.cambioHorario?`<span style="font-size:9px;background:var(--amber-dim);color:var(--amber);padding:1px 6px;border-radius:20px;border:1px solid rgba(245,197,24,.3)"><i class="ti ti-alert-triangle" style="font-size:9px"></i> ${c.nuevoHorario||'Cambio'}</span>`:''}
-            </div>
-          </td>
-          <td><span class="zona-chip ${zonaClass(c.zona)}">${c.zona}</span></td>
-          <td style="text-align:center"><span class="badge badge-cyan">${getFortCount(c.id)}</span></td>
-          <td>${c.activo?'<span class="badge badge-green">Activo</span>':'<span class="badge badge-amber">Refacc.</span>'}</td>
-          <td onclick="event.stopPropagation()"><div style="display:flex;gap:4px">
-            <button class="btn btn-sm" onclick="openEdit('centros',${c.id})"><i class="ti ti-edit"></i></button>
-            <button class="btn btn-sm btn-danger" onclick="deleteCentro(${c.id})"><i class="ti ti-trash"></i></button>
-          </div></td>
-        </tr>`;
-      }).join('');
+  if(filtro) data = data.filter(c=>c.nombre.toLowerCase().includes(filtro)||c.zona.toLowerCase().includes(filtro));
+  if(!data.length){ tbody.innerHTML=`<tr><td colspan="8"><div class="empty-state"><i class="ti ti-building-community"></i><p>No hay centros</p></div></td></tr>`; return; }
+  tbody.innerHTML = data.map((c,i)=>{
+    // Construir horario resumido desde c.dias
+    let horResumen='';
+    if(c.dias && Object.keys(c.dias).length){
+      const activos=DIAS_SEMANA.filter(d=>c.dias[d.toLowerCase()]?.activo);
+      if(activos.length){
+        const primero=c.dias[activos[0].toLowerCase()];
+        horResumen=activos.length===1
+          ? `${activos[0].substring(0,3)} ${primero.horaInicio}–${primero.horaFin}`
+          : `${activos.map(d=>d.substring(0,3)).join('/')} ${primero.horaInicio}–${primero.horaFin}`;
+      }
     }
-  }
-
-  // ── Tarjetas (mobile) ──
-  if(cardsEl){
-    if(!data.length){
-      cardsEl.innerHTML = emptyHtml;
-    } else {
-      cardsEl.innerHTML = data.map((c,i)=>{
-        const horResumen = centroHorResumen(c);
-        const forts = getFortCount(c.id);
-        const zonaC = {Norte:'var(--cyan)',Este:'var(--amber)',Sur:'var(--green)',Oeste:'var(--orange)'}[c.zona]||'var(--text3)';
-        return`<div style="background:var(--dark3);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;cursor:pointer" onclick="openCvDrawer(${c.id})">
-          <div style="display:flex;align-items:center;gap:10px;padding:12px 14px">
-            <div style="width:32px;height:32px;border-radius:50%;background:var(--dark4);border:2px solid ${zonaC};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:${zonaC};flex-shrink:0">${i+1}</div>
-            <div style="flex:1;min-width:0">
-              <div style="font-weight:700;font-size:13px;color:var(--text);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.nombre}</div>
-              <div style="display:flex;align-items:center;gap:5px;margin-top:3px;flex-wrap:wrap">
-                <span class="zona-chip ${zonaClass(c.zona)}" style="font-size:9px">${c.zona}</span>
-                ${c.barrio?`<span style="font-size:10px;color:var(--text3)">${c.barrio}</span>`:''}
-              </div>
-            </div>
-            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">
-              ${c.activo?'<span class="badge badge-green" style="font-size:9px">Activo</span>':'<span class="badge badge-amber" style="font-size:9px">Refacc.</span>'}
-              <span style="font-size:9px;color:var(--text3)"><i class="ti ti-users" style="font-size:10px"></i> ${forts}</span>
-            </div>
-          </div>
-          <div style="padding:8px 14px 10px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
-            <span style="font-size:10px;font-family:var(--font-mono);color:var(--cyan)">${horResumen}</span>
-            <div style="display:flex;gap:6px" onclick="event.stopPropagation()">
-              <button class="btn btn-sm" onclick="openEdit('centros',${c.id})" style="padding:4px 8px"><i class="ti ti-edit"></i></button>
-              <button class="btn btn-sm btn-danger" onclick="deleteCentro(${c.id})" style="padding:4px 8px"><i class="ti ti-trash"></i></button>
-            </div>
-          </div>
-        </div>`;
-      }).join('');
-    }
-  }
+    if(!horResumen) horResumen=c.horario||'–';
+    return`<tr style="cursor:pointer" onclick="openCvDrawer(${c.id})">
+      <td style="color:var(--text3);font-size:11px;font-weight:700;font-family:var(--font-mono)">${i+1}</td>
+      <td>
+        <div style="font-weight:700;font-size:12px;line-height:1.3">${c.nombre}</div>
+        <div style="display:flex;align-items:center;gap:5px;margin-top:3px;flex-wrap:wrap">
+          ${c.barrio?`<span style="font-size:10px;color:var(--text3)">${c.barrio}</span>`:''}
+          <span style="font-size:10px;font-family:var(--font-mono);color:var(--cyan);background:var(--cyan-dim);padding:1px 7px;border-radius:20px;border:1px solid var(--cyan-border)">${horResumen}</span>
+          ${c.cambioHorario?`<span style="font-size:9px;background:var(--amber-dim);color:var(--amber);padding:1px 6px;border-radius:20px;border:1px solid rgba(245,197,24,.3)"><i class="ti ti-alert-triangle" style="font-size:9px"></i> ${c.nuevoHorario||'Cambio'}</span>`:''}
+        </div>
+      </td>
+      <td><span class="zona-chip ${zonaClass(c.zona)}">${c.zona}</span></td>
+      <td style="text-align:center"><span class="badge badge-cyan">${getFortCount(c.id)}</span></td>
+      <td>${c.activo?'<span class="badge badge-green">Activo</span>':'<span class="badge badge-amber">Refacc.</span>'}</td>
+      <td onclick="event.stopPropagation()"><div style="display:flex;gap:4px">
+        <button class="btn btn-sm" onclick="openEdit('centros',${c.id})"><i class="ti ti-edit"></i></button>
+        <button class="btn btn-sm btn-danger" onclick="deleteCentro(${c.id})"><i class="ti ti-trash"></i></button>
+      </div></td>
+    </tr>`;
+  }).join('');
 }
 
 function renderInterior(filtro='') {
@@ -3274,7 +3206,7 @@ const TAB_META = {
   actividades:    {title:'Actividades y Calendario',    icon:'ti-calendar-event',     add:null},
   centros:        {title:'Centros Vecinales — Capital', icon:'ti-building-community', add:'Centro'},
   interior:       {title:'Departamentos — Interior',    icon:'ti-map-pin',            add:'Departamento'},
-  territorio:     {title:'Vista Territorial — Centros y Fortalecedores', icon:'ti-map-2', add:null},
+  territorio:     {title:'Territorio — Centros y Fortalecedores', icon:'ti-map-2',   add:null},
   visitas:        {title:'Cronograma de Visitas por Semana',       icon:'ti-calendar-week', add:'Visita'},
   fortalecedores: {title:'Fortalecedores',              icon:'ti-users',              add:'Fortalecedor/a'},
   chicos:         {title:'Estudiantes por Centro',      icon:'ti-school',             add:'Registro'},
