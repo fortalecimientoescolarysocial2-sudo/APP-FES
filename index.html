@@ -485,6 +485,139 @@ tbody tr:nth-child(even):hover { background: rgba(0,87,184,.04); }
 }
 .day-add-btn:hover { background: var(--cyan-dim); color: var(--cyan); border-color: var(--cyan-border); }
 
+/* ── Semana actual hero banner ── */
+.semana-hero {
+  background: linear-gradient(135deg, #0057B8 0%, #003d8a 100%);
+  border-radius: var(--radius);
+  padding: 18px 22px 0;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,87,184,.2), 0 1px 4px rgba(0,87,184,.1);
+  display: flex;
+  flex-direction: column;
+}
+.semana-hero::before {
+  content:''; position:absolute; right:-40px; top:-40px;
+  width:180px; height:180px; border-radius:50%;
+  background:rgba(255,255,255,.05); pointer-events:none;
+}
+.semana-hero::after {
+  content:''; position:absolute; left:-30px; bottom:-30px;
+  width:120px; height:120px; border-radius:50%;
+  background:rgba(255,102,0,.1); pointer-events:none;
+}
+.semana-hero-eyebrow {
+  font-size:9px; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+  color:rgba(255,255,255,.55); margin-bottom:4px;
+  display:flex; align-items:center; gap:6px;
+}
+.semana-hero-eyebrow::before {
+  content:''; display:inline-block; width:6px; height:6px; border-radius:50%;
+  background:#7BC144; animation:pulse 2.5s infinite;
+}
+.semana-hero-title {
+  font-size:22px; font-weight:900; color:#fff;
+  letter-spacing:-.02em; line-height:1.1; margin-bottom:0;
+}
+.semana-hero-sub {
+  font-size:11px; color:rgba(255,255,255,.6); margin-bottom:0;
+  font-family:'Lora',serif; font-style:italic;
+}
+.semana-hero-stats {
+  display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+  margin-top:10px;
+}
+.semana-hero-stat {
+  display:flex; align-items:center; gap:5px;
+  font-size:11px; font-weight:700;
+  background:rgba(255,255,255,.12); color:#fff;
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:20px; padding:4px 12px;
+}
+.semana-hero-stat.green { background:rgba(123,193,68,.2); border-color:rgba(123,193,68,.4); color:#a8e06b; }
+.semana-hero-stat.amber { background:rgba(245,168,0,.2); border-color:rgba(245,168,0,.4); color:#ffd166; }
+.semana-hero-stat.red   { background:rgba(212,43,43,.2); border-color:rgba(212,43,43,.4); color:#ff8a8a; }
+.semana-hero-prog {
+  position:absolute; right:22px; top:50%; transform:translateY(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  pointer-events:none;
+}
+.semana-hero-pct {
+  font-size:28px; font-weight:900; color:#fff; line-height:1;
+}
+.semana-hero-pct-lbl {
+  font-size:8px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:rgba(255,255,255,.5);
+}
+.semana-hero-prog-bar {
+  width:80px; height:6px; background:rgba(255,255,255,.2); border-radius:4px; overflow:hidden; margin-top:2px;
+}
+.semana-hero-prog-bar-fill {
+  height:100%; border-radius:4px;
+  background: linear-gradient(90deg,#FF6600,#7BC144);
+  transition: width .4s ease;
+}
+/* Hero layout helpers */
+.semana-hero-body {
+  display:flex; align-items:center; gap:16px;
+  padding-bottom:14px; position:relative; z-index:1;
+}
+.semana-hero-left { flex:1; min-width:0; }
+.semana-hero-right {
+  flex-shrink:0;
+  display:flex; flex-direction:column; align-items:center; gap:1px;
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18);
+  border-radius:12px; padding:10px 18px; min-width:84px;
+}
+.semana-hero-prog-full {
+  width:100%; height:5px;
+  background:rgba(255,255,255,.15);
+  border-radius:0 0 var(--radius) var(--radius);
+  overflow:hidden; flex-shrink:0;
+}
+.semana-hero-prog-full .semana-hero-prog-bar-fill {
+  border-radius:0 4px 4px 0;
+  transition: width .5s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── day-col mejorado (light mode) ── */
+.day-col {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  min-height: 140px; transition: border-color .15s, box-shadow .15s;
+}
+.day-col:hover { border-color: var(--border2); box-shadow: var(--shadow-sm); }
+.day-col.hoy {
+  border-color: #0057B8 !important;
+  box-shadow: 0 0 0 2px rgba(0,87,184,.12), 0 4px 16px rgba(0,87,184,.1);
+}
+.day-col.hoy .day-header { background: rgba(0,87,184,.08) !important; }
+.day-col.hoy .day-name { color: #0057B8 !important; }
+.day-col.hoy .day-date { color: #0057B8 !important; font-weight: 700; }
+.day-col.pasado { border-color: rgba(46,158,79,.25) !important; }
+.day-col.pasado .day-header { background: rgba(46,158,79,.05) !important; }
+.day-col.pasado .day-name { color: var(--green) !important; }
+.day-header {
+  padding: 10px 12px; background: var(--dark4);
+  border-bottom: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.day-name { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--text2); }
+.day-date { font-size: 10px; font-family: var(--font-mono); color: var(--text3); }
+.day-date-num {
+  font-size:20px; font-weight:900; color:var(--text); line-height:1;
+  font-family:'Poppins',sans-serif;
+}
+.day-header-left { display:flex; flex-direction:column; gap:1px; }
+.day-count-badge {
+  font-size:9px; font-weight:800; background:var(--cyan-dim);
+  color:var(--cyan); border:1px solid var(--cyan-border);
+  border-radius:10px; padding:1px 6px; white-space:nowrap;
+}
+.day-count-badge.empty { background:var(--dark4); color:var(--text3); border-color:var(--border); }
+.day-body { padding: 8px; }
+
 /* Lista de visitas */
 .visitas-list-table { }
 .visitas-semana-title {
@@ -2095,23 +2228,6 @@ textarea.form-control { min-height: 70px; resize: vertical; }
           <div id="centros-cards" style="padding:10px;display:none"></div>
         </div>
 
-        <!-- ── Fortalecedores vinculados ── -->
-        <div class="card" style="margin-top:14px">
-          <div class="card-header">
-            <span class="card-title"><i class="ti ti-users-group"></i>Fortalecedores — Registro</span>
-            <div style="display:flex;gap:8px;align-items:center">
-              <select class="form-control" style="width:auto;font-size:11px;padding:5px 24px 5px 8px" id="filtro-programa-cv" onchange="renderFortalecedoresCv()">
-                <option value="">Todos los programas</option>
-                <option>FES</option><option>Familia Riojanas</option><option>Formadores Comunitarios</option><option>Planta Permanente</option>
-              </select>
-              <button class="btn btn-sm btn-primary" onclick="abrirModalFortConCentros()"><i class="ti ti-plus"></i> Agregar</button>
-            </div>
-          </div>
-          <div class="table-wrap">
-            <table><thead><tr><th>#</th><th>Nombre</th><th>DNI</th><th>Programa</th><th>Contacto</th><th>Estado</th><th>Acc.</th></tr></thead>
-            <tbody id="body-fortalecedores-cv"></tbody></table>
-          </div>
-        </div>
       </div>
 
       <!-- ══ TERRITORIO / ESTUDIANTES ══ -->
@@ -2186,12 +2302,45 @@ textarea.form-control { min-height: 70px; resize: vertical; }
           <div id="vptab-btn-anual" class="notas-tab-btn" onclick="switchVisitaPrincipal('anual')"><i class="ti ti-calendar-month"></i> Por mes</div>
         </div>
 
-        <!-- ══ PESTAÑA POR SEMANA (acordeón mes → semanas) ══ -->
+        <!-- ══ PESTAÑA POR SEMANA ══ -->
         <div id="vpanel-semanal">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;flex-wrap:wrap">
-            <div id="visitas-stats-inline" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+          <!-- Banner semana actual -->
+          <div class="semana-hero" id="semana-hero-banner">
+            <div class="semana-hero-body">
+              <div class="semana-hero-left">
+                <div class="semana-hero-eyebrow" id="semana-hero-eyebrow">Semana actual</div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+                  <button id="hero-prev-week" onclick="navegarHeroSemana(-1)" title="Semana anterior" style="flex-shrink:0;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:8px;color:#fff;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,.25)'" onmouseout="this.style.background='rgba(255,255,255,.15)'"><i class="ti ti-chevron-left"></i></button>
+                  <div class="semana-hero-title" id="semana-hero-label" style="flex:1">–</div>
+                  <button id="hero-today-btn" onclick="currentHeroSemana=null;renderVisitas()" title="Ir a semana actual" style="flex-shrink:0;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:8px;color:rgba(255,255,255,.75);padding:0 10px;height:30px;display:flex;align-items:center;cursor:pointer;font-size:10px;font-weight:700;letter-spacing:.05em;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,.22)'" onmouseout="this.style.background='rgba(255,255,255,.12)'">Hoy</button>
+                  <button id="hero-next-week" onclick="navegarHeroSemana(1)" title="Semana siguiente" style="flex-shrink:0;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:8px;color:#fff;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,.25)'" onmouseout="this.style.background='rgba(255,255,255,.15)'"><i class="ti ti-chevron-right"></i></button>
+                </div>
+                <div class="semana-hero-sub" id="semana-hero-sub">Cargando...</div>
+                <div class="semana-hero-stats" id="semana-hero-stats"></div>
+              </div>
+              <div class="semana-hero-right">
+                <div class="semana-hero-pct" id="semana-hero-pct">0%</div>
+                <div class="semana-hero-pct-lbl">completado</div>
+              </div>
+            </div>
+            <div class="semana-hero-prog-full" id="semana-hero-prog">
+              <div class="semana-hero-prog-bar-fill" id="semana-hero-fill" style="width:0%;height:100%"></div>
+            </div>
+          </div>
+
+          <!-- Grilla semanal -->
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+            <span style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--text3)"><i class="ti ti-calendar-week" style="font-size:12px"></i> Vista por día</span>
             <button class="btn btn-sm btn-primary" onclick="currentTab='visitas';openModal()"><i class="ti ti-plus"></i> Nueva visita</button>
           </div>
+          <div class="week-grid" id="week-grid-actual"></div>
+
+          <!-- Separador historial -->
+          <div style="display:flex;align-items:center;gap:10px;margin:20px 0 14px">
+            <span style="font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);white-space:nowrap">Historial por mes</span>
+            <div style="flex:1;height:1px;background:var(--border)"></div>
+          </div>
+
           <!-- Acordeones mes → semanas -->
           <div id="visitas-meses-acordeon"></div>
         </div>
@@ -3253,16 +3402,105 @@ function renderVisitas() {
     return (parseInt(bY)*12 + MESES.indexOf(bM)) - (parseInt(aY)*12 + MESES.indexOf(aM));
   });
 
-  // ── Stats inline globales ──
-  const statsEl = document.getElementById('visitas-stats-inline');
-  if(statsEl) {
-    const total = state.visitas.length;
-    const real = state.visitas.filter(v=>v.estado==='Realizada').length;
-    const pend = state.visitas.filter(v=>v.estado==='Pendiente').length;
-    statsEl.innerHTML = `
-      <span style="font-size:11px;font-weight:700;background:rgba(46,158,79,.1);color:var(--green);border:1px solid rgba(46,158,79,.25);border-radius:20px;padding:4px 12px">${real} realizadas</span>
-      <span style="font-size:11px;font-weight:700;background:rgba(245,168,0,.1);color:var(--amber);border:1px solid rgba(245,168,0,.25);border-radius:20px;padding:4px 12px">${pend} pendientes</span>
-      <span style="font-size:11px;font-weight:700;background:var(--dark4);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:4px 12px">${total} total</span>`;
+  // ── Hero banner semana (navegable) ──
+  const hoyForBanner = new Date();
+  const semanaHoyKey = semanaISOdeDate(hoyForBanner);
+  if(!currentHeroSemana) currentHeroSemana = semanaHoyKey;
+  const semActualKey = currentHeroSemana;
+  const esHeroSemanaActual = semActualKey === semanaHoyKey;
+  const visActual = state.visitas.filter(v => v.semana === semActualKey);
+  const realAct = visActual.filter(v=>v.estado==='Realizada').length;
+  const pendAct = visActual.filter(v=>v.estado==='Pendiente').length;
+  const cancAct = visActual.filter(v=>v.estado==='Cancelada').length;
+  const pctAct  = visActual.length ? Math.round(realAct/visActual.length*100) : 0;
+
+  const heroLabel = document.getElementById('semana-hero-label');
+  const heroEyebrow = document.getElementById('semana-hero-eyebrow');
+  const heroSub   = document.getElementById('semana-hero-sub');
+  const heroStats = document.getElementById('semana-hero-stats');
+  const heroPct   = document.getElementById('semana-hero-pct');
+  const heroFill  = document.getElementById('semana-hero-fill');
+  if(heroLabel) heroLabel.textContent = semanaLabel(semActualKey);
+  if(heroEyebrow) {
+    if(esHeroSemanaActual) {
+      heroEyebrow.textContent = 'Semana actual';
+    } else {
+      const lun = lunesDeSemanaISO(semActualKey);
+      const esAnterior = lun < new Date(hoyForBanner.getFullYear(), hoyForBanner.getMonth(), hoyForBanner.getDate() - hoyForBanner.getDay() + 1);
+      heroEyebrow.textContent = esAnterior ? '← Semana anterior' : '→ Semana siguiente';
+    }
+  }
+  if(heroSub) {
+    const lun = lunesDeSemanaISO(semActualKey);
+    const vie = new Date(lun); vie.setDate(lun.getDate()+4);
+    const fmt = d => d.toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'});
+    heroSub.textContent = `${fmt(lun)} — ${fmt(vie)}`;
+  }
+  if(heroStats) heroStats.innerHTML = `
+    <span class="semana-hero-stat">${visActual.length} visita${visActual.length!==1?'s':''}</span>
+    ${realAct ? `<span class="semana-hero-stat green"><i class="ti ti-circle-check" style="font-size:11px"></i> ${realAct} realizadas</span>` : ''}
+    ${pendAct ? `<span class="semana-hero-stat amber"><i class="ti ti-clock" style="font-size:11px"></i> ${pendAct} pendientes</span>` : ''}
+    ${cancAct ? `<span class="semana-hero-stat red"><i class="ti ti-x" style="font-size:11px"></i> ${cancAct} canceladas</span>` : ''}
+  `;
+  if(heroPct) heroPct.textContent = pctAct + '%';
+  if(heroFill) heroFill.style.width = pctAct + '%';
+
+  // ── Week grid semana actual ──
+  const weekGrid = document.getElementById('week-grid-actual');
+  if(weekGrid) {
+    const _hoyV = new Date();
+    const _hoyDow = _hoyV.getDay();
+    const DIAS_MAP = {Lunes:1,Martes:2,'Miércoles':3,Jueves:4,Viernes:5};
+    const ZONA_COLOR_G = {Norte:'var(--cyan)',Este:'var(--amber)',Sur:'var(--green)',Oeste:'var(--orange)'};
+    weekGrid.innerHTML = DIAS_SEMANA.map(dia => {
+      const visDay = visActual.filter(v=>v.dia===dia).sort((a,b)=>(a.hora||'').localeCompare(b.hora||''));
+      const diaDow = DIAS_MAP[dia]||0;
+      const esHoy = diaDow === _hoyDow;
+      const esPasado = !esHoy && diaDow < _hoyDow;
+      const colClass = esHoy ? 'hoy' : esPasado ? 'pasado' : '';
+      const fecha = getDayFecha(semActualKey, dia);
+      const dNum = fecha ? fecha.split('/')[0] : '';
+      return `
+      <div class="day-col ${colClass}">
+        <div class="day-header">
+          <div class="day-header-left">
+            <span class="day-name">${dia}</span>
+            <span class="day-date">${fecha}</span>
+          </div>
+          <span class="day-count-badge ${visDay.length===0?'empty':''}">${visDay.length || 'sin'} ${visDay.length===1?'visita':'visitas'}</span>
+        </div>
+        <div class="day-body">
+          ${visDay.map(v => {
+            const zona = getZona(v.centroId);
+            const zColor = ZONA_COLOR_G[zona]||'var(--mid)';
+            const ec = v.estado==='Realizada'?'var(--green)':v.estado==='Cancelada'?'var(--red)':v.estado==='Reprogramada'?'#7C3AED':'var(--amber)';
+            const eb = v.estado==='Realizada'?'rgba(46,158,79,.1)':v.estado==='Cancelada'?'var(--red-dim)':v.estado==='Reprogramada'?'rgba(124,58,237,.1)':'var(--amber-dim)';
+            return `
+            <div class="visita-card">
+              <div class="visita-card-accent" style="background:${zColor}"></div>
+              <div style="padding-left:6px">
+                <div class="visita-nombre" title="${getNombre(v.centroId)}">${getNombre(v.centroId)}</div>
+                <div class="visita-meta">
+                  <span class="visita-hora"><i class="ti ti-clock" style="font-size:9px"></i> ${v.hora||'–'}</span>
+                  <span class="visita-estado ${(v.estado||'').toLowerCase()}" style="background:${eb};color:${ec}">${v.estado}</span>
+                </div>
+                ${zona ? `<span class="zona-chip ${zonaClass(zona)}" style="font-size:8px;padding:1px 6px;margin-top:3px;display:inline-block">${zona}</span>` : ''}
+                ${v.responsable ? `<div style="font-size:9.5px;color:var(--text3);margin-top:3px"><i class="ti ti-user" style="font-size:9px"></i> ${v.responsable}</div>` : ''}
+                ${v.obs ? `<div style="font-size:9px;color:var(--text3);font-style:italic;margin-top:2px">${v.obs}</div>` : ''}
+              </div>
+              <div class="visita-actions">
+                <button class="btn btn-sm btn-icon" onclick="editVisita(${v.id})"><i class="ti ti-edit"></i></button>
+                <button class="btn btn-sm btn-icon btn-danger" onclick="deleteVisita(${v.id})"><i class="ti ti-trash"></i></button>
+              </div>
+            </div>`;
+          }).join('')}
+          ${visDay.length === 0 ? `<div style="padding:12px 4px;text-align:center;color:var(--text3);font-size:10px;opacity:.6">Sin visitas</div>` : ''}
+          <button class="day-add-btn" onclick="openAddVisita('${semActualKey}','${dia}')">
+            <i class="ti ti-plus"></i> Agregar
+          </button>
+        </div>
+      </div>`;
+    }).join('');
   }
 
   container.innerHTML = mesesOrdenados.map((mk, mi) => {
@@ -3416,6 +3654,7 @@ function deleteVisita(id) {
 // VISITAS — PANEL PRINCIPAL (semana / mes)
 // ═══════════════════════════════════════════════
 let visitaVistaActiva = 'semanal'; // 'semanal' | 'anual'
+let currentHeroSemana = null; // semana mostrada en el hero banner (null = semana actual)
 let visitaMesActivo = { mes: MESES[new Date().getMonth()], anio: new Date().getFullYear() };
 let visitaSubTab = 'resumen';
 
@@ -3696,7 +3935,18 @@ function renderVisitasAnualSubTab() {
   }
 }
 
-function cambiarMesVisita(mes,anio){ visitaMesActivo={mes,anio:parseInt(anio)}; renderVisitasAnual(); }
+function navegarHeroSemana(delta) {
+  const hoy = new Date();
+  const semHoyKey = semanaISOdeDate(hoy);
+  if(!currentHeroSemana) currentHeroSemana = semHoyKey;
+  // Calcular lunes de la semana actual en el banner y desplazar delta semanas
+  const lunes = lunesDeSemanaISO(currentHeroSemana);
+  lunes.setDate(lunes.getDate() + delta * 7);
+  currentHeroSemana = semanaISOdeDate(lunes);
+  renderVisitas();
+}
+
+
 
 function agregarMesVisita(){
   const meses = getVisitaMeses();
