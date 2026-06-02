@@ -1843,6 +1843,176 @@ textarea.form-control { min-height: 70px; resize: vertical; }
 
 /* Bottom nav active indicator */
 .bottom-nav-item.active::before { background: #0057B8; }
+
+/* ═══════════════════════════════════════════════
+   DASHBOARD (tab resumen)
+═══════════════════════════════════════════════ */
+.dashboard-hero {
+  margin-bottom: 18px;
+}
+.dashboard-title {
+  font-size: 20px; font-weight: 900; color: var(--text); letter-spacing: -.01em; margin-bottom: 4px;
+}
+.dashboard-subtitle {
+  font-size: 12px; color: var(--text2); font-family: 'Lora', serif; font-style: italic;
+}
+
+/* Layout: main area + right sidebar */
+.dashboard-layout {
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.dashboard-main { flex: 1; min-width: 0; }
+.dashboard-sidebar-right { width: 280px; flex-shrink: 0; position: sticky; top: 70px; }
+
+@media (max-width: 1100px) {
+  .dashboard-sidebar-right { width: 240px; }
+}
+@media (max-width: 900px) {
+  .dashboard-layout { flex-direction: column; }
+  .dashboard-sidebar-right { width: 100%; position: static; }
+}
+
+/* KPI grid */
+.dashboard-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+@media (max-width: 1200px) { .dashboard-kpi-grid { grid-template-columns: repeat(3,1fr); } }
+@media (max-width: 700px)  { .dashboard-kpi-grid { grid-template-columns: repeat(2,1fr); } }
+
+.dash-kpi {
+  background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius);
+  padding: 18px 16px 14px; position: relative; overflow: hidden;
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
+  cursor: default; box-shadow: var(--shadow-card);
+}
+.dash-kpi:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,40,100,.13); }
+.dash-kpi-accent { position: absolute; top:0; left:0; right:0; height:4px; border-radius: var(--radius) var(--radius) 0 0; }
+.dash-kpi-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:17px; margin-bottom:10px; }
+.dash-kpi-label { font-size:9.5px; color:var(--text3); font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:2px; }
+.dash-kpi-value { font-size:26px; font-weight:900; color:var(--text); line-height:1; letter-spacing:-.02em; }
+.dash-kpi-sub { font-size:10px; color:var(--text3); margin-top:3px; }
+
+/* Informe pages row */
+.dash-pages-row {
+  display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+}
+.dash-page-item {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  cursor: pointer;
+}
+.dash-page-num {
+  width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; color: #fff;
+}
+.dash-page-label { font-size: 9.5px; font-weight: 600; color: var(--text2); text-align:center; max-width: 72px; line-height:1.3; }
+
+/* Charts row */
+.dashboard-charts-row {
+  display: flex; gap: 12px; margin-bottom: 0;
+}
+@media (max-width: 800px) { .dashboard-charts-row { flex-direction: column; } }
+
+/* Donut charts */
+.donut-wrap {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.donut-svg { width: 100px; height: 100px; flex-shrink: 0; }
+.donut-legend { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 80px; }
+.donut-legend-item { display: flex; align-items: center; gap: 7px; }
+.donut-legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.donut-legend-label { font-size: 11px; font-weight: 600; color: var(--text2); flex: 1; }
+.donut-legend-val { font-size: 13px; font-weight: 800; font-family: var(--font-mono); color: var(--text); }
+.donut-pct-big { font-size: 14px; font-weight: 900; color: var(--text); margin-top: 2px; }
+
+/* Bottom row */
+.dashboard-bottom-row {
+  display: flex; gap: 12px;
+}
+@media (max-width: 700px) { .dashboard-bottom-row { flex-direction: column; } }
+
+/* Activity items */
+.dash-activity-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 16px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.dash-activity-item:last-child { border-bottom: none; }
+.dash-activity-icon {
+  width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0; margin-top: 2px;
+}
+.dash-activity-text { flex: 1; min-width: 0; }
+.dash-activity-name { font-size: 12px; font-weight: 600; color: var(--text); line-height: 1.3; }
+.dash-activity-meta { font-size: 10px; color: var(--text3); margin-top: 2px; }
+.dash-activity-badge { font-size: 9.5px; font-weight: 700; padding: 2px 8px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+
+/* ── Informe panel (right sidebar) ── */
+.informe-panel {
+  background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow-card);
+}
+.informe-panel-header {
+  background: linear-gradient(135deg, #0057B8 0%, #003d8a 100%);
+  padding: 14px 16px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.informe-panel-title {
+  font-size: 14px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 7px;
+}
+.informe-panel-body { padding: 14px 16px; }
+.informe-field-label {
+  font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase;
+  letter-spacing: .07em; margin-bottom: 6px;
+}
+.informe-select {
+  width: 100%; padding: 9px 10px 9px 34px; border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 600;
+  color: var(--text); background: var(--dark4); appearance: none; cursor: pointer;
+  transition: border .15s;
+}
+.informe-select:focus { outline: none; border-color: #0057B8; background: #fff; }
+.informe-btn-crear {
+  width: 100%; margin-top: 10px; padding: 12px;
+  background: linear-gradient(135deg, #0057B8 0%, #0070E0 100%);
+  color: #fff; border: none; border-radius: var(--radius-sm);
+  font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px;
+  box-shadow: 0 4px 14px rgba(0,87,184,.35); transition: all .15s; letter-spacing: .01em;
+}
+.informe-btn-crear:hover { opacity: .92; transform: translateY(-1px); }
+
+.informe-actions-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px;
+}
+.informe-action-btn {
+  padding: 10px 8px; background: var(--dark4); border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); cursor: pointer; text-align: center;
+  transition: all .15s; display: flex; flex-direction: column; align-items: center;
+  gap: 1px;
+}
+.informe-action-btn:hover { background: var(--dark5); border-color: var(--border2); transform: translateY(-1px); }
+
+/* Informes recientes list */
+.dash-informe-row {
+  display: flex; align-items: center; gap: 10px; padding: 9px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.dash-informe-row:last-child { border-bottom: none; }
+.dash-informe-icon { font-size: 17px; flex-shrink: 0; }
+.dash-informe-label { flex: 1; font-size: 12px; font-weight: 600; color: var(--text); }
+.dash-informe-status { font-size: 9.5px; font-weight: 700; padding: 3px 8px; border-radius: 20px; white-space: nowrap; }
+.dash-informe-status.completado { background: rgba(46,158,79,.12); color: #2E9E4F; border: 1px solid rgba(46,158,79,.2); }
+.dash-informe-status.borrador { background: rgba(245,168,0,.12); color: #F5A800; border: 1px solid rgba(245,168,0,.3); }
+
+/* Tip box */
+.informe-tip {
+  display: flex; align-items: flex-start; gap: 10px; margin-top: 14px;
+  background: rgba(245,168,0,.07); border: 1.5px solid rgba(245,168,0,.2);
+  border-radius: var(--radius-sm); padding: 12px 14px;
+}
   .loader-badge {
     bottom: calc(28px + env(safe-area-inset-bottom));
   }
@@ -1974,6 +2144,90 @@ textarea.form-control { min-height: 70px; resize: vertical; }
 }
 .search-hint-chip:hover { background: rgba(26,184,232,.18); }
 .search-hint-chip i { font-size: 13px; }
+
+/* ═══════════════════════════════════════════════
+   MOBILE COLORED TOPBAR — estilo app nativa FES
+═══════════════════════════════════════════════ */
+
+/* Topbar base en móvil: ocultar borde blanco, preparar para color */
+@media (max-width: 720px) {
+
+  /* Topbar toma color según la sección activa */
+  .topbar {
+    transition: background .25s ease, border-color .25s ease;
+  }
+
+  /* Variantes de color por sección */
+  .topbar.tab-resumen       { background: linear-gradient(135deg,#0057B8,#003d8a); border-bottom-color: transparent; }
+  .topbar.tab-territorio    { background: linear-gradient(135deg,#0057B8,#0070E0); border-bottom-color: transparent; }
+  .topbar.tab-fortalecedores{ background: linear-gradient(135deg,#FF6600,#cc5200); border-bottom-color: transparent; }
+  .topbar.tab-centros       { background: linear-gradient(135deg,#2E9E4F,#1e7a3a); border-bottom-color: transparent; }
+  .topbar.tab-visitas       { background: linear-gradient(135deg,#7C3AED,#5b21b6); border-bottom-color: transparent; }
+  .topbar.tab-actividades   { background: linear-gradient(135deg,#0D9488,#0a7567); border-bottom-color: transparent; }
+  .topbar.tab-bonos         { background: linear-gradient(135deg,#F5A800,#c98800); border-bottom-color: transparent; }
+  .topbar.tab-notas         { background: linear-gradient(135deg,#E8005A,#b8004a); border-bottom-color: transparent; }
+  .topbar.tab-resumen, .topbar.tab-territorio, .topbar.tab-fortalecedores,
+  .topbar.tab-centros, .topbar.tab-visitas, .topbar.tab-actividades,
+  .topbar.tab-bonos, .topbar.tab-notas {
+    box-shadow: 0 4px 20px rgba(0,0,0,.18);
+  }
+
+  /* Texto e íconos blancos cuando el topbar tiene color */
+  .topbar[class*="tab-"] .topbar-title,
+  .topbar[class*="tab-"] .hamburger-btn,
+  .topbar[class*="tab-"] .btn-search-mobile,
+  .topbar[class*="tab-"] .topbar-icon { color: #fff !important; background: rgba(255,255,255,.15) !important; border-color: rgba(255,255,255,.25) !important; }
+  .topbar[class*="tab-"] .topbar-title { color: #fff !important; }
+  .topbar[class*="tab-"] #btn-add { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.35); color: #fff; }
+  .topbar[class*="tab-"] #btn-add span { color: #fff; }
+
+  /* Bottom nav: íconos más grandes y label visible */
+  .bottom-nav-item { gap: 3px; padding: 6px 2px; }
+  .bottom-nav-item i { font-size: 20px; }
+  .bottom-nav-item span { font-size: 9px; font-weight: 700; letter-spacing: .01em; }
+
+  /* Bottom nav: indicador de color por sección */
+  .bottom-nav-item[data-tab="resumen"].active        { color: #0057B8; }
+  .bottom-nav-item[data-tab="territorio"].active     { color: #0057B8; }
+  .bottom-nav-item[data-tab="fortalecedores"].active { color: #FF6600; }
+  .bottom-nav-item[data-tab="centros"].active        { color: #2E9E4F; }
+  .bottom-nav-item[data-tab="visitas"].active        { color: #7C3AED; }
+  .bottom-nav-item[data-tab="actividades"].active    { color: #0D9488; }
+  .bottom-nav-item[data-tab="bonos"].active          { color: #F5A800; }
+  .bottom-nav-item[data-tab="notas"].active          { color: #E8005A; }
+
+  .bottom-nav-item[data-tab="resumen"].active::after        { background: linear-gradient(90deg,#0057B8,#0070E0); box-shadow: 0 2px 8px rgba(0,87,184,.5); }
+  .bottom-nav-item[data-tab="territorio"].active::after     { background: linear-gradient(90deg,#0057B8,#0070E0); box-shadow: 0 2px 8px rgba(0,112,224,.5); }
+  .bottom-nav-item[data-tab="fortalecedores"].active::after { background: linear-gradient(90deg,#FF6600,#FF8533); box-shadow: 0 2px 8px rgba(255,102,0,.5); }
+  .bottom-nav-item[data-tab="centros"].active::after        { background: linear-gradient(90deg,#2E9E4F,#3DBF62); box-shadow: 0 2px 8px rgba(46,158,79,.5); }
+  .bottom-nav-item[data-tab="visitas"].active::after        { background: linear-gradient(90deg,#7C3AED,#9B5DFF); box-shadow: 0 2px 8px rgba(124,58,237,.5); }
+  .bottom-nav-item[data-tab="actividades"].active::after    { background: linear-gradient(90deg,#0D9488,#14B8A6); box-shadow: 0 2px 8px rgba(13,148,136,.5); }
+  .bottom-nav-item[data-tab="bonos"].active::after          { background: linear-gradient(90deg,#F5A800,#FFc533); box-shadow: 0 2px 8px rgba(245,168,0,.5); }
+  .bottom-nav-item[data-tab="notas"].active::after          { background: linear-gradient(90deg,#E8005A,#FF2277); box-shadow: 0 2px 8px rgba(232,0,90,.5); }
+
+  /* Avatares circulares en listas de fortalecedores/centros */
+  .fort-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 800; flex-shrink: 0;
+    text-transform: uppercase; font-family: 'Poppins', sans-serif;
+  }
+
+  /* Stat cards en 2 columnas más compactas en móvil */
+  .stats-grid { gap: 8px; }
+  .stat-card { padding: 14px 14px 12px; }
+  .stat-value { font-size: 24px; }
+  .stat-icon { width: 32px; height: 32px; font-size: 15px; margin-bottom: 10px; }
+
+  /* Cards de lista: padding táctil mínimo de 48px */
+  .visita-list-card, .centro-card-mobile, .cv-fort-card { min-height: 64px; }
+
+  /* Ocultar elementos de desktop en móvil */
+  .topbar .btn:not(#btn-add):not(.hamburger-btn) { display: none; }
+
+  /* Header con subtítulo de sección */
+  .topbar-title { font-size: 14px !important; font-weight: 800 !important; }
+}
 </style>
 <body>
 
@@ -2109,29 +2363,169 @@ textarea.form-control { min-height: 70px; resize: vertical; }
 
     <div class="content">
 
-      <!-- ══ RESUMEN ══ -->
+      <!-- ══ RESUMEN / DASHBOARD ══ -->
       <div class="section-tab active" id="tab-resumen">
-        <span class="section-eyebrow"><i class="ti ti-book-2" style="font-size:11px"></i> Programa FES · Ciclo escolar 2026 · La Rioja</span>
-        <div id="bimestral-container"></div>
-        <div class="stats-grid" id="stats-resumen"></div>
-        <div class="card" style="margin-bottom:14px">
-          <div class="card-header"><span class="card-title"><i class="ti ti-trending-up"></i>Variación último mes registrado</span></div>
-          <div id="variacion-resumen" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0"></div>
-        </div>
-        <div class="resumen-grid">
-          <div class="card">
-            <div class="card-header"><span class="card-title"><i class="ti ti-award"></i>Top Centros por Asistencia</span></div>
-            <div id="top-centros"></div>
-          </div>
-          <div class="card">
-            <div class="card-header"><span class="card-title"><i class="ti ti-coin"></i>Bonos de Contribución</span></div>
-            <div id="resumen-bonos"></div>
+
+        <!-- Dashboard hero header -->
+        <div class="dashboard-hero">
+          <div class="dashboard-hero-left">
+            <div class="dashboard-welcome">
+              <h1 class="dashboard-title">¡Bienvenido, Administrador! 👋</h1>
+              <p class="dashboard-subtitle">Desde aquí podés crear y gestionar los informes mensuales del Programa FES.</p>
+            </div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-header"><span class="card-title"><i class="ti ti-clock-edit"></i>Centros con Cambio de Horario</span></div>
-          <div id="resumen-cambios"></div>
-        </div>
+
+        <!-- Dashboard layout: main + sidebar -->
+        <div class="dashboard-layout">
+
+          <!-- ── Main column ── -->
+          <div class="dashboard-main">
+
+            <!-- KPI cards row -->
+            <div class="dashboard-kpi-grid" id="dashboard-kpi-grid">
+              <!-- filled by renderDashboard() -->
+            </div>
+
+            <!-- Páginas del informe -->
+            <div class="card" style="margin-bottom:14px">
+              <div class="card-header">
+                <span class="card-title"><i class="ti ti-file-description"></i>Páginas del informe</span>
+                <span id="dash-informe-pages-count" style="font-size:11px;color:var(--text3);font-weight:700"></span>
+              </div>
+              <div style="padding:16px 20px">
+                <div class="dash-pages-row" id="dash-pages-row">
+                  <!-- filled by renderDashboard() -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Charts row -->
+            <div class="dashboard-charts-row">
+              <!-- Distribución por ubicación -->
+              <div class="card" style="flex:1;min-width:0">
+                <div class="card-header"><span class="card-title"><i class="ti ti-map-2"></i>Distribución por ubicación</span></div>
+                <div style="padding:16px 20px">
+                  <div class="donut-wrap" id="donut-ubicacion-wrap">
+                    <svg class="donut-svg" viewBox="0 0 120 120" id="donut-ubicacion-svg"></svg>
+                    <div class="donut-legend" id="donut-ubicacion-legend"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- Actividades del mes -->
+              <div class="card" style="flex:1;min-width:0">
+                <div class="card-header"><span class="card-title"><i class="ti ti-star"></i>Actividades del mes</span><span style="font-size:11px;color:#0057B8;font-weight:700;cursor:pointer" onclick="showTab('actividades')">Ver todo →</span></div>
+                <div style="padding:14px 20px" id="dash-actividades-resumen">
+                  <!-- filled by renderDashboard() -->
+                </div>
+              </div>
+              <!-- Fortalecedores por programa -->
+              <div class="card" style="flex:1.2;min-width:0">
+                <div class="card-header"><span class="card-title"><i class="ti ti-users"></i>Fortalecedores por programa</span></div>
+                <div style="padding:14px 20px" id="dash-forts-prog">
+                  <!-- filled by renderDashboard() -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Actividad reciente + mapa tagline -->
+            <div class="dashboard-bottom-row" style="margin-top:14px">
+              <div class="card" style="flex:1.1">
+                <div class="card-header"><span class="card-title"><i class="ti ti-activity"></i>Actividad reciente</span></div>
+                <div id="dash-actividad-reciente" style="padding:4px 0 8px">
+                  <!-- filled by renderDashboard() -->
+                </div>
+              </div>
+              <div class="card" style="flex:1">
+                <div class="card-header"><span class="card-title"><i class="ti ti-map-pin-check"></i>Visitas — Semana actual</span><span style="font-size:11px;color:#0057B8;font-weight:700;cursor:pointer" onclick="showTab('visitas')">Ver todo →</span></div>
+                <div id="dash-visitas-semana" style="padding:4px 0 8px">
+                  <!-- filled by renderDashboard() -->
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /dashboard-main -->
+
+          <!-- ── Sidebar right ── -->
+          <div class="dashboard-sidebar-right">
+
+            <!-- Crear informe panel -->
+            <div class="informe-panel">
+              <div class="informe-panel-header">
+                <div>
+                  <div class="informe-panel-title"><i class="ti ti-sparkles" style="color:#F5A800"></i> Crear nuevo informe</div>
+                </div>
+              </div>
+              <div class="informe-panel-body">
+                <div class="informe-field-label">Seleccioná el mes del informe</div>
+                <div style="position:relative">
+                  <select class="informe-select" id="informe-mes-select">
+                    <option value="1">Enero 2026</option>
+                    <option value="2">Febrero 2026</option>
+                    <option value="3">Marzo 2026</option>
+                    <option value="4">Abril 2026</option>
+                    <option value="5" selected>Mayo 2026</option>
+                    <option value="6">Junio 2026</option>
+                    <option value="7">Julio 2026</option>
+                    <option value="8">Agosto 2026</option>
+                    <option value="9">Septiembre 2026</option>
+                    <option value="10">Octubre 2026</option>
+                    <option value="11">Noviembre 2026</option>
+                    <option value="12">Diciembre 2026</option>
+                  </select>
+                  <i class="ti ti-calendar" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#0057B8;font-size:15px;pointer-events:none"></i>
+                </div>
+                <button class="informe-btn-crear" onclick="generarInformeMensual()">
+                  <i class="ti ti-file-download"></i> Crear informe mensual
+                </button>
+                <div class="informe-actions-grid">
+                  <button class="informe-action-btn" onclick="showTab('territorio')">
+                    <i class="ti ti-upload" style="font-size:16px;color:#0057B8;display:block;margin-bottom:4px"></i>
+                    <span style="font-size:11px;font-weight:700;color:var(--text)">Cargar datos</span>
+                    <span style="font-size:9.5px;color:var(--text3)">Importar información</span>
+                  </button>
+                  <button class="informe-action-btn">
+                    <i class="ti ti-template" style="font-size:16px;color:#0D9488;display:block;margin-bottom:4px"></i>
+                    <span style="font-size:11px;font-weight:700;color:var(--text)">Plantillas</span>
+                    <span style="font-size:9.5px;color:var(--text3)">Usar plantilla</span>
+                  </button>
+                  <button class="informe-action-btn" onclick="pdfResumen()">
+                    <i class="ti ti-eye" style="font-size:16px;color:#7C3AED;display:block;margin-bottom:4px"></i>
+                    <span style="font-size:11px;font-weight:700;color:var(--text)">Vista previa</span>
+                    <span style="font-size:9.5px;color:var(--text3)">Ver antes de generar</span>
+                  </button>
+                  <button class="informe-action-btn" onclick="exportSeccionPDF()">
+                    <i class="ti ti-file-type-pdf" style="font-size:16px;color:#E8005A;display:block;margin-bottom:4px"></i>
+                    <span style="font-size:11px;font-weight:700;color:var(--text)">Exportar PDF</span>
+                    <span style="font-size:9.5px;color:var(--text3)">Generar informe</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Informes recientes -->
+            <div class="card" style="margin-top:14px">
+              <div class="card-header" style="justify-content:space-between">
+                <span class="card-title"><i class="ti ti-history"></i>Informes recientes</span>
+                <span style="font-size:11px;color:#0057B8;font-weight:700;cursor:pointer" onclick="showTab('resumen')">Ver todos</span>
+              </div>
+              <div id="dash-informes-recientes" style="padding:4px 0 4px">
+                <!-- filled by renderDashboard() -->
+              </div>
+            </div>
+
+            <!-- Tip -->
+            <div class="informe-tip">
+              <i class="ti ti-bulb" style="font-size:18px;color:#F5A800;flex-shrink:0;margin-top:2px"></i>
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:2px">Tip</div>
+                <div style="font-size:11px;color:var(--text2);line-height:1.5">Podés cargar los datos una vez al mes y generar automáticamente las 7 páginas del informe.</div>
+              </div>
+            </div>
+
+          </div><!-- /dashboard-sidebar-right -->
+
+        </div><!-- /dashboard-layout -->
       </div>
 
       <!-- ══ ACTIVIDADES ══ -->
@@ -2186,7 +2580,7 @@ textarea.form-control { min-height: 70px; resize: vertical; }
             <button class="btn btn-sm btn-primary" onclick="openModal()"><i class="ti ti-plus"></i> Agregar</button>
           </div>
           <div class="table-wrap">
-            <table><thead><tr><th>Departamento / Localidad</th><th style="text-align:center">Centros</th><th style="text-align:center">Marzo</th><th style="text-align:center">Abril</th><th style="text-align:center">Var.</th><th style="text-align:center">Fortals.</th><th>Acc.</th></tr></thead>
+            <table><thead><tr><th>Departamento / Localidad</th><th style="text-align:center">Centros</th><th style="text-align:center">Marzo</th><th style="text-align:center">Abril</th><th style="text-align:center">Mayo</th><th style="text-align:center">Var.</th><th style="text-align:center">Fortals.</th><th>Acc.</th></tr></thead>
             <tbody id="body-interior"></tbody></table>
           </div>
         </div>
@@ -2459,10 +2853,14 @@ textarea.form-control { min-height: 70px; resize: vertical; }
         <div class="card" style="margin-bottom:14px">
           <div class="card-header"><span class="card-title"><i class="ti ti-users-group"></i>Fortalecedores Capital — Por Programa</span></div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:0">
-            <div style="padding:13px 16px;text-align:center;border-right:1px solid var(--border)"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">Programa FES</div><div style="font-size:26px;font-weight:900;color:var(--orange);font-family:var(--font-mono)" id="cnt-fes">–</div></div>
-            <div style="padding:13px 16px;text-align:center;border-right:1px solid var(--border)"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">Fam. Riojanas</div><div style="font-size:26px;font-weight:900;color:var(--cyan);font-family:var(--font-mono)" id="cnt-fam">–</div></div>
-            <div style="padding:13px 16px;text-align:center;border-right:1px solid var(--border)"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">Form. Comunit.</div><div style="font-size:26px;font-weight:900;color:var(--cyan);font-family:var(--font-mono)" id="cnt-form">–</div></div>
-            <div style="padding:13px 16px;text-align:center"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">Planta Perm.</div><div style="font-size:26px;font-weight:900;color:var(--green);font-family:var(--font-mono)" id="cnt-planta">–</div></div>
+            <div style="padding:13px 16px;text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border)"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">Programa FES</div><div style="font-size:26px;font-weight:900;color:var(--orange);font-family:var(--font-mono)" id="cnt-fes">–</div></div>
+            <div style="padding:13px 16px;text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border)"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">Fam. Riojanas</div><div style="font-size:26px;font-weight:900;color:var(--cyan);font-family:var(--font-mono)" id="cnt-fam">–</div></div>
+            <div style="padding:13px 16px;text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border)"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">Form. Comunit.</div><div style="font-size:26px;font-weight:900;color:var(--green);font-family:var(--font-mono)" id="cnt-form">–</div></div>
+            <div style="padding:13px 16px;text-align:center;border-bottom:1px solid var(--border)"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">Planta Perm.</div><div style="font-size:26px;font-weight:900;color:var(--amber);font-family:var(--font-mono)" id="cnt-planta">–</div></div>
+            <div style="padding:13px 16px;text-align:center;border-right:1px solid var(--border)"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">Sub. Sec. N.A.</div><div style="font-size:26px;font-weight:900;color:#7C3AED;font-family:var(--font-mono)" id="cnt-subsec">–</div></div>
+            <div style="padding:13px 16px;text-align:center;border-right:1px solid var(--border)"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">PROSOCA</div><div style="font-size:26px;font-weight:900;color:#0D9488;font-family:var(--font-mono)" id="cnt-prosoca">–</div></div>
+            <div style="padding:13px 16px;text-align:center;border-right:1px solid var(--border)"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">Sub. Sec. Dep.</div><div style="font-size:26px;font-weight:900;color:#E8005A;font-family:var(--font-mono)" id="cnt-deportes">–</div></div>
+            <div style="padding:13px 16px;text-align:center"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">Otros</div><div style="font-size:26px;font-weight:900;color:var(--text3);font-family:var(--font-mono)" id="cnt-otros">–</div></div>
           </div>
           <div style="background:var(--dark4);margin:0 16px 14px;border-radius:9px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border)">
             <span style="font-size:12px;font-weight:700;color:var(--text2)">🎓 Total equipo educativo — Capital</span>
@@ -2475,7 +2873,7 @@ textarea.form-control { min-height: 70px; resize: vertical; }
             <div style="display:flex;gap:8px;align-items:center">
               <select class="form-control" style="width:auto;font-size:11px;padding:5px 24px 5px 8px" id="filtro-programa" onchange="renderFortalecedores()">
                 <option value="">Todos los programas</option>
-                <option>FES</option><option>Familia Riojanas</option><option>Formadores Comunitarios</option><option>Planta Permanente</option>
+                <option>FES</option><option>Familias Riojanas</option><option>Formadores Comunitarios</option><option>Planta Permanente</option><option>Sub. Sec. N.A.</option><option>PROSOCA</option><option>Sub. Sec. Deportes</option>
               </select>
               <button class="btn btn-sm btn-primary" onclick="openModal()"><i class="ti ti-plus"></i> Agregar</button>
             </div>
@@ -2562,14 +2960,14 @@ textarea.form-control { min-height: 70px; resize: vertical; }
 <!-- Bottom Nav -->
 <div class="bottom-nav">
   <div class="bottom-nav-inner">
-    <div class="bottom-nav-item active" id="bnav-resumen" onclick="showTab('resumen')"><i class="ti ti-layout-dashboard"></i><span>Panel</span></div>
-    <div class="bottom-nav-item" id="bnav-actividades" onclick="showTab('actividades')"><i class="ti ti-calendar-event"></i><span>Agenda</span></div>
-    <div class="bottom-nav-item" id="bnav-centros" onclick="showTab('centros')"><i class="ti ti-building-community"></i><span>Centros</span></div>
-    <div class="bottom-nav-item" id="bnav-visitas" onclick="showTab('visitas')"><i class="ti ti-map-pin-check"></i><span>Visitas</span></div>
-    <div class="bottom-nav-item" id="bnav-territorio" onclick="showTab('territorio')"><i class="ti ti-pencil"></i><span>Alumnos</span></div>
-    <div class="bottom-nav-item" id="bnav-fortalecedores" onclick="showTab('fortalecedores')"><i class="ti ti-users-group"></i><span>Equipo</span></div>
-    <div class="bottom-nav-item" id="bnav-notas" onclick="showTab('notas')"><i class="ti ti-notebook"></i><span>Notas</span></div>
-    <div class="bottom-nav-item" id="bnav-bonos" onclick="showTab('bonos')"><i class="ti ti-coin"></i><span>Bonos</span></div>
+    <div class="bottom-nav-item active" id="bnav-resumen" data-tab="resumen" onclick="showTab('resumen')"><i class="ti ti-layout-dashboard"></i><span>Panel</span></div>
+    <div class="bottom-nav-item" id="bnav-actividades" data-tab="actividades" onclick="showTab('actividades')"><i class="ti ti-calendar-event"></i><span>Agenda</span></div>
+    <div class="bottom-nav-item" id="bnav-centros" data-tab="centros" onclick="showTab('centros')"><i class="ti ti-building-community"></i><span>Centros</span></div>
+    <div class="bottom-nav-item" id="bnav-visitas" data-tab="visitas" onclick="showTab('visitas')"><i class="ti ti-map-pin-check"></i><span>Visitas</span></div>
+    <div class="bottom-nav-item" id="bnav-territorio" data-tab="territorio" onclick="showTab('territorio')"><i class="ti ti-pencil"></i><span>Alumnos</span></div>
+    <div class="bottom-nav-item" id="bnav-fortalecedores" data-tab="fortalecedores" onclick="showTab('fortalecedores')"><i class="ti ti-users-group"></i><span>Equipo</span></div>
+    <div class="bottom-nav-item" id="bnav-notas" data-tab="notas" onclick="showTab('notas')"><i class="ti ti-notebook"></i><span>Notas</span></div>
+    <div class="bottom-nav-item" id="bnav-bonos" data-tab="bonos" onclick="showTab('bonos')"><i class="ti ti-coin"></i><span>Bonos</span></div>
   </div>
 </div>
 
@@ -2690,7 +3088,7 @@ textarea.form-control { min-height: 70px; resize: vertical; }
 // ═══════════════════════════════════════════════
 // STATE & CONSTANTS
 // ═══════════════════════════════════════════════
-const KEY = 'fes_data_v7';
+const KEY = 'fes_data_v8';
 let state = { centros:[], fortalecedores:[
   {id:1,nombre:"Allende, Zarate Lutmila",dni:"39884761",programa:"FES",activo:true},
   {id:2,nombre:"Andrada Díaz Ana María",dni:"32349311",programa:"FES",activo:true},
@@ -2840,7 +3238,7 @@ const TIPO_COLOR = {'Actividad cultural':'var(--cyan)','Capacitación':'var(--gr
 const TIPO_BADGE = {'Actividad cultural':'badge-cyan','Capacitación':'badge-green','Taller':'badge-pink','Reunión':'badge-orange','Salida educativa':'badge-amber','Pago de bono':'badge-amber','Informe/Cierre':'badge-cyan','Otro':'badge-gray'};
 const DIAS_SEMANA = ['Lunes','Martes','Miércoles','Jueves','Viernes'];
 const ZONA_COLOR = {Norte:'var(--cyan)',Este:'var(--amber)',Sur:'var(--green)',Oeste:'var(--orange)'};
-const PROG_COLOR = {'FES':'var(--orange)','Familia Riojanas':'var(--cyan)','Formadores Comunitarios':'var(--green)','Planta Permanente':'var(--amber)'};
+const PROG_COLOR = {'FES':'var(--orange)','Familias Riojanas':'var(--cyan)','Formadores Comunitarios':'var(--green)','Planta Permanente':'var(--amber)'};
 
 // ═══════════════════════════════════════════════
 // STORAGE
@@ -2854,6 +3252,8 @@ async function load() {
   if(!state.asistencia)  state.asistencia = [];
   if(!state.centros.length) loadDemo();
   renderAll();
+  // Aplicar color inicial del topbar
+  document.querySelector('.topbar')?.classList.add('tab-resumen');
 }
 async function save() {
   try { await window.storage.set(KEY, JSON.stringify(state)); } catch(e){}
@@ -2943,50 +3343,149 @@ function loadDemo() {
     };
   });
 
-  const fortData = [
-    [1,'Flores, María del Carmen'],[1,'Gutiérrez, Carlos Alberto'],[2,'Vargas, Silvia Beatriz'],
-    [3,'Núñez, Gabriela Soledad'],[4,'Rodríguez, Jorge Ernesto'],[5,'López, Patricia Andrea'],
-    [6,'Herrera, Marcelo Daniel'],[7,'Torres, Analía Beatriz'],[9,'Praolini, Roberto Juan'],
-    [10,'Olmos, Claudia Vanesa'],[11,'Rivas, Fernando Luis'],[12,'Menem, Karina Ayelén'],
-    [13,'Soria, Pablo Sebastián'],[14,'Castro, Miriam Eugenia'],[15,'Álvarez, Diego Fabián'],
-    [16,'Montes, Rosana Graciela'],[17,'Lucero, Juan Carlos'],[18,'Bazán, Verónica Noemí'],
-    [19,'Puebla, Marcos Ezequiel'],[20,'Llanos, Sandra Lorena'],[21,'Díaz, Ramón Alejandro'],
-    [22,'Melis, Daniela Belén'],[23,'Nieva, Adrián Ramón'],[24,'Quispe, Andrea Cecilia'],
-    [25,'Agave, Mario Eduardo'],[26,'Rivero, Gloria Isabel'],[27,'Angelelli, Claudia Teresa'],
-    [28,'Junio, Roberto Ariel'],[29,'Arce, Luciana Paola'],[30,'Margarita, Graciela del Valle'],
-    [31,'Referente FES',,'Planta Permanente'],[32,'Capilla, Patricia Elena'],
-    [34,'Nuevo, Hernán Roque'],[35,'Catalina, María de los Ángeles'],
-    [36,'Andrés, Valeria Analía'],[37,'Enero, Horacio Gustavo'],
-    [38,'Nodo, Estela Ramona'],[39,'Oratorio, Lucas Emanuel'],
-    [40,'Montañas, Silvia Rosa'],[41,'Esperanza, Carmen Lidya'],[42,'Mirador, José Ramón'],
-    [43,'Cerro, Tomás Benjamín'],[44,'Piedad, Lorena Beatriz'],[45,'Rucci, Alfredo Matías'],
-    [46,'Nintai, María Fernanda'],[47,'Huella, Néstor Daniel'],[48,'Fuerza, Mirna Soledad'],
-    [49,'Gallegos, Oscar Ariel'],[50,'Yacampi, Verónica Ester'],[51,'Biblioteca, Miguel Ángel'],
-    [52,'Vivienda, Natalia Eugenia'],[53,'Velazco, Walter Sebastián'],
-    [54,'Alpes, Romina Vanesa'],[55,'José, Ana Cristina'],
-    [56,'Atlético, Eduardo Rubén'],[57,'Rosa, Laura Beatriz'],[58,'Evita, Gustavo José'],
+  const fortsConCentro = [
+    {nombre:"Adaro Díaz Nahir",programa:"Familias Riojanas",centroId:1},
+    {nombre:"Allende Lutmila",programa:"FES",centroId:1},
+    {nombre:"Andrada Fernanda",programa:"FES",centroId:2},
+    {nombre:"Aranda Ana Gisela",programa:"FES",centroId:3},
+    {nombre:"Arévalo Fernanda",programa:"FES",centroId:3},
+    {nombre:"Argomoza Pablo",programa:"FES",centroId:4},
+    {nombre:"Atencio Rodríguez Rocío",programa:"FES",centroId:5},
+    {nombre:"Ávila Omar",programa:"FES",centroId:6},
+    {nombre:"Barrionuevo Jose Ezequiel",programa:"FES",centroId:7},
+    {nombre:"Bazán Nicol Rosa",programa:"FES",centroId:8},
+    {nombre:"Bladimir Banega Jesús",programa:"FES",centroId:9},
+    {nombre:"Caliva Erika Gisela",programa:"FES",centroId:9},
+    {nombre:"Carrizo María Gabriela",programa:"FES",centroId:10},
+    {nombre:"Carrizo Verónica",programa:"FES",centroId:10},
+    {nombre:"Ceballo Mirtha",programa:"Planta Permanente",centroId:15},
+    {nombre:"Cejas Díaz Karen",programa:"FES",centroId:16},
+    {nombre:"Colina Lorena",programa:"FES",centroId:16},
+    {nombre:"Contreras Carolina Celeste",programa:"FES",centroId:17},
+    {nombre:"Córdoba Mercedes Ana Laura",programa:"FES",centroId:18},
+    {nombre:"Cortez Ruiz Mirna",programa:"FES",centroId:18},
+    {nombre:"Corzo Alejandro",programa:"FES",centroId:19},
+    {nombre:"Corzo Mayra",programa:"Formadores Comunitarios",centroId:19},
+    {nombre:"De la Vega Lucero",programa:"FES",centroId:20},
+    {nombre:"De la Vega Micaela",programa:"FES",centroId:20},
+    {nombre:"Dematte Lucía",programa:"FES",centroId:21},
+    {nombre:"Domínguez Fabiana",programa:"FES",centroId:21},
+    {nombre:"Espeche Ariana",programa:"FES",centroId:22},
+    {nombre:"Espeche Jaime Ariana",programa:"FES",centroId:22},
+    {nombre:"Espeche Jaime María Dolores",programa:"FES",centroId:23},
+    {nombre:"Espinosa Florencia",programa:"FES",centroId:23,licencia:'LICENCIA EMBARAZO DE ALTO RIESGO'},
+    {nombre:"Espinosa María Belén",programa:"FES",centroId:24},
+    {nombre:"Flores Andrea",programa:"Familias Riojanas",centroId:24},
+    {nombre:"Flores Melani Gisel",programa:"FES",centroId:25},
+    {nombre:"Gez Trinidad",programa:"FES",centroId:25},
+    {nombre:"Gómez Yanina",programa:"FES",centroId:26},
+    {nombre:"González Ana Carla",programa:"FES",centroId:26},
+    {nombre:"González Flavia",programa:"FES",centroId:27},
+    {nombre:"González Leyes Vanessa",programa:"FES",centroId:27},
+    {nombre:"Gordillo Virginia",programa:"FES",centroId:28},
+    {nombre:"Granillo Celeste",programa:"FES",centroId:28},
+    {nombre:"Guardia Lucio",programa:"FES",centroId:29},
+    {nombre:"Guidice Zoe",programa:"FES",centroId:29},
+    {nombre:"Herrera Jimena Sabrina",programa:"FES",centroId:30},
+    {nombre:"Herváez Marcelo",programa:"FES",centroId:30},
+    {nombre:"Ibáñez Patricia",programa:"FES",centroId:33},
+    {nombre:"King Valeria",programa:"Sub. Sec. Deportes",centroId:33},
+    {nombre:"Ledesma María Florencia",programa:"FES",centroId:34},
+    {nombre:"Leguiza Evelin",programa:"FES",centroId:34},
+    {nombre:"López José Luis",programa:"FES",centroId:35},
+    {nombre:"Ludueña Nancy",programa:"FES",centroId:35},
+    {nombre:"Luján Eliana",programa:"FES",centroId:36},
+    {nombre:"Luna Evelin Celeste",programa:"FES",centroId:36},
+    {nombre:"Manti Giovanna",programa:"FES",centroId:37},
+    {nombre:"Martínez Carlos",programa:"PROSOCA",centroId:37},
+    {nombre:"Megías Francisco",programa:"Formadores Comunitarios",centroId:38},
+    {nombre:"Mendoza Analía de los Ángeles",programa:"Planta Permanente",centroId:38},
+    {nombre:"Mercado Cortez Élida Valeria",programa:"Planta Permanente",centroId:39},
+    {nombre:"Mercado Milena",programa:"FES",centroId:39},
+    {nombre:"Minué Gisela",programa:"FES",centroId:40},
+    {nombre:"Miranda Alicia",programa:"FES",centroId:40},
+    {nombre:"Mollecundo Marta",programa:"FES",centroId:41},
+    {nombre:"Molina Ester",programa:"Planta Permanente",centroId:41},
+    {nombre:"Montívero Yamila",programa:"FES",centroId:42},
+    {nombre:"Montoya Ana Carolina",programa:"Planta Permanente",centroId:42},
+    {nombre:"Morales Sofía",programa:"FES",centroId:43},
+    {nombre:"Moreno Adriana",programa:"FES",centroId:43},
+    {nombre:"Moreno Mercedes",programa:"FES",centroId:44},
+    {nombre:"Muñoz Cynthia",programa:"Familias Riojanas",centroId:44},
+    {nombre:"Narvaez Sandra",programa:"FES",centroId:45},
+    {nombre:"Neyra Jimena",programa:"FES",centroId:45},
+    {nombre:"Nieto Luciana",programa:"Formadores Comunitarios",centroId:46},
+    {nombre:"Nieto Ocampo Hernán",programa:"FES",centroId:46},
+    {nombre:"Noriega Karina",programa:"FES",centroId:47},
+    {nombre:"Ocampo Bettiana",programa:"FES",centroId:47},
+    {nombre:"Páez Carol",programa:"FES",centroId:48},
+    {nombre:"Palacios Valeria",programa:"Formadores Comunitarios",centroId:48},
+    {nombre:"Pazos Jazmín",programa:"FES",centroId:49},
+    {nombre:"Pelliza Araceli",programa:"FES",centroId:49},
+    {nombre:"Perea Karen",programa:"FES",centroId:50},
+    {nombre:"Pereira María Belén",programa:"FES",centroId:50},
+    {nombre:"Pereyra Flavia Carolina",programa:"FES",centroId:51},
+    {nombre:"Pérez Milagros",programa:"FES",centroId:51},
+    {nombre:"Quiroga Luciana",programa:"FES",centroId:52},
+    {nombre:"Ramos Romina",programa:"FES",centroId:52},
+    {nombre:"Reguera Aimo Ananias",programa:"FES",centroId:53},
+    {nombre:"Resler Claudia",programa:"FES",centroId:53},
+    {nombre:"Reynoso Anabela",programa:"FES",centroId:54,licencia:'LICENCIA EMBARAZO DE ALTO RIESGO'},
+    {nombre:"Reynoso Teresa",programa:"FES",centroId:54},
+    {nombre:"Rivas Patricia",programa:"FES",centroId:55},
+    {nombre:"Rivera Marcela",programa:"FES",centroId:55},
+    {nombre:"Rivera María Antonia",programa:"Planta Permanente",centroId:56},
+    {nombre:"Rivero Eugenia",programa:"FES",centroId:56},
+    {nombre:"Rivero Yésica",programa:"FES",centroId:57},
+    {nombre:"Romero Andrea Carolina",programa:"FES",centroId:57},
+    {nombre:"Romero Fabricio",programa:"Sub. Sec. N.A.",centroId:58},
+    {nombre:"Romero Lorena",programa:"FES",centroId:58},
+    {nombre:"Romero Miriam",programa:"FES",centroId:43},
+    {nombre:"Romero Natali",programa:"FES",centroId:44},
+    {nombre:"Romero Rosa",programa:"FES",centroId:45},
+    {nombre:"Ruarte Sigrid",programa:"FES",centroId:46},
+    {nombre:"Ruiz Marina",programa:"FES",centroId:47},
+    {nombre:"Salinas Laura",programa:"Sub. Sec. N.A.",centroId:48},
+    {nombre:"Simonelli Chiara",programa:"FES",centroId:49},
+    {nombre:"Soria Gallardo Karol",programa:"FES",centroId:50},
+    {nombre:"Sosa Elizabeth María",programa:"Planta Permanente",centroId:51},
+    {nombre:"Sosa Luna Lucas",programa:"FES",centroId:52},
+    {nombre:"Tarnowski Fernando",programa:"FES",centroId:53},
+    {nombre:"Torres Fanny Yohana",programa:"FES",centroId:54},
+    {nombre:"Torres Romero Mathias",programa:"FES",centroId:55},
+    {nombre:"Urbano Carolina",programa:"FES",centroId:56},
+    {nombre:"Vaquel Stefy Elena",programa:"FES",centroId:57,licencia:'LICENCIA DE MATERNIDAD'},
+    {nombre:"Varas Micaela",programa:"FES",centroId:58,licencia:'LICENCIA EMBARAZO DE ALTO RIESGO'},
+    {nombre:"Vera Florencia Valentina",programa:"FES",centroId:43},
+    {nombre:"Vergara Julieta",programa:"FES",centroId:44},
+    {nombre:"Wee Emilse",programa:"Planta Permanente",centroId:45},
+    {nombre:"Yacante Ariana Salomé",programa:"FES",centroId:46},
+    {nombre:"Yacante Carla",programa:"FES",centroId:47},
+    {nombre:"Yáñez Maribel",programa:"FES",centroId:48},
+    {nombre:"Zarate Paola",programa:"FES",centroId:49},
   ];
   let fId=1;
-  state.fortalecedores = fortData.map(([cid,nombre,,prog])=>({
-    id:fId++, centroId:cid, nombre, dni:'', contacto:'',
-    materia: Math.random() > 0.5 ? 'Lengua' : 'Matemática',
-    turno:'Tarde', programa:prog||'FES', activo:true
+  state.fortalecedores = fortsConCentro.map(f=>({
+    id:fId++, centroId:f.centroId, nombre:f.nombre, dni:'', contacto:'',
+    materia:'Lengua', turno:'Tarde', programa:f.programa,
+    activo:true, licencia:f.licencia||''
   }));
 
   const datosChicos = [
-    [44,6,7],[48,12,14],[45,8,10],[19,8,10],[35,8,10],[1,7,8],[22,12,14],[26,20,26],
-    [18,34,43],[25,17,20],[27,17,20],[28,12,14],[55,25,31],[29,8,10],[20,12,14],
-    [24,17,20],[33,10,12],[4,15,18],[6,9,11],[2,3,4],[3,18,24],[7,32,38],
-    [5,8,10],[9,14,17],[14,7,8],[10,14,17],[51,11,13],[46,23,28],[47,9,11],
-    [54,10,12],[49,5,6],[53,14,17],[43,11,13],[12,13,16],[50,20,24],[37,16,19],
-    [36,18,22],[38,31,39],[41,27,34],[42,23,30],[39,17,20],[15,23,30],[52,12,14],
-    [23,15,18],[57,17,20],[11,27,34],[58,5,6],[40,18,24],[30,11,13],[16,16,19],
-    [17,69,85],[56,10,12],[31,138,143],[32,5,6],[34,0,10],
+    [44,6,7,12],[48,12,14,14],[45,8,10,11],[19,8,10,11],[35,8,10,11],[1,7,8,8],[22,12,14,17],[26,20,26,28],
+    [18,34,43,46],[25,17,20,18],[27,17,20,18],[28,12,14,14],[55,25,31,32],[29,8,10,11],[20,12,14,13],
+    [24,17,20,26],[33,10,12,13],[4,15,18,13],[6,9,11,9],[2,3,4,14],[3,18,24,11],[7,32,38,17],
+    [5,8,10,11],[9,14,17,46],[14,7,8,11],[10,14,17,21],[51,11,13,13],[46,23,28,31],[47,9,11,35],
+    [54,10,12,13],[49,5,6,7],[53,14,17,18],[43,11,13,14],[12,13,16,15],[50,20,24,25],[37,16,19,20],
+    [36,18,22,23],[38,31,39,48],[41,27,34,35],[42,23,30,32],[39,17,20,22],[15,23,30,15],[52,12,14,19],
+    [23,15,18,21],[57,17,20,20],[11,27,34,20],[58,5,6,6],[40,18,24,25],[30,11,13,12],[16,16,19,22],
+    [17,69,85,85],[56,10,12,13],[31,138,143,145],[32,5,6,6],[34,0,10,11],
   ];
   let cId=1;
-  datosChicos.forEach(([cid,mar,abr])=>{
+  datosChicos.forEach(([cid,mar,abr,may])=>{
     if(mar>0) state.chicos.push({id:cId++,centroId:cid,anio:2026,mes:'Marzo',cantidad:mar,obs:''});
     if(abr>0) state.chicos.push({id:cId++,centroId:cid,anio:2026,mes:'Abril',cantidad:abr,obs:cid===34?'Centro nuevo':''});
+    if(may>0) state.chicos.push({id:cId++,centroId:cid,anio:2026,mes:'Mayo',cantidad:may,obs:''});
   });
 
   const cobran=[1,2,4,5,6,7,11,12,13,15,17,19,20,21,22,23,24,25,28,29,30,31,32,35,36,38,39,40,41,42,43,49,51,52,53,54,56,57,58];
@@ -2997,27 +3496,27 @@ function loadDemo() {
   });
 
   state.interior = [
-    {id:1,departamento:'San Blas de los Sauces',centros:4,marzo:37,abril:40,var:3,fort:4,activo:true},
-    {id:2,departamento:'Gral. La Madrid (Villa Castelli)',centros:4,marzo:54,abril:61,var:7,fort:7,activo:true},
-    {id:3,departamento:'Gral. Ocampo (Catuna)',centros:2,marzo:37,abril:40,var:3,fort:4,activo:true},
-    {id:4,departamento:'Vinchina (Intendente)',centros:4,marzo:37,abril:42,var:5,fort:5,activo:true},
-    {id:5,departamento:'Vinchina (Oviedo)',centros:2,marzo:23,abril:26,var:3,fort:3,activo:true},
-    {id:6,departamento:'Famatina',centros:2,marzo:22,abril:25,var:3,fort:3,activo:true},
-    {id:7,departamento:'Arauco',centros:6,marzo:65,abril:73,var:8,fort:12,activo:true},
-    {id:8,departamento:'Sanagasta',centros:3,marzo:42,abril:47,var:5,fort:5,activo:true},
-    {id:9,departamento:'San Martín (Ulapes)',centros:1,marzo:46,abril:52,var:6,fort:8,activo:true},
-    {id:10,departamento:'Castro Barros (Aminga)',centros:1,marzo:5,abril:5,var:0,fort:5,activo:true},
-    {id:11,departamento:'Independencia (Patquía)',centros:0,marzo:0,abril:0,var:0,fort:2,activo:false},
-    {id:12,departamento:'Gral. Belgrano',centros:1,marzo:18,abril:20,var:2,fort:3,activo:true},
-    {id:13,departamento:'Felipe Varela (Intendente)',centros:6,marzo:46,abril:52,var:6,fort:6,activo:true},
-    {id:14,departamento:'Felipe Varela (Chamia)',centros:3,marzo:18,abril:21,var:3,fort:4,activo:true},
-    {id:15,departamento:'Chamical (Intendente)',centros:7,marzo:42,abril:47,var:5,fort:7,activo:true},
-    {id:16,departamento:'Chamical (Aliendro)',centros:3,marzo:18,abril:21,var:3,fort:3,activo:true},
-    {id:17,departamento:'J. F. Quiroga (Malanzan)',centros:3,marzo:23,abril:26,var:3,fort:3,activo:true},
-    {id:18,departamento:'Á. V. Peñaloza (Intendente)',centros:1,marzo:9,abril:10,var:1,fort:1,activo:true},
-    {id:19,departamento:'Á. V. Peñaloza (Castro)',centros:1,marzo:14,abril:15,var:1,fort:1,activo:true},
-    {id:20,departamento:'R. V. Peñaloza (Chepes)',centros:7,marzo:55,abril:62,var:7,fort:12,activo:true},
-    {id:21,departamento:'Chilecito',centros:10,marzo:55,abril:57,var:2,fort:20,activo:true},
+    {id:1,departamento:'San Blas de los Sauces',centros:4,marzo:37,abril:40,mayo:44,var:4,fort:4,activo:true},
+    {id:2,departamento:'Gral. La Madrid (Villa Castelli)',centros:4,marzo:54,abril:61,mayo:67,var:6,fort:7,activo:true},
+    {id:3,departamento:'Gral. Ocampo (Catuna)',centros:2,marzo:37,abril:40,mayo:44,var:4,fort:4,activo:true},
+    {id:4,departamento:'Vinchina (Intendente)',centros:4,marzo:37,abril:42,mayo:46,var:4,fort:5,activo:true},
+    {id:5,departamento:'Vinchina (Oviedo)',centros:2,marzo:23,abril:26,mayo:29,var:3,fort:3,activo:true},
+    {id:6,departamento:'Famatina',centros:2,marzo:22,abril:25,mayo:27,var:2,fort:3,activo:true},
+    {id:7,departamento:'Arauco',centros:6,marzo:65,abril:73,mayo:80,var:7,fort:12,activo:true},
+    {id:8,departamento:'Sanagasta',centros:3,marzo:42,abril:47,mayo:52,var:5,fort:5,activo:true},
+    {id:9,departamento:'San Martín (Ulapes)',centros:1,marzo:46,abril:52,mayo:57,var:5,fort:8,activo:true},
+    {id:10,departamento:'Castro Barros (Aminga)',centros:1,marzo:5,abril:5,mayo:5,var:0,fort:5,activo:true},
+    {id:11,departamento:'Independencia (Patquía)',centros:0,marzo:0,abril:0,mayo:0,var:0,fort:2,activo:false},
+    {id:12,departamento:'Gral. Belgrano',centros:1,marzo:18,abril:20,mayo:22,var:2,fort:3,activo:true},
+    {id:13,departamento:'Felipe Varela (Intendente)',centros:6,marzo:46,abril:52,mayo:57,var:5,fort:6,activo:true},
+    {id:14,departamento:'Felipe Varela (Chamia)',centros:3,marzo:18,abril:21,mayo:23,var:2,fort:4,activo:true},
+    {id:15,departamento:'Chamical (Intendente)',centros:7,marzo:42,abril:47,mayo:52,var:5,fort:7,activo:true},
+    {id:16,departamento:'Chamical (Aliendro)',centros:3,marzo:18,abril:21,mayo:23,var:2,fort:3,activo:true},
+    {id:17,departamento:'J. F. Quiroga (Malanzan)',centros:3,marzo:23,abril:26,mayo:29,var:3,fort:3,activo:true},
+    {id:18,departamento:'Á. V. Peñaloza (Intendente)',centros:1,marzo:9,abril:10,mayo:11,var:1,fort:1,activo:true},
+    {id:19,departamento:'Á. V. Peñaloza (Castro)',centros:1,marzo:14,abril:15,mayo:16,var:1,fort:1,activo:true},
+    {id:20,departamento:'R. V. Peñaloza (Chepes)',centros:7,marzo:55,abril:62,mayo:68,var:6,fort:12,activo:true},
+    {id:21,departamento:'Chilecito',centros:10,marzo:55,abril:57,mayo:62,var:5,fort:20,activo:true},
   ];
 
   state.cronogramas['2026-4'] = [
@@ -3037,8 +3536,11 @@ function loadDemo() {
     {id:3,titulo:'Taller de arte y expresión',tipo:'Taller',anio:2026,mes:'Abril',participantes:60,lugar:'Centro Angelelli',obs:''},
     {id:4,titulo:'Reunión de coordinadores',tipo:'Reunión',anio:2026,mes:'Abril',participantes:18,lugar:'Casa Central',obs:''},
     {id:5,titulo:'Pago de bonos de contribución',tipo:'Pago de bono',anio:2026,mes:'Abril',participantes:39,lugar:'–',obs:'39 centros habilitados'},
-    {id:6,titulo:'Salida a Museo de La Rioja',tipo:'Salida educativa',anio:2026,mes:'Mayo',participantes:120,lugar:'Museo Folklórico',obs:''},
-    {id:7,titulo:'Capacitación: Fortalecedores y Derechos',tipo:'Capacitación',anio:2026,mes:'Mayo',participantes:55,lugar:'Casa Central',obs:'Obligatoria'},
+    {id:6,titulo:'Fortalecimiento en Lengua y Matemática',tipo:'Clases',anio:2026,mes:'Mayo',participantes:1224,lugar:'Centros Vecinales Capital',obs:'Lunes a jueves — actividad regular diaria'},
+    {id:7,titulo:'Taller: Lectura y Escritura',tipo:'Taller',anio:2026,mes:'Mayo',participantes:1224,lugar:'Centros Vecinales Capital',obs:''},
+    {id:8,titulo:'Taller: El Papel Arrugado — Prevención del Bullying',tipo:'Taller',anio:2026,mes:'Mayo',participantes:1224,lugar:'Centros Vecinales Capital',obs:''},
+    {id:9,titulo:'Taller: De Títeres "Manos que Cuentan"',tipo:'Taller',anio:2026,mes:'Mayo',participantes:1224,lugar:'Centros Vecinales Capital',obs:''},
+    {id:10,titulo:'Capacitación: Fortalecedores como Garante de los Derechos',tipo:'Capacitación',anio:2026,mes:'Mayo',participantes:119,lugar:'Casa Central',obs:'NUEVO — Formación orientada a fortalecer el rol de los fortalecedores en la promoción y protección de los derechos de niñas, niños, adolescentes y comunidad.'},
   ];
 
   // Visitas demo — semana del 12 al 16 de mayo 2026
@@ -3097,7 +3599,7 @@ const getZona   = id => (state.centros.find(x=>x.id==id)||{}).zona||'';
 const getFortCount = id => state.fortalecedores.filter(f=>f.centroId==id&&f.activo).length;
 const centrosOpts = sel => [...state.centros].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es')).map(c=>`<option value="${c.id}" ${c.id==sel?'selected':''}>${c.nombre}</option>`).join('');
 const zonaClass = z => ({Norte:'zona-norte',Este:'zona-este',Sur:'zona-sur',Oeste:'zona-oeste'}[z]||'');
-const programaBadge = p => ({'FES':'badge-orange','Familia Riojanas':'badge-cyan','Formadores Comunitarios':'badge-green','Planta Permanente':'badge-amber'}[p]||'badge-gray');
+const programaBadge = p => ({'FES':'badge-orange','Familias Riojanas':'badge-cyan','Familia Riojanas':'badge-cyan','Formadores Comunitarios':'badge-green','Planta Permanente':'badge-amber','Sub. Sec. N.A.':'badge-purple','Sub. Sec. Deportes':'badge-teal','PROSOCA':'badge-pink'}[p]||'badge-gray');
 
 // Semanas disponibles
 // ── Semana: utilidades de fecha ──────────────────
@@ -3269,13 +3771,22 @@ function renderStats() {
       <div class="stat-card cyan"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-layout-grid"></i></div><div class="stat-label">Otros Prog.</div><div class="stat-value">${otras}</div></div>`;
     const el=id=>document.getElementById(id);
     const pFes=state.fortalecedores.filter(f=>f.programa==='FES'&&f.activo).length;
-    const pFam=state.fortalecedores.filter(f=>f.programa==='Familia Riojanas'&&f.activo).length;
+    const pFam=state.fortalecedores.filter(f=>f.programa==='Familias Riojanas'&&f.activo).length;
     const pForm=state.fortalecedores.filter(f=>f.programa==='Formadores Comunitarios'&&f.activo).length;
     const pPl=state.fortalecedores.filter(f=>f.programa==='Planta Permanente'&&f.activo).length;
+    const pSubSec=state.fortalecedores.filter(f=>(f.programa==='Sub. Sec. N.A.'||f.programa==='Sub. Sec. N.A')&&f.activo).length;
+    const pProsoca=state.fortalecedores.filter(f=>f.programa==='PROSOCA'&&f.activo).length;
+    const pDep=state.fortalecedores.filter(f=>f.programa==='Sub. Sec. Deportes'&&f.activo).length;
+    const conocidos=['FES','Familias Riojanas','Formadores Comunitarios','Planta Permanente','Sub. Sec. N.A.','Sub. Sec. N.A','PROSOCA','Sub. Sec. Deportes'];
+    const pOtros=state.fortalecedores.filter(f=>f.activo&&!conocidos.includes(f.programa)).length;
     if(el('cnt-fes')) el('cnt-fes').textContent=pFes||'–';
     if(el('cnt-fam')) el('cnt-fam').textContent=pFam||'–';
     if(el('cnt-form')) el('cnt-form').textContent=pForm||'–';
     if(el('cnt-planta')) el('cnt-planta').textContent=pPl||'–';
+    if(el('cnt-subsec')) el('cnt-subsec').textContent=pSubSec||'–';
+    if(el('cnt-prosoca')) el('cnt-prosoca').textContent=pProsoca||'–';
+    if(el('cnt-deportes')) el('cnt-deportes').textContent=pDep||'–';
+    if(el('cnt-otros')) el('cnt-otros').textContent=pOtros||'–';
     if(el('cnt-total-cap')) el('cnt-total-cap').textContent=act||'–';
   }
 
@@ -3307,11 +3818,13 @@ function renderStats() {
 
   const sr = document.getElementById('stats-resumen');
   if(sr){
-    const totalEstCap=state.chicos.filter(c=>c.mes==='Abril').reduce((s,ch)=>s+ch.cantidad,0);
-    const totalEstInt=state.interior.filter(d=>d.activo).reduce((s,d)=>s+d.abril,0);
+    const mesesChicos=[...new Set(state.chicos.map(c=>c.mes))].sort((a,b)=>MESES.indexOf(a)-MESES.indexOf(b));
+    const ultimoMesChicos=mesesChicos[mesesChicos.length-1]||'Mayo';
+    const totalEstCap=state.chicos.filter(c=>c.mes===ultimoMesChicos).reduce((s,ch)=>s+ch.cantidad,0);
+    const totalEstInt=state.interior.filter(d=>d.activo).reduce((s,d)=>s+(d.mayo||d.abril||0),0);
     sr.innerHTML=`
-      <div class="stat-card cyan"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-school"></i></div><div class="stat-label">Estud. Capital</div><div class="stat-value">${totalEstCap.toLocaleString('es-AR')}</div></div>
-      <div class="stat-card orange"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-map-pin"></i></div><div class="stat-label">Estud. Interior</div><div class="stat-value">${totalEstInt.toLocaleString('es-AR')}</div></div>
+      <div class="stat-card cyan"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-school"></i></div><div class="stat-label">Estud. Capital (${ultimoMesChicos})</div><div class="stat-value">${totalEstCap.toLocaleString('es-AR')}</div></div>
+      <div class="stat-card orange"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-map-pin"></i></div><div class="stat-label">Estud. Interior (Mayo)</div><div class="stat-value">${totalEstInt.toLocaleString('es-AR')}</div></div>
       <div class="stat-card green"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-building-community"></i></div><div class="stat-label">Centros activos</div><div class="stat-value">${state.centros.filter(c=>c.activo).length}</div></div>
       <div class="stat-card pink"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-star"></i></div><div class="stat-label">Actividades reg.</div><div class="stat-value">${state.actividades.length}</div></div>
       <div class="stat-card amber"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-users"></i></div><div class="stat-label">Fortalecedores</div><div class="stat-value">${state.fortalecedores.filter(f=>f.activo).length}</div></div>`;
@@ -4194,20 +4707,25 @@ function renderInterior(filtro='') {
   const tbody = document.getElementById('body-interior');
   let data = state.interior;
   if(filtro) data = data.filter(d=>d.departamento.toLowerCase().includes(filtro));
-  if(!data.length){ tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><i class="ti ti-map-pin"></i><p>Sin datos</p></div></td></tr>`; return; }
+  if(!data.length){ tbody.innerHTML=`<tr><td colspan="8"><div class="empty-state"><i class="ti ti-map-pin"></i><p>Sin datos</p></div></td></tr>`; return; }
   const totCentros = data.reduce((s,d)=>s+d.centros,0);
   const totMarzo   = data.reduce((s,d)=>s+d.marzo,0);
   const totAbril   = data.reduce((s,d)=>s+d.abril,0);
+  const totMayo    = data.reduce((s,d)=>s+(d.mayo||0),0);
   const totFort    = data.reduce((s,d)=>s+d.fort,0);
-  const totVar     = totAbril - totMarzo;
+  const totVar     = totMayo - totAbril;
   tbody.innerHTML = data.map(d=>{
-    const varColor = d.var>0?'var(--green)':d.var<0?'var(--red)':'var(--text3)';
-    return `<tr style="${!d.activo?'opacity:.5':''}">
-      <td style="font-weight:600;font-size:12px;max-width:200px">${d.departamento}${!d.activo?'<br><span class="badge badge-red" style="font-size:9px">Inactivo</span>':''}</td>
-      <td style="text-align:center;font-family:var(--font-mono);font-size:12px;font-weight:600">${d.centros}</td>
-      <td style="text-align:center;font-family:var(--font-mono);font-size:12px;font-weight:600">${d.marzo}</td>
-      <td style="text-align:center;font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--cyan)">${d.abril}</td>
-      <td style="text-align:center;font-family:var(--font-mono);font-weight:700;color:${varColor}">${d.var>0?'+':''}${d.var}</td>
+    const mayo = d.mayo || d.abril;
+    const varMayo = mayo - d.abril;
+    const varColor = varMayo>0?'var(--green)':varMayo<0?'var(--red)':'var(--text3)';
+    const licencia = !d.activo;
+    return `<tr style="${licencia?'opacity:.5':''}">
+      <td style="font-weight:600;font-size:12px;max-width:200px">${d.departamento}${licencia?'<br><span class="badge badge-red" style="font-size:9px">Lic.</span>':''}</td>
+      <td style="text-align:center;font-family:var(--font-mono);font-size:12px;font-weight:600">${d.centros||'–'}</td>
+      <td style="text-align:center;font-family:var(--font-mono);font-size:12px">${d.marzo||'–'}</td>
+      <td style="text-align:center;font-family:var(--font-mono);font-size:12px">${d.abril||'–'}</td>
+      <td style="text-align:center;font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--cyan)">${licencia?'Lic.':mayo||'–'}</td>
+      <td style="text-align:center;font-family:var(--font-mono);font-weight:700;color:${varColor}">${licencia?'—':(varMayo>0?'+':'')+varMayo}</td>
       <td style="text-align:center;font-family:var(--font-mono);font-weight:700;color:var(--orange)">${d.fort}</td>
       <td><div style="display:flex;gap:4px">
         <button class="btn btn-sm" onclick="openEdit('interior',${d.id})"><i class="ti ti-edit"></i></button>
@@ -4217,8 +4735,9 @@ function renderInterior(filtro='') {
   }).join('') + `<tr style="background:rgba(26,184,232,.06);border-top:2px solid var(--cyan-border)">
     <td style="font-size:11px;font-weight:800;color:var(--cyan);text-transform:uppercase;letter-spacing:.06em">TOTAL INTERIOR</td>
     <td style="text-align:center;font-family:var(--font-mono);font-size:14px;font-weight:900;color:var(--text)">${totCentros}</td>
-    <td style="text-align:center;font-family:var(--font-mono);font-size:14px;font-weight:900;color:var(--text)">${totMarzo}</td>
-    <td style="text-align:center;font-family:var(--font-mono);font-size:14px;font-weight:900;color:var(--cyan)">${totAbril}</td>
+    <td style="text-align:center;font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--text2)">${totMarzo}</td>
+    <td style="text-align:center;font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--text2)">${totAbril}</td>
+    <td style="text-align:center;font-family:var(--font-mono);font-size:14px;font-weight:900;color:var(--cyan)">${totMayo}</td>
     <td style="text-align:center;font-family:var(--font-mono);font-size:14px;font-weight:900;color:${totVar>=0?'var(--green)':'var(--red)'}">${totVar>=0?'+':''}${totVar}</td>
     <td style="text-align:center;font-family:var(--font-mono);font-size:14px;font-weight:900;color:var(--orange)">${totFort}</td>
     <td></td>
@@ -4468,70 +4987,369 @@ function renderBonos(filtro='') {
 // RESUMEN
 // ═══════════════════════════════════════════════
 function renderResumen() {
-  const mesesDisp=[...new Set(state.chicos.map(c=>c.mes))].sort((a,b)=>MESES.indexOf(a)-MESES.indexOf(b));
-  const bc=document.getElementById('bimestral-container');
-  if(bc){
-    const cols=mesesDisp.slice(-3);
-    if(cols.length){
-      bc.innerHTML=`<div class="bimestral-grid">${cols.map((m,i)=>`
-        <div class="bimestral-card ${i===cols.length-1?'ultimo':''}">
-          <div class="bimestral-month">${m} 2026${i===cols.length-1?' ↑':''}</div>
-          <div class="bimestral-row"><div class="bimestral-label">Estud. Capital</div><div class="bimestral-val ${i===cols.length-1?'highlight':''}">${state.chicos.filter(c=>c.mes===m).reduce((s,c)=>s+c.cantidad,0).toLocaleString('es-AR')}</div></div>
-          <div class="bimestral-row"><div class="bimestral-label">Centros Interior</div><div class="bimestral-val ${i===cols.length-1?'highlight':''}">${state.interior.filter(d=>d.activo).reduce((s,d)=>s+d.centros,0)}</div></div>
-        </div>`).join('')}</div>`;
-    } else bc.innerHTML='';
-  }
+  renderDashboard();
+}
 
-  const top=document.getElementById('top-centros');
-  const ultimoMes=mesesDisp[mesesDisp.length-1]||'Abril';
-  const porCentro=state.centros.map(c=>({nombre:c.nombre,total:state.chicos.filter(ch=>ch.centroId==c.id&&ch.mes===ultimoMes).reduce((s,ch)=>s+ch.cantidad,0)})).filter(c=>c.total>0).sort((a,b)=>b.total-a.total);
-  const maxVal=porCentro[0]?.total||1;
-  if(top) top.innerHTML=porCentro.slice(0,8).map((c,i)=>`
-    <div class="ranking-item">
-      <div class="ranking-num">${i+1}</div>
-      <div style="flex:1;min-width:0">
-        <div style="font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px">${c.nombre}</div>
-        <div class="ranking-bar-wrap"><div class="ranking-bar" style="width:${Math.round(c.total/maxVal*100)}%"></div></div>
-      </div>
-      <div class="ranking-count">${c.total}</div>
-    </div>`).join('');
+// ═══════════════════════════════════════════════
+// DASHBOARD — render completo (tab inicio)
+// ═══════════════════════════════════════════════
+function renderDashboard() {
+  const mesesChicos = [...new Set(state.chicos.map(c=>c.mes))].sort((a,b)=>MESES.indexOf(a)-MESES.indexOf(b));
+  const ultimoMes   = mesesChicos[mesesChicos.length-1] || 'Mayo';
+  const anteriorMes = mesesChicos[mesesChicos.length-2] || 'Abril';
+  const totalEstCap = state.chicos.filter(c=>c.mes===ultimoMes).reduce((s,c)=>s+c.cantidad,0);
+  const totalEstAnt = state.chicos.filter(c=>c.mes===anteriorMes).reduce((s,c)=>s+c.cantidad,0);
+  const totalEstInt = state.interior.filter(d=>d.activo).reduce((s,d)=>s+(d.mayo||d.abril||0),0);
+  const centrosCapital = state.centros.filter(c=>c.activo).length;
+  const centrosInterior = state.interior.filter(d=>d.activo).reduce((s,d)=>s+d.centros,0);
+  const totalForts = state.fortalecedores.filter(f=>f.activo).length;
+  const pctCrecimiento = totalEstAnt > 0 ? ((totalEstCap - totalEstAnt) / totalEstAnt * 100).toFixed(1) : '0.0';
+  const pctSign = pctCrecimiento >= 0 ? '+' : '';
 
-  const rb=document.getElementById('resumen-bonos');
-  const cobran=state.bonos.filter(b=>b.cobraBono).length;
-  const noCobran=state.bonos.filter(b=>!b.cobraBono).length;
-  if(rb) rb.innerHTML=`
-    <div style="padding:16px">
-      <div style="text-align:center;margin-bottom:14px">
-        <div style="font-size:11px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Monto por bono</div>
-        <div style="font-size:36px;font-weight:900;color:var(--amber);font-family:var(--font-mono)">$${MONTO_BONO.toLocaleString('es-AR')}</div>
-        <div style="font-size:10px;color:var(--text3);margin-top:2px">Total mensual: $${(cobran*MONTO_BONO).toLocaleString('es-AR')}</div>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <div style="text-align:center;flex:1"><div style="font-size:30px;font-weight:900;color:var(--green);font-family:var(--font-mono)">${cobran}</div><div style="font-size:9px;text-transform:uppercase;font-weight:700;letter-spacing:.06em;color:var(--text3)">Cobran bono</div></div>
-        <div style="width:1px;height:48px;background:var(--border)"></div>
-        <div style="text-align:center;flex:1"><div style="font-size:30px;font-weight:900;color:var(--red);font-family:var(--font-mono)">${noCobran}</div><div style="font-size:9px;text-transform:uppercase;font-weight:700;letter-spacing:.06em;color:var(--text3)">No cobran</div></div>
-      </div>
-      <div style="background:var(--dark4);border-radius:6px;overflow:hidden;height:7px;display:flex">
-        <div style="width:${Math.round(cobran/(cobran+noCobran)*100)}%;background:linear-gradient(90deg,var(--green2),var(--green))"></div>
-        <div style="flex:1;background:var(--red);opacity:.3"></div>
-      </div>
+  // ── KPI cards ──
+  const kpiEl = document.getElementById('dashboard-kpi-grid');
+  if(kpiEl) kpiEl.innerHTML = `
+    <div class="dash-kpi cyan">
+      <div class="dash-kpi-accent" style="background:linear-gradient(90deg,#0057B8,#0070E0)"></div>
+      <div class="dash-kpi-icon" style="background:rgba(0,87,184,.1);color:#0057B8"><i class="ti ti-building-community"></i></div>
+      <div class="dash-kpi-label">Centros Capital</div>
+      <div class="dash-kpi-value">${centrosCapital}</div>
+      <div class="dash-kpi-sub">4 zonas</div>
+    </div>
+    <div class="dash-kpi orange">
+      <div class="dash-kpi-accent" style="background:linear-gradient(90deg,#FF6600,#FF8533)"></div>
+      <div class="dash-kpi-icon" style="background:rgba(255,102,0,.1);color:#FF6600"><i class="ti ti-building-community"></i></div>
+      <div class="dash-kpi-label">Centros Interior</div>
+      <div class="dash-kpi-value">${centrosInterior}</div>
+      <div class="dash-kpi-sub">21 dptos.</div>
+    </div>
+    <div class="dash-kpi teal">
+      <div class="dash-kpi-accent" style="background:linear-gradient(90deg,#0D9488,#14B8A6)"></div>
+      <div class="dash-kpi-icon" style="background:rgba(13,148,136,.1);color:#0D9488"><i class="ti ti-users-group"></i></div>
+      <div class="dash-kpi-label">Estud. Capital</div>
+      <div class="dash-kpi-value">${totalEstCap.toLocaleString('es-AR')}</div>
+      <div class="dash-kpi-sub">${ultimoMes} 2026</div>
+    </div>
+    <div class="dash-kpi pink">
+      <div class="dash-kpi-accent" style="background:linear-gradient(90deg,#E8005A,#FF2277)"></div>
+      <div class="dash-kpi-icon" style="background:rgba(232,0,90,.1);color:#E8005A"><i class="ti ti-users-group"></i></div>
+      <div class="dash-kpi-label">Estud. Interior</div>
+      <div class="dash-kpi-value">${totalEstInt.toLocaleString('es-AR')}</div>
+      <div class="dash-kpi-sub">${ultimoMes} 2026</div>
+    </div>
+    <div class="dash-kpi ${pctCrecimiento >= 0 ? 'green' : 'red'}">
+      <div class="dash-kpi-accent" style="background:linear-gradient(90deg,${pctCrecimiento >= 0 ? '#2E9E4F,#3DBF62' : '#D42B2B,#F04545'})"></div>
+      <div class="dash-kpi-icon" style="background:${pctCrecimiento >= 0 ? 'rgba(46,158,79,.1)' : 'rgba(212,43,43,.1)'};color:${pctCrecimiento >= 0 ? '#2E9E4F' : '#D42B2B'}"><i class="ti ti-trending-up"></i></div>
+      <div class="dash-kpi-label">Crecimiento general</div>
+      <div class="dash-kpi-value" style="color:${pctCrecimiento >= 0 ? '#2E9E4F' : '#D42B2B'}">${pctSign}${pctCrecimiento}%</div>
+      <div class="dash-kpi-sub">${anteriorMes} → ${ultimoMes}</div>
+    </div>
+    <div class="dash-kpi amber">
+      <div class="dash-kpi-accent" style="background:linear-gradient(90deg,#F5A800,#FFc533)"></div>
+      <div class="dash-kpi-icon" style="background:rgba(245,168,0,.1);color:#F5A800"><i class="ti ti-id-badge-2"></i></div>
+      <div class="dash-kpi-label">Fortalecedores</div>
+      <div class="dash-kpi-value">${totalForts}</div>
+      <div class="dash-kpi-sub">activos</div>
     </div>`;
 
-  const rc=document.getElementById('resumen-cambios');
-  const cambios=state.centros.filter(c=>c.cambioHorario);
-  if(rc) rc.innerHTML=cambios.length?`<table style="margin:0"><thead><tr><th>Centro</th><th>Horario original</th><th>Nuevo horario</th></tr></thead><tbody>${cambios.map(c=>`<tr><td style="font-weight:600;font-size:11.5px">${c.nombre}</td><td style="font-size:11px;color:var(--text3)">${c.horario||'–'}</td><td><div class="change-tag"><i class="ti ti-arrow-right" style="font-size:11px"></i>${c.nuevoHorario||'Pendiente'}</div></td></tr>`).join('')}</tbody></table>`:`<div class="empty-state" style="padding:24px"><i class="ti ti-check"></i><p>Sin cambios de horario pendientes</p></div>`;
+  // ── Páginas del informe ──
+  const pagesEl = document.getElementById('dash-pages-row');
+  const pageCount = document.getElementById('dash-informe-pages-count');
+  const pages = [
+    {num:1, label:'Resumen Ejecutivo',         color:'#0057B8'},
+    {num:2, label:'Centros Vecinales – Capital',color:'#FF6600'},
+    {num:3, label:'Estudiantes',                color:'#0D9488'},
+    {num:4, label:'Actividades – Capital',      color:'#E8005A'},
+    {num:5, label:'Interior – Departamentos',   color:'#7C3AED'},
+    {num:6, label:'Interior – Resumen',         color:'#F5A800'},
+    {num:7, label:'Resumen General',            color:'#2E9E4F'},
+  ];
+  if(pageCount) pageCount.textContent = `(${pages.length})`;
+  if(pagesEl) pagesEl.innerHTML = pages.map(p=>`
+    <div class="dash-page-item" title="${p.label}">
+      <div class="dash-page-num" style="background:${p.color}">${p.num}</div>
+      <div class="dash-page-label">${p.label}</div>
+    </div>`).join('<div style="flex:1;min-width:6px;height:2px;background:var(--border);border-radius:2px;align-self:center;margin-bottom:18px"></div>');
 
-  const vr=document.getElementById('variacion-resumen');
+  // ── Donut ubicación ──
+  const totalGeneral = totalEstCap + totalEstInt;
+  if(totalGeneral > 0) {
+    _renderDonut('donut-ubicacion-svg', [
+      {val: totalEstCap, color:'#0057B8'},
+      {val: totalEstInt, color:'#FF6600'},
+    ]);
+    const pctCap = Math.round(totalEstCap/totalGeneral*100);
+    document.getElementById('donut-ubicacion-legend').innerHTML = `
+      <div class="donut-legend-item">
+        <div class="donut-legend-dot" style="background:#0057B8"></div>
+        <div class="donut-legend-label">Capital</div>
+        <div class="donut-legend-val">${pctCap}%</div>
+      </div>
+      <div style="font-size:10px;color:var(--text3);padding-left:17px">(${totalEstCap.toLocaleString('es-AR')})</div>
+      <div class="donut-legend-item" style="margin-top:4px">
+        <div class="donut-legend-dot" style="background:#FF6600"></div>
+        <div class="donut-legend-label">Interior</div>
+        <div class="donut-legend-val">${100-pctCap}%</div>
+      </div>
+      <div style="font-size:10px;color:var(--text3);padding-left:17px">(${totalEstInt.toLocaleString('es-AR')})</div>`;
+  }
+
+  // ── Actividades del mes ──
+  const actResEl = document.getElementById('dash-actividades-resumen');
+  if(actResEl) {
+    const mesNomDash = MESES[new Date().getMonth()] || ultimoMes;
+    const actMesDash = state.actividades.filter(a => a.mes === mesNomDash || a.mes === ultimoMes);
+    const totalPartDash = actMesDash.reduce((s,a)=>s+(a.participantes||0),0);
+    if(!actMesDash.length) {
+      actResEl.innerHTML = `<div style="padding:12px 0;text-align:center;color:var(--text3);font-size:12px"><i class="ti ti-calendar-off" style="font-size:24px;display:block;margin-bottom:8px;opacity:.4"></i>Sin actividades cargadas</div>`;
+    } else {
+      actResEl.innerHTML = `
+        <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border)">
+          <div><div style="font-size:22px;font-weight:900;color:var(--cyan);line-height:1">${actMesDash.length}</div><div style="font-size:10px;color:var(--text3);font-weight:700;margin-top:2px">actividades en ${mesNomDash}</div></div>
+        </div>` +
+        actMesDash.slice(0,4).map(a=>`
+        <div style="display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)">
+          <div style="width:6px;height:6px;border-radius:50%;background:${TIPO_COLOR[a.tipo]||'var(--text3)'};margin-top:4px;flex-shrink:0"></div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:11.5px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.titulo}</div>
+            <div style="font-size:10px;color:var(--text3);margin-top:1px">${a.tipo} · ${(a.participantes||0)} part.</div>
+          </div>
+        </div>`).join('') +
+        (actMesDash.length > 4 ? `<div style="font-size:10px;color:#0057B8;font-weight:700;padding-top:8px;cursor:pointer" onclick="showTab('actividades')">+${actMesDash.length-4} más →</div>` : '');
+    }
+  }
+
+  // ── Fortalecedores por programa ──
+  const progGroups = {};
+  state.fortalecedores.filter(f=>f.activo).forEach(f=>{ progGroups[f.programa]=(progGroups[f.programa]||0)+1; });
+  const progColors = {'FES':'#FF6600','Familias Riojanas':'#0057B8','Formadores Comunitarios':'#2E9E4F','Planta Permanente':'#F5A800','Sub. Sec. N.A.':'#7C3AED','PROSOCA':'#0D9488','Otros':'#aaa'};
+  const progEntries = Object.entries(progGroups).sort((a,b)=>b[1]-a[1]);
+  const totalFortsEl = progEntries.reduce((s,[,v])=>s+v,0);
+  const fpEl = document.getElementById('dash-forts-prog');
+  if(fpEl) fpEl.innerHTML = progEntries.map(([prog, cnt])=>{
+    const pct = Math.round(cnt/totalFortsEl*100);
+    const color = progColors[prog] || '#999';
+    return `<div style="margin-bottom:9px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+        <span style="font-size:11px;font-weight:600;color:var(--text2)">${prog}</span>
+        <span style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--text)">${cnt} <span style="color:var(--text3);font-weight:500">(${pct}%)</span></span>
+      </div>
+      <div style="height:5px;background:var(--dark4);border-radius:4px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:${color};border-radius:4px;transition:width .4s ease"></div>
+      </div>
+    </div>`;
+  }).join('') + `<div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;align-items:center">
+    <span style="font-size:11px;font-weight:700;color:var(--text2)">Total</span>
+    <span style="font-family:var(--font-mono);font-size:14px;font-weight:900;color:var(--text)">${totalFortsEl} <span style="font-size:10px;font-weight:600;color:var(--text3)">fortalecedores</span></span>
+  </div>`;
+
+  // ── Actividad reciente ──
+  const actEl = document.getElementById('dash-actividad-reciente');
+  const hoy = new Date();
+  const actReciente = [
+    {icon:'ti ti-circle-check', bg:'rgba(46,158,79,.12)', color:'#2E9E4F', text:'Informe '+ultimoMes+' 2026 generado', sub: hoy.toLocaleDateString('es-AR')+' – 14:30', badge:'Completado', badgeClass:'completado'},
+    {icon:'ti ti-pencil',       bg:'rgba(0,87,184,.1)',   color:'#0057B8', text:'Datos actualizados — Centros Vecinales Capital', sub: hoy.toLocaleDateString('es-AR')+' – 12:10', badge:'', badgeClass:''},
+    {icon:'ti ti-cloud-upload', bg:'rgba(124,58,237,.1)', color:'#7C3AED', text:'Datos cargados — Interior – Departamentos', sub: hoy.toLocaleDateString('es-AR')+' – 10:45', badge:'', badgeClass:''},
+  ];
+  if(actEl) actEl.innerHTML = actReciente.map(a=>`
+    <div class="dash-activity-item">
+      <div class="dash-activity-icon" style="background:${a.bg};color:${a.color}"><i class="${a.icon}"></i></div>
+      <div class="dash-activity-text">
+        <div class="dash-activity-name">${a.text}</div>
+        <div class="dash-activity-meta">${a.sub}</div>
+      </div>
+      ${a.badge ? `<span class="dash-activity-badge" style="background:rgba(46,158,79,.12);color:#2E9E4F;border:1px solid rgba(46,158,79,.2)">${a.badge}</span>` : ''}
+    </div>`).join('');
+
+  // ── Visitas semana actual ──
+  const visEl = document.getElementById('dash-visitas-semana');
+  if(visEl) {
+    const hoyV = new Date();
+    const semKey = semanaISOdeDate(hoyV);
+    const visSem = state.visitas.filter(v => v.semana === semKey);
+    const realV  = visSem.filter(v=>v.estado==='Realizada').length;
+    const pendV  = visSem.filter(v=>v.estado==='Pendiente').length;
+    const cancV  = visSem.filter(v=>v.estado==='Cancelada').length;
+    const pctV   = visSem.length ? Math.round(realV/visSem.length*100) : 0;
+    if(!visSem.length) {
+      visEl.innerHTML = `<div style="padding:16px 20px;text-align:center;color:var(--text3);font-size:12px"><i class="ti ti-calendar-off" style="font-size:24px;display:block;margin-bottom:8px;opacity:.4"></i>Sin visitas esta semana</div>`;
+    } else {
+      visEl.innerHTML = `
+        <div style="padding:12px 20px 8px">
+          <div style="display:flex;gap:10px;margin-bottom:10px">
+            <div style="flex:1;text-align:center;background:rgba(46,158,79,.08);border-radius:10px;padding:10px 6px;border:1px solid rgba(46,158,79,.2)">
+              <div style="font-size:20px;font-weight:900;color:#2E9E4F">${realV}</div>
+              <div style="font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-top:2px">Realizadas</div>
+            </div>
+            <div style="flex:1;text-align:center;background:rgba(245,168,0,.08);border-radius:10px;padding:10px 6px;border:1px solid rgba(245,168,0,.2)">
+              <div style="font-size:20px;font-weight:900;color:#F5A800">${pendV}</div>
+              <div style="font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-top:2px">Pendientes</div>
+            </div>
+            <div style="flex:1;text-align:center;background:rgba(212,43,43,.08);border-radius:10px;padding:10px 6px;border:1px solid rgba(212,43,43,.2)">
+              <div style="font-size:20px;font-weight:900;color:#D42B2B">${cancV}</div>
+              <div style="font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-top:2px">Canceladas</div>
+            </div>
+          </div>
+          <div style="margin-bottom:6px;display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:10px;color:var(--text3);font-weight:600">Completado</span>
+            <span style="font-size:11px;font-weight:800;color:${pctV===100?'#2E9E4F':'#0057B8'}">${pctV}%</span>
+          </div>
+          <div style="height:7px;background:var(--dark4);border-radius:4px;overflow:hidden;margin-bottom:12px">
+            <div style="height:100%;width:${pctV}%;background:${pctV===100?'#2E9E4F':'linear-gradient(90deg,#0057B8,#14B8A6)'};border-radius:4px;transition:width .4s ease"></div>
+          </div>` +
+          visSem.slice(0,4).map(v=>{
+            const zona = getZona(v.centroId);
+            const zonaC = {Norte:'var(--cyan)',Este:'var(--amber)',Sur:'var(--green)',Oeste:'var(--orange)'}[zona]||'var(--text3)';
+            const ec = v.estado==='Realizada'?'#2E9E4F':v.estado==='Cancelada'?'#D42B2B':'#F5A800';
+            return `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
+              <div style="width:8px;height:8px;border-radius:50%;background:${ec};flex-shrink:0"></div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:11px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${getNombre(v.centroId)}</div>
+                <div style="font-size:9.5px;color:var(--text3)">${v.dia} ${v.hora ? '· '+v.hora : ''}<span style="margin-left:4px;color:${zonaC};font-weight:700">${zona}</span></div>
+              </div>
+            </div>`;
+          }).join('') +
+          (visSem.length > 4 ? `<div style="font-size:10px;color:#0057B8;font-weight:700;padding-top:8px;cursor:pointer" onclick="showTab('visitas')">+${visSem.length-4} más →</div>` : '') +
+        `</div>`;
+    }
+  }
+
+  // ── Informes recientes ──
+  const informesMeses = [
+    {mes: ultimoMes,  status:'completado', icon:'#0057B8'},
+    {mes: anteriorMes,status:'completado', icon:'#FF6600'},
+    {mes: mesesChicos[mesesChicos.length-3]||'Marzo', status:'completado', icon:'#0D9488'},
+    {mes: 'Febrero',  status:'completado', icon:'#7C3AED'},
+    {mes: 'Enero',    status:'borrador',   icon:'#F5A800'},
+  ];
+  const irEl = document.getElementById('dash-informes-recientes');
+  if(irEl) irEl.innerHTML = informesMeses.map(inf=>`
+    <div class="dash-informe-row">
+      <i class="ti ti-file-description dash-informe-icon" style="color:${inf.icon}"></i>
+      <span class="dash-informe-label">${inf.mes} 2026</span>
+      <span class="dash-informe-status ${inf.status}">${inf.status==='completado'?'Completado':'Borrador'}</span>
+      <i class="ti ti-dots" style="font-size:14px;color:var(--text3);cursor:pointer;margin-left:4px"></i>
+    </div>`).join('');
+}
+
+// helper: draw a donut SVG in-place
+function _renderDonut(svgId, segments) {
+  const svgEl = document.getElementById(svgId);
+  if(!svgEl) return;
+  const cx=60, cy=60, r=44, stroke=14;
+  const total = segments.reduce((s,seg)=>s+seg.val,0);
+  if(!total){ svgEl.innerHTML=''; return; }
+  let offset = -90; // start from top
+  const circumference = 2 * Math.PI * r;
+  let paths = '';
+  segments.forEach(seg => {
+    const pct = seg.val / total;
+    const dash = pct * circumference;
+    const gap  = circumference - dash;
+    const rot  = offset;
+    paths += `<circle cx="${cx}" cy="${cy}" r="${r}"
+      fill="none" stroke="${seg.color}" stroke-width="${stroke}"
+      stroke-dasharray="${dash} ${gap}"
+      stroke-dashoffset="${-rot/360*circumference}"
+      stroke-linecap="butt"
+      style="transform-origin:${cx}px ${cy}px;transform:rotate(-90deg)"
+    />`;
+    offset += pct * 360;
+  });
+  const bigVal = segments.reduce((m,s)=>s.val>m.val?s:m).val;
+  const bigPct = Math.round(bigVal/total*100);
+  svgEl.innerHTML = `
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--dark4)" stroke-width="${stroke}"/>
+    ${paths}
+    <text x="${cx}" y="${cy-4}" text-anchor="middle" font-family="Poppins,sans-serif" font-size="13" font-weight="900" fill="var(--text)">${bigPct}%</text>
+    <text x="${cx}" y="${cy+11}" text-anchor="middle" font-family="Poppins,sans-serif" font-size="7.5" font-weight="700" fill="var(--text3)">del total</text>`;
+}
+
+function generarInformeMensual() {
+  const sel = document.getElementById('informe-mes-select');
+  const mes = sel ? MESES[parseInt(sel.value)-1] : 'Mayo';
+  // Build a comprehensive multi-section PDF report
+  const {doc} = pdfBase(`Informe Mensual — ${mes} 2026`, `Programa FES · La Rioja · ${mes} 2026`);
   const meses=[...new Set(state.chicos.map(c=>c.mes))].sort((a,b)=>MESES.indexOf(a)-MESES.indexOf(b));
-  const ultimo=meses[meses.length-1]||'Abril';
-  const anterior=meses[meses.length-2]||'Marzo';
-  const eu=state.chicos.filter(c=>c.mes===ultimo).reduce((s,c)=>s+c.cantidad,0);
-  const ea=state.chicos.filter(c=>c.mes===anterior).reduce((s,c)=>s+c.cantidad,0);
-  if(vr) vr.innerHTML=`
-    <div style="padding:14px 16px;text-align:center;border-right:1px solid var(--border)"><div style="font-size:9.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700">${anterior}</div><div style="font-size:28px;font-weight:900;color:var(--text3);margin-top:4px;font-family:var(--font-mono)">${ea}</div></div>
-    <div style="padding:14px 16px;text-align:center;border-right:1px solid var(--border)"><div style="font-size:9.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700">${ultimo}</div><div style="font-size:28px;font-weight:900;color:var(--cyan);margin-top:4px;font-family:var(--font-mono)">${eu}</div></div>
-    <div style="padding:14px 16px;text-align:center;border-right:1px solid var(--border)"><div style="font-size:9.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700">Variación</div><div style="font-size:28px;font-weight:900;color:${eu-ea>=0?'var(--green)':'var(--red)'};margin-top:4px;font-family:var(--font-mono)">${eu-ea>=0?'+':''}${eu-ea}</div></div>
-    <div style="padding:14px 16px;text-align:center"><div style="font-size:9.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700">Interior (Abr.)</div><div style="font-size:28px;font-weight:900;color:var(--orange);margin-top:4px;font-family:var(--font-mono)">${state.interior.filter(d=>d.activo).reduce((s,d)=>s+d.abril,0)}</div></div>`;
+  const ultimoMes=meses[meses.length-1]||mes;
+  let curY = 45;
+
+  // Page 1: Resumen ejecutivo
+  doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(0,87,184);
+  doc.text('1. Resumen Ejecutivo', 14, curY); curY+=7;
+  const totalCap=state.chicos.filter(c=>c.mes===ultimoMes).reduce((s,c)=>s+c.cantidad,0);
+  const totalInt=state.interior.filter(d=>d.activo).reduce((s,d)=>s+(d.mayo||d.abril||0),0);
+  doc.autoTable({
+    startY:curY,
+    head:[['Indicador','Valor']],
+    body:[
+      ['Total estudiantes Capital ('+ultimoMes+')', totalCap.toLocaleString('es-AR')],
+      ['Total estudiantes Interior', totalInt.toLocaleString('es-AR')],
+      ['Centros activos Capital', state.centros.filter(c=>c.activo).length],
+      ['Centros Interior', state.interior.filter(d=>d.activo).reduce((s,d)=>s+d.centros,0)],
+      ['Fortalecedores activos', state.fortalecedores.filter(f=>f.activo).length],
+      ['Bonos de contribución', state.bonos.filter(b=>b.cobraBono).length+' centros · $'+(state.bonos.filter(b=>b.cobraBono).length*MONTO_BONO).toLocaleString('es-AR')],
+    ],
+    theme:'striped',
+    headStyles:{fillColor:[0,87,184],textColor:255,fontStyle:'bold',fontSize:9},
+    bodyStyles:{fontSize:8.5},
+    margin:{left:14,right:14},
+  });
+  curY = doc.lastAutoTable.finalY + 10;
+
+  // Page 2: Centros Capital
+  if(curY > 220){ doc.addPage(); curY = 20; }
+  doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(255,102,0);
+  doc.text('2. Centros Vecinales — Capital', 14, curY); curY+=7;
+  doc.autoTable({
+    startY:curY,
+    head:[['Centro','Zona','Fortalecedores','Estado']],
+    body:state.centros.slice(0,30).map(c=>[c.nombre,c.zona,getFortCount(c.id),c.activo?'Activo':'Refacc.']),
+    theme:'striped',
+    headStyles:{fillColor:[255,102,0],textColor:255,fontStyle:'bold',fontSize:8},
+    bodyStyles:{fontSize:7.5},
+    margin:{left:14,right:14},
+  });
+  curY = doc.lastAutoTable.finalY + 10;
+
+  // Page 3: Estudiantes
+  doc.addPage(); curY=20;
+  doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(13,148,136);
+  doc.text('3. Estudiantes — Capital', 14, curY); curY+=7;
+  const mesesPiv=[...new Set(state.chicos.map(c=>c.mes))].sort((a,b)=>MESES.indexOf(a)-MESES.indexOf(b));
+  const chicosHead=['Centro','Zona',...mesesPiv,'Total'];
+  const chicosBody=state.centros.filter(c=>state.chicos.some(ch=>ch.centroId===c.id)).slice(0,40).map(c=>{
+    const vals=mesesPiv.map(m=>state.chicos.find(ch=>ch.centroId===c.id&&ch.mes===m)?.cantidad||0);
+    const tot=vals[vals.length-1]||0;
+    return [c.nombre,c.zona,...vals,tot];
+  });
+  doc.autoTable({
+    startY:curY,
+    head:[chicosHead],
+    body:chicosBody,
+    theme:'striped',
+    headStyles:{fillColor:[13,148,136],textColor:255,fontStyle:'bold',fontSize:8},
+    bodyStyles:{fontSize:7},
+    margin:{left:14,right:14},
+    columnStyles:{0:{cellWidth:55}},
+  });
+
+  // Page 4: Interior
+  doc.addPage(); curY=20;
+  doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(124,58,237);
+  doc.text('5. Interior — Departamentos', 14, curY); curY+=7;
+  doc.autoTable({
+    startY:curY,
+    head:[['Departamento','Centros','Marzo','Abril','Mayo','Var.','Forts.']],
+    body:state.interior.map(d=>[d.departamento,d.centros,d.marzo||0,d.abril||0,d.mayo||d.abril||0,(d.mayo||d.abril||0)-d.abril,d.fort]),
+    theme:'striped',
+    headStyles:{fillColor:[124,58,237],textColor:255,fontStyle:'bold',fontSize:8},
+    bodyStyles:{fontSize:7.5},
+    margin:{left:14,right:14},
+  });
+
+  pdfFooter(doc);
+  doc.save(`FES_Informe_${mes}_2026.pdf`);
 }
 
 // ═══════════════════════════════════════════════
@@ -4729,6 +5547,15 @@ function showTab(tab) {
   const soi = document.getElementById('search-overlay-input');
   if(soi) soi.value='';
   searchVal='';
+  // ── Topbar color por sección (móvil) ──
+  const topbar = document.querySelector('.topbar');
+  if(topbar) {
+    topbar.classList.remove(
+      'tab-resumen','tab-territorio','tab-fortalecedores','tab-centros',
+      'tab-visitas','tab-actividades','tab-bonos','tab-notas','tab-interior'
+    );
+    topbar.classList.add('tab-'+tab);
+  }
   // Actualizar etiqueta del botón PDF
   const pdfLabels={resumen:'Resumen',centros:'Centros',fortalecedores:'Fortalecedores',chicos:'Estudiantes',bonos:'Bonos',actividades:'Actividades',interior:'Interior',territorio:'Estudiantes',notas:'Notas'};
   const pdfBtn=document.getElementById('btn-pdf-section');
@@ -4896,7 +5723,7 @@ function buildForm() {
       <div class="form-group"><label>Nombre completo *</label><input class="form-control" id="f-nombre" value="${f.nombre||''}" placeholder="Apellido, Nombre"></div>
       <div class="form-row">
         <div class="form-group"><label>DNI</label><input class="form-control" id="f-dni" value="${f.dni||''}" placeholder="Número de documento"></div>
-        <div class="form-group"><label>Programa</label><select class="form-control" id="f-programa"><option ${f.programa==='FES'||!f.programa?'selected':''}>FES</option><option ${f.programa==='Familia Riojanas'?'selected':''}>Familia Riojanas</option><option ${f.programa==='Formadores Comunitarios'?'selected':''}>Formadores Comunitarios</option><option ${f.programa==='Planta Permanente'?'selected':''}>Planta Permanente</option></select></div>
+        <div class="form-group"><label>Programa</label><select class="form-control" id="f-programa"><option ${f.programa==='FES'||!f.programa?'selected':''}>FES</option><option ${f.programa==='Familias Riojanas'?'selected':''}>Familias Riojanas</option><option ${f.programa==='Formadores Comunitarios'?'selected':''}>Formadores Comunitarios</option><option ${f.programa==='Planta Permanente'?'selected':''}>Planta Permanente</option></select></div>
       </div>
       <div class="form-row">
         <div class="form-group"><label>Contacto</label><input class="form-control" id="f-contacto" value="${f.contacto||''}" placeholder="Teléfono/WhatsApp"></div>
