@@ -2144,90 +2144,6 @@ textarea.form-control { min-height: 70px; resize: vertical; }
 }
 .search-hint-chip:hover { background: rgba(26,184,232,.18); }
 .search-hint-chip i { font-size: 13px; }
-
-/* ═══════════════════════════════════════════════
-   MOBILE COLORED TOPBAR — estilo app nativa FES
-═══════════════════════════════════════════════ */
-
-/* Topbar base en móvil: ocultar borde blanco, preparar para color */
-@media (max-width: 720px) {
-
-  /* Topbar toma color según la sección activa */
-  .topbar {
-    transition: background .25s ease, border-color .25s ease;
-  }
-
-  /* Variantes de color por sección */
-  .topbar.tab-resumen       { background: linear-gradient(135deg,#0057B8,#003d8a); border-bottom-color: transparent; }
-  .topbar.tab-territorio    { background: linear-gradient(135deg,#0057B8,#0070E0); border-bottom-color: transparent; }
-  .topbar.tab-fortalecedores{ background: linear-gradient(135deg,#FF6600,#cc5200); border-bottom-color: transparent; }
-  .topbar.tab-centros       { background: linear-gradient(135deg,#2E9E4F,#1e7a3a); border-bottom-color: transparent; }
-  .topbar.tab-visitas       { background: linear-gradient(135deg,#7C3AED,#5b21b6); border-bottom-color: transparent; }
-  .topbar.tab-actividades   { background: linear-gradient(135deg,#0D9488,#0a7567); border-bottom-color: transparent; }
-  .topbar.tab-bonos         { background: linear-gradient(135deg,#F5A800,#c98800); border-bottom-color: transparent; }
-  .topbar.tab-notas         { background: linear-gradient(135deg,#E8005A,#b8004a); border-bottom-color: transparent; }
-  .topbar.tab-resumen, .topbar.tab-territorio, .topbar.tab-fortalecedores,
-  .topbar.tab-centros, .topbar.tab-visitas, .topbar.tab-actividades,
-  .topbar.tab-bonos, .topbar.tab-notas {
-    box-shadow: 0 4px 20px rgba(0,0,0,.18);
-  }
-
-  /* Texto e íconos blancos cuando el topbar tiene color */
-  .topbar[class*="tab-"] .topbar-title,
-  .topbar[class*="tab-"] .hamburger-btn,
-  .topbar[class*="tab-"] .btn-search-mobile,
-  .topbar[class*="tab-"] .topbar-icon { color: #fff !important; background: rgba(255,255,255,.15) !important; border-color: rgba(255,255,255,.25) !important; }
-  .topbar[class*="tab-"] .topbar-title { color: #fff !important; }
-  .topbar[class*="tab-"] #btn-add { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.35); color: #fff; }
-  .topbar[class*="tab-"] #btn-add span { color: #fff; }
-
-  /* Bottom nav: íconos más grandes y label visible */
-  .bottom-nav-item { gap: 3px; padding: 6px 2px; }
-  .bottom-nav-item i { font-size: 20px; }
-  .bottom-nav-item span { font-size: 9px; font-weight: 700; letter-spacing: .01em; }
-
-  /* Bottom nav: indicador de color por sección */
-  .bottom-nav-item[data-tab="resumen"].active        { color: #0057B8; }
-  .bottom-nav-item[data-tab="territorio"].active     { color: #0057B8; }
-  .bottom-nav-item[data-tab="fortalecedores"].active { color: #FF6600; }
-  .bottom-nav-item[data-tab="centros"].active        { color: #2E9E4F; }
-  .bottom-nav-item[data-tab="visitas"].active        { color: #7C3AED; }
-  .bottom-nav-item[data-tab="actividades"].active    { color: #0D9488; }
-  .bottom-nav-item[data-tab="bonos"].active          { color: #F5A800; }
-  .bottom-nav-item[data-tab="notas"].active          { color: #E8005A; }
-
-  .bottom-nav-item[data-tab="resumen"].active::after        { background: linear-gradient(90deg,#0057B8,#0070E0); box-shadow: 0 2px 8px rgba(0,87,184,.5); }
-  .bottom-nav-item[data-tab="territorio"].active::after     { background: linear-gradient(90deg,#0057B8,#0070E0); box-shadow: 0 2px 8px rgba(0,112,224,.5); }
-  .bottom-nav-item[data-tab="fortalecedores"].active::after { background: linear-gradient(90deg,#FF6600,#FF8533); box-shadow: 0 2px 8px rgba(255,102,0,.5); }
-  .bottom-nav-item[data-tab="centros"].active::after        { background: linear-gradient(90deg,#2E9E4F,#3DBF62); box-shadow: 0 2px 8px rgba(46,158,79,.5); }
-  .bottom-nav-item[data-tab="visitas"].active::after        { background: linear-gradient(90deg,#7C3AED,#9B5DFF); box-shadow: 0 2px 8px rgba(124,58,237,.5); }
-  .bottom-nav-item[data-tab="actividades"].active::after    { background: linear-gradient(90deg,#0D9488,#14B8A6); box-shadow: 0 2px 8px rgba(13,148,136,.5); }
-  .bottom-nav-item[data-tab="bonos"].active::after          { background: linear-gradient(90deg,#F5A800,#FFc533); box-shadow: 0 2px 8px rgba(245,168,0,.5); }
-  .bottom-nav-item[data-tab="notas"].active::after          { background: linear-gradient(90deg,#E8005A,#FF2277); box-shadow: 0 2px 8px rgba(232,0,90,.5); }
-
-  /* Avatares circulares en listas de fortalecedores/centros */
-  .fort-avatar {
-    width: 40px; height: 40px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 15px; font-weight: 800; flex-shrink: 0;
-    text-transform: uppercase; font-family: 'Poppins', sans-serif;
-  }
-
-  /* Stat cards en 2 columnas más compactas en móvil */
-  .stats-grid { gap: 8px; }
-  .stat-card { padding: 14px 14px 12px; }
-  .stat-value { font-size: 24px; }
-  .stat-icon { width: 32px; height: 32px; font-size: 15px; margin-bottom: 10px; }
-
-  /* Cards de lista: padding táctil mínimo de 48px */
-  .visita-list-card, .centro-card-mobile, .cv-fort-card { min-height: 64px; }
-
-  /* Ocultar elementos de desktop en móvil */
-  .topbar .btn:not(#btn-add):not(.hamburger-btn) { display: none; }
-
-  /* Header con subtítulo de sección */
-  .topbar-title { font-size: 14px !important; font-weight: 800 !important; }
-}
 </style>
 <body>
 
@@ -2960,14 +2876,14 @@ textarea.form-control { min-height: 70px; resize: vertical; }
 <!-- Bottom Nav -->
 <div class="bottom-nav">
   <div class="bottom-nav-inner">
-    <div class="bottom-nav-item active" id="bnav-resumen" data-tab="resumen" onclick="showTab('resumen')"><i class="ti ti-layout-dashboard"></i><span>Panel</span></div>
-    <div class="bottom-nav-item" id="bnav-actividades" data-tab="actividades" onclick="showTab('actividades')"><i class="ti ti-calendar-event"></i><span>Agenda</span></div>
-    <div class="bottom-nav-item" id="bnav-centros" data-tab="centros" onclick="showTab('centros')"><i class="ti ti-building-community"></i><span>Centros</span></div>
-    <div class="bottom-nav-item" id="bnav-visitas" data-tab="visitas" onclick="showTab('visitas')"><i class="ti ti-map-pin-check"></i><span>Visitas</span></div>
-    <div class="bottom-nav-item" id="bnav-territorio" data-tab="territorio" onclick="showTab('territorio')"><i class="ti ti-pencil"></i><span>Alumnos</span></div>
-    <div class="bottom-nav-item" id="bnav-fortalecedores" data-tab="fortalecedores" onclick="showTab('fortalecedores')"><i class="ti ti-users-group"></i><span>Equipo</span></div>
-    <div class="bottom-nav-item" id="bnav-notas" data-tab="notas" onclick="showTab('notas')"><i class="ti ti-notebook"></i><span>Notas</span></div>
-    <div class="bottom-nav-item" id="bnav-bonos" data-tab="bonos" onclick="showTab('bonos')"><i class="ti ti-coin"></i><span>Bonos</span></div>
+    <div class="bottom-nav-item active" id="bnav-resumen" onclick="showTab('resumen')"><i class="ti ti-layout-dashboard"></i><span>Panel</span></div>
+    <div class="bottom-nav-item" id="bnav-actividades" onclick="showTab('actividades')"><i class="ti ti-calendar-event"></i><span>Agenda</span></div>
+    <div class="bottom-nav-item" id="bnav-centros" onclick="showTab('centros')"><i class="ti ti-building-community"></i><span>Centros</span></div>
+    <div class="bottom-nav-item" id="bnav-visitas" onclick="showTab('visitas')"><i class="ti ti-map-pin-check"></i><span>Visitas</span></div>
+    <div class="bottom-nav-item" id="bnav-territorio" onclick="showTab('territorio')"><i class="ti ti-pencil"></i><span>Alumnos</span></div>
+    <div class="bottom-nav-item" id="bnav-fortalecedores" onclick="showTab('fortalecedores')"><i class="ti ti-users-group"></i><span>Equipo</span></div>
+    <div class="bottom-nav-item" id="bnav-notas" onclick="showTab('notas')"><i class="ti ti-notebook"></i><span>Notas</span></div>
+    <div class="bottom-nav-item" id="bnav-bonos" onclick="showTab('bonos')"><i class="ti ti-coin"></i><span>Bonos</span></div>
   </div>
 </div>
 
@@ -3252,8 +3168,6 @@ async function load() {
   if(!state.asistencia)  state.asistencia = [];
   if(!state.centros.length) loadDemo();
   renderAll();
-  // Aplicar color inicial del topbar
-  document.querySelector('.topbar')?.classList.add('tab-resumen');
 }
 async function save() {
   try { await window.storage.set(KEY, JSON.stringify(state)); } catch(e){}
@@ -5547,15 +5461,6 @@ function showTab(tab) {
   const soi = document.getElementById('search-overlay-input');
   if(soi) soi.value='';
   searchVal='';
-  // ── Topbar color por sección (móvil) ──
-  const topbar = document.querySelector('.topbar');
-  if(topbar) {
-    topbar.classList.remove(
-      'tab-resumen','tab-territorio','tab-fortalecedores','tab-centros',
-      'tab-visitas','tab-actividades','tab-bonos','tab-notas','tab-interior'
-    );
-    topbar.classList.add('tab-'+tab);
-  }
   // Actualizar etiqueta del botón PDF
   const pdfLabels={resumen:'Resumen',centros:'Centros',fortalecedores:'Fortalecedores',chicos:'Estudiantes',bonos:'Bonos',actividades:'Actividades',interior:'Interior',territorio:'Estudiantes',notas:'Notas'};
   const pdfBtn=document.getElementById('btn-pdf-section');
