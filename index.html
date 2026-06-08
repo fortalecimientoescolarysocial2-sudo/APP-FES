@@ -3,7 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="screen-orientation" content="portrait">
 <title>FES — Fortalecimiento Escolar y Social</title>
+
+<!-- PWA -->
+<meta name="theme-color" content="#0f1623">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FES La Rioja">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="Programa Fortalecimiento Escolar y Social — La Rioja">
+<link rel="manifest" href="manifest.json">
+
+<!-- Íconos iOS (inline SVG como data URI para no depender de archivos externos) -->
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230f1623'/%3E%3Ctext x='90' y='118' font-family='Arial Black,sans-serif' font-size='88' font-weight='900' text-anchor='middle'%3E%3Ctspan fill='%23f5a800'%3EF%3C/tspan%3E%3Ctspan fill='%231ab8e8'%3EE%3C/tspan%3E%3Ctspan fill='%23e8286e'%3ES%3C/tspan%3E%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
@@ -78,9 +91,9 @@ body { font-family:'Poppins',sans-serif; font-size:13px; line-height:1.5; color:
 .sidebar-brand::before { content:''; position:absolute; left:-20px; bottom:-20px; width:80px; height:80px; border-radius:50%; background:rgba(255,102,0,.1); pointer-events:none; }
 .brand-logo-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
 .brand-fes { display:flex; align-items:center; font-weight:900; font-size:28px; line-height:1; letter-spacing:-1px; }
-.brand-fes .f { color:#FF6600; }
-.brand-fes .e { color:#fff; }
-.brand-fes .s { color:#7BC144; }
+.brand-fes .f { color:#FF6600 !important; }
+.brand-fes .e { color:#ffffff !important; }
+.brand-fes .s { color:#7BC144 !important; }
 .brand-text { flex:1; min-width:0; }
 .brand-text-main { font-size:10px; font-weight:700; color:rgba(255,255,255,.9); line-height:1.3; }
 .brand-text-sub { font-size:9px; color:rgba(255,255,255,.5); margin-top:1px; font-style:italic; font-family:'Lora',serif; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -406,6 +419,21 @@ tbody td:first-child { color:var(--text); font-weight:600; }
 .motivo-area.visible { display:block; }
 .motivo-area textarea { width:100%; padding:11px 13px; background:var(--dark4); border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'Poppins',sans-serif; font-size:14px; color:var(--text); resize:none; min-height:72px; transition:border var(--transition); }
 .motivo-area textarea:focus { outline:none; border-color:#0057B8; box-shadow:0 0 0 3px rgba(0,87,184,.08); background:#fff; }
+.foto-area { display:none; margin-top:14px; animation:fadeIn .18s ease; }
+.foto-area.visible { display:block; }
+.foto-area-label { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.1em; color:var(--text3); margin-bottom:8px; }
+.foto-upload-btn { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:12px; border:2px dashed var(--border2); border-radius:var(--radius-sm); background:var(--dark4); font-family:'Poppins',sans-serif; font-size:12px; font-weight:600; color:var(--text2); cursor:pointer; transition:all var(--transition); }
+.foto-upload-btn:active,.foto-upload-btn:hover { border-color:#0057B8; color:#0057B8; background:var(--cyan-dim); }
+.foto-preview-wrap { position:relative; margin-top:8px; display:none; }
+.foto-preview-wrap.has-foto { display:block; }
+.foto-preview-img { width:100%; max-height:160px; object-fit:cover; border-radius:var(--radius-sm); border:2px solid var(--green); }
+.foto-remove-btn { position:absolute; top:6px; right:6px; background:rgba(200,32,32,.85); border:none; border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px; cursor:pointer; }
+.foto-badge { display:inline-flex; align-items:center; gap:3px; font-size:9px; font-weight:700; color:var(--green); background:var(--green-dim); border-radius:20px; padding:2px 7px; cursor:pointer; }
+.foto-badge i { font-size:10px; }
+.foto-lightbox { display:none; position:fixed; inset:0; background:rgba(0,10,30,.85); z-index:600; align-items:center; justify-content:center; padding:20px; }
+.foto-lightbox.open { display:flex; }
+.foto-lightbox img { max-width:100%; max-height:85vh; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.5); }
+.foto-lightbox-close { position:absolute; top:16px; right:16px; background:rgba(255,255,255,.15); border:none; border-radius:50%; width:36px; height:36px; color:#fff; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
 .estado-sheet-actions { display:flex; gap:8px; padding:0 18px 4px; }
 .estado-sheet-cancel-btn { flex:1; padding:13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); background:var(--dark4); font-family:'Poppins',sans-serif; font-size:13px; font-weight:600; color:var(--text2); cursor:pointer; transition:all var(--transition); }
 .estado-sheet-confirm-btn { flex:2; padding:13px; border:none; border-radius:var(--radius-sm); background:linear-gradient(135deg,#0057B8,#003d8a); font-family:'Poppins',sans-serif; font-size:13px; font-weight:700; color:#fff; cursor:pointer; transition:all var(--transition); box-shadow:0 3px 12px rgba(0,87,184,.28); }
@@ -431,8 +459,13 @@ tbody td:first-child { color:var(--text); font-weight:600; }
 .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,20,60,.45); backdrop-filter:blur(7px); z-index:200; align-items:flex-end; justify-content:center; }
 .modal-overlay.open { display:flex; }
 @media(min-width:600px) { .modal-overlay { align-items:center; } }
-.modal { background:#fff; border:1px solid var(--border); border-radius:var(--radius) var(--radius) 0 0; width:100%; max-width:480px; max-height:90vh; display:flex; flex-direction:column; animation:slideUp .25s cubic-bezier(.34,1.56,.64,1); overflow:hidden; box-shadow:0 -8px 40px rgba(0,30,80,.14); }
+.modal { background:#fff; border:1px solid var(--border); border-radius:var(--radius) var(--radius) 0 0; width:100%; max-width:480px; max-height:90vh; display:flex; flex-direction:column; animation:slideUp .25s cubic-bezier(.34,1.56,.64,1); overflow:hidden; box-shadow:0 -8px 40px rgba(0,30,80,.14); will-change:max-height,transform; }
 @media(min-width:600px) { .modal { border-radius:var(--radius); box-shadow:0 8px 40px rgba(0,30,80,.18); } }
+/* Mobile: scroll suave dentro del formulario */
+@media(max-width:720px) {
+  .modal-body-inner { scroll-behavior:smooth; overscroll-behavior:contain; }
+  .form-control:focus { scroll-margin-top: 80px; }
+}
 @keyframes slideUp { from{transform:translateY(40px);opacity:0} to{transform:translateY(0);opacity:1} }
 .modal-handle { width:36px; height:4px; background:var(--border); border-radius:4px; margin:10px auto 0; flex-shrink:0; }
 @media(min-width:600px) { .modal-handle { display:none; } }
@@ -539,17 +572,108 @@ textarea.form-control { min-height:72px; resize:vertical; }
 .cv-horario-dia-label { color:var(--text2); font-weight:600; }
 .cv-horario-dia-val { color:#0057B8; font-family:var(--font-mono); font-size:11px; }
 
-/* ══ BOTTOM NAV ══ */
-.bottom-nav { display:none; position:fixed; bottom:0; left:0; right:0; height:calc(var(--bottom-nav-h) + env(safe-area-inset-bottom)); border-top:1px solid var(--border); z-index:100; background:rgba(255,255,255,.97); backdrop-filter:blur(12px); box-shadow:0 -4px 24px rgba(0,30,80,.1); }
-.bottom-nav-inner { display:flex; height:var(--bottom-nav-h); overflow-x:auto; scrollbar-width:none; }
-.bottom-nav-inner::-webkit-scrollbar { display:none; }
-.bottom-nav-item { flex:1; min-width:50px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; cursor:pointer; font-size:9px; font-weight:700; color:var(--text3); transition:all var(--transition); position:relative; padding:8px 4px; -webkit-tap-highlight-color:transparent; min-height:48px; }
-.bottom-nav-item i { font-size:22px; transition:transform .2s cubic-bezier(.34,1.56,.64,1),color var(--transition); }
-.bottom-nav-item:active i { transform:scale(.88); }
-.bottom-nav-item.active { color:#0057B8; }
-.bottom-nav-item.active i { color:#0057B8; transform:scale(1.08); }
-.bottom-nav-item.active span { color:#0057B8; font-weight:800; }
-.bottom-nav-item.active::after { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:36px; height:3px; border-radius:0 0 5px 5px; background:linear-gradient(90deg,#0057B8,#0070E0); }
+/* ══ BOTTOM NAV — redesign completo ══ */
+.bottom-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  z-index: 100;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -4px 30px rgba(0,30,80,.1);
+  flex-direction: column;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ── Logo strip ── */
+.bnav-logo-strip {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; padding: 8px 20px 6px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #0057B8 0%, #003d8a 100%);
+  position: relative; overflow: hidden;
+}
+.bnav-logo-strip::after {
+  content: ''; position: absolute; right: -20px; top: -20px;
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(255,255,255,.06); pointer-events: none;
+}
+.bnav-logo-strip::before {
+  content: ''; position: absolute; left: -15px; bottom: -15px;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: rgba(255,102,0,.12); pointer-events: none;
+}
+.bnav-logo-fes {
+  display: flex; align-items: center;
+  font-weight: 900; font-size: 22px; line-height: 1;
+  letter-spacing: -0.5px; font-family: 'Poppins', sans-serif;
+  flex-shrink: 0; position: relative; z-index: 1;
+}
+.bnl-f { color: #f5a800 !important; }
+.bnl-e { color: #1ab8e8 !important; }
+.bnl-s { color: #e8286e !important; }
+.bnav-logo-text { position: relative; z-index: 1; }
+.bnl-main { font-size: 11px; font-weight: 800; color: #fff; letter-spacing: .02em; line-height: 1.2; }
+.bnl-sub  { font-size: 8.5px; color: rgba(255,255,255,.6); font-weight: 500; letter-spacing: .02em; line-height: 1.3; white-space: nowrap; }
+
+/* ── Nav items row ── */
+.bottom-nav-inner {
+  display: flex; height: 58px;
+}
+.bottom-nav-item {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px; cursor: pointer;
+  font-size: 9.5px; font-weight: 700; color: var(--text3);
+  transition: all var(--transition);
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none; padding: 6px 2px 4px;
+}
+.bnav-icon-wrap {
+  width: 32px; height: 32px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; transition: all .2s cubic-bezier(.34,1.56,.64,1);
+  color: var(--text3);
+}
+.bottom-nav-item:active .bnav-icon-wrap { transform: scale(.85); }
+
+/* Activo */
+.bottom-nav-item.active { color: #0057B8; }
+.bottom-nav-item.active .bnav-icon-wrap {
+  color: #0057B8;
+  background: var(--cyan-dim);
+  transform: scale(1.08);
+}
+.bottom-nav-item.active::before {
+  content: '';
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 32px; height: 3px; border-radius: 0 0 4px 4px;
+  background: linear-gradient(90deg, #0057B8, #0070E0);
+}
+
+/* Botón central Visitas — más prominente */
+.bnav-icon-mid {
+  width: 46px; height: 46px; border-radius: 14px;
+  background: linear-gradient(135deg, #FF6600, #FF8533);
+  color: #fff !important; font-size: 22px;
+  box-shadow: 0 4px 16px rgba(255,102,0,.35);
+  margin-top: -10px;
+  border: 3px solid #fff;
+}
+.bottom-nav-item.bnav-mid { color: #FF6600; }
+.bottom-nav-item.bnav-mid:active .bnav-icon-mid { transform: scale(.9); }
+.bottom-nav-item.bnav-mid.active .bnav-icon-mid {
+  background: linear-gradient(135deg, #0057B8, #0070E0);
+  box-shadow: 0 4px 16px rgba(0,87,184,.4);
+}
+.bottom-nav-item.bnav-mid.active { color: #0057B8; }
+.bottom-nav-item.bnav-mid.active::before { display: none; }
+
+@media(max-width:720px) {
+  .bottom-nav { display: flex; }
+  .main { margin-bottom: calc(58px + 36px + env(safe-area-inset-bottom)); }
+}
+
 
 .hamburger-btn { display:none; align-items:center; justify-content:center; width:34px; height:34px; border-radius:var(--radius-sm); background:var(--cyan-dim); border:1.5px solid var(--cyan-border); color:#0057B8; cursor:pointer; flex-shrink:0; transition:all var(--transition); }
 .hamburger-btn:hover { background:rgba(0,87,184,.15); }
@@ -577,7 +701,7 @@ textarea.form-control { min-height:72px; resize:vertical; }
 @media(max-width:900px) { .sidebar { position:fixed; top:0; left:-260px; bottom:0; z-index:50; transition:left .25s cubic-bezier(.34,1.1,.64,1); } .sidebar.mobile-open { left:0; box-shadow:8px 0 40px rgba(0,30,80,.15); } .hamburger-btn { display:flex; } }
 @media(max-width:720px) {
   .bottom-nav { display:flex; }
-  .main { margin-bottom:calc(var(--bottom-nav-h) + env(safe-area-inset-bottom)); }
+  .main { margin-bottom:calc(58px + 36px + env(safe-area-inset-bottom)); }
   .content { padding:12px 12px 20px; }
   .topbar { padding:0 12px; height:52px; }
   .stats-grid { grid-template-columns:repeat(2,1fr); }
@@ -600,6 +724,231 @@ textarea.form-control { min-height:72px; resize:vertical; }
 }
 @media(max-width:400px) { .pdf-btn-label { display:none; } .search-input { width:90px; } .topbar-title { font-size:12px; } }
 @media print { .sidebar,.topbar,.bottom-nav,.modal-overlay { display:none !important; } .section-tab { display:block !important; } body { background:#fff; color:#111; } }
+
+/* ── Zona chip buttons (filtro semanal visitas) ── */
+.zona-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--dark3);
+  color: var(--text2);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+  letter-spacing: .02em;
+}
+.zona-chip-btn:hover {
+  border-color: var(--accent);
+  color: var(--text1);
+  background: var(--dark4);
+}
+.zona-chip-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(59,130,246,.25);
+}
+.zona-chip-btn[data-zona="Norte"].active { background:var(--cyan);   border-color:var(--cyan);   box-shadow:0 2px 8px rgba(6,182,212,.25); }
+.zona-chip-btn[data-zona="Este"].active  { background:var(--amber);  border-color:var(--amber);  box-shadow:0 2px 8px rgba(245,158,11,.25); }
+.zona-chip-btn[data-zona="Sur"].active   { background:var(--green);  border-color:var(--green);  box-shadow:0 2px 8px rgba(46,158,79,.25); }
+.zona-chip-btn[data-zona="Oeste"].active { background:var(--orange); border-color:var(--orange); box-shadow:0 2px 8px rgba(249,115,22,.25); }
+@keyframes skeleton-shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg,
+    var(--dark4) 25%,
+    var(--dark5) 50%,
+    var(--dark4) 75%
+  );
+  background-size: 600px 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  border-radius: var(--radius-xs);
+  display: block;
+}
+.skeleton-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-card);
+}
+.skeleton-header {
+  height: 44px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--dark3) 0%, var(--dark4) 100%);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.skeleton-header .skeleton { height: 10px; border-radius: 20px; }
+.skeleton-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+/* Stat card skeleton */
+.skeleton-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.skeleton-stat {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 14px 13px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.skeleton-stat .sk-icon { width: 36px; height: 36px; border-radius: 10px; }
+.skeleton-stat .sk-label { height: 8px; width: 55%; border-radius: 20px; }
+.skeleton-stat .sk-value { height: 26px; width: 40%; border-radius: 6px; }
+/* Table skeleton */
+.skeleton-table-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.skeleton-table-row:last-child { border-bottom: none; }
+.skeleton-table-row .sk-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.skeleton-table-row .sk-line-long { height: 9px; flex: 2; border-radius: 20px; }
+.skeleton-table-row .sk-line-mid { height: 9px; flex: 1; border-radius: 20px; }
+.skeleton-table-row .sk-chip { height: 18px; width: 52px; border-radius: 20px; flex-shrink: 0; }
+.skeleton-table-row .sk-btn { height: 24px; width: 28px; border-radius: 6px; flex-shrink: 0; }
+/* KPI card skeleton */
+.skeleton-kpi {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 14px 12px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.skeleton-kpi::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: linear-gradient(90deg, var(--dark4), var(--dark5), var(--dark4));
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+.skeleton-kpi .sk-kpi-icon { width: 32px; height: 32px; border-radius: 9px; }
+.skeleton-kpi .sk-kpi-label { height: 8px; width: 60%; border-radius: 20px; }
+.skeleton-kpi .sk-kpi-value { height: 28px; width: 45%; border-radius: 6px; }
+/* Visitas / cronograma card skeleton */
+.skeleton-crono-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+.skeleton-crono-item {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  box-shadow: var(--shadow-1);
+}
+.skeleton-crono-item .sk-fecha {
+  width: 48px; min-width: 48px; height: 52px;
+  border-radius: 10px;
+}
+.skeleton-crono-item .sk-crono-body {
+  flex: 1; display: flex; flex-direction: column; gap: 7px;
+}
+.skeleton-crono-item .sk-title { height: 11px; width: 70%; border-radius: 20px; }
+.skeleton-crono-item .sk-desc  { height: 9px;  width: 90%; border-radius: 20px; }
+.skeleton-crono-item .sk-desc2 { height: 9px;  width: 55%; border-radius: 20px; }
+/* nota card skeleton */
+.skeleton-nota {
+  background: var(--dark3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 13px 15px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.skeleton-nota::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(180deg, var(--dark4), var(--dark5));
+  background-size: 100% 200%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+.skeleton-nota .sk-nota-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.skeleton-nota .sk-nota-asunto { height: 12px; flex: 1; border-radius: 20px; }
+.skeleton-nota .sk-nota-fecha  { height: 9px;  width: 56px; border-radius: 20px; flex-shrink: 0; }
+.skeleton-nota .sk-nota-line   { height: 9px;  border-radius: 20px; }
+/* Acceso rápido skeleton */
+.skeleton-acceso-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.skeleton-acceso-item {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 6px 14px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.skeleton-acceso-item .sk-acc-icon { width: 28px; height: 28px; border-radius: 8px; }
+.skeleton-acceso-item .sk-acc-label { height: 8px; width: 70%; border-radius: 20px; }
+/* staggered delay for natural feel */
+.skeleton-stat:nth-child(1) .skeleton,
+.skeleton-kpi:nth-child(1) .skeleton,
+.skeleton-table-row:nth-child(1) .skeleton,
+.skeleton-crono-item:nth-child(1) .skeleton { animation-delay: 0s; }
+.skeleton-stat:nth-child(2) .skeleton,
+.skeleton-kpi:nth-child(2) .skeleton,
+.skeleton-table-row:nth-child(2) .skeleton,
+.skeleton-crono-item:nth-child(2) .skeleton { animation-delay: .08s; }
+.skeleton-stat:nth-child(3) .skeleton,
+.skeleton-kpi:nth-child(3) .skeleton,
+.skeleton-table-row:nth-child(3) .skeleton,
+.skeleton-crono-item:nth-child(3) .skeleton { animation-delay: .16s; }
+.skeleton-stat:nth-child(4) .skeleton,
+.skeleton-kpi:nth-child(4) .skeleton,
+.skeleton-table-row:nth-child(4) .skeleton,
+.skeleton-crono-item:nth-child(4) .skeleton { animation-delay: .24s; }
+.skeleton-stat:nth-child(5) .skeleton,
+.skeleton-kpi:nth-child(5) .skeleton,
+.skeleton-table-row:nth-child(5) .skeleton,
+.skeleton-crono-item:nth-child(5) .skeleton { animation-delay: .32s; }
+.skeleton-table-row:nth-child(6)  .skeleton { animation-delay: .40s; }
+.skeleton-table-row:nth-child(7)  .skeleton { animation-delay: .48s; }
+.skeleton-table-row:nth-child(8)  .skeleton { animation-delay: .56s; }
+/* Section entrance animation */
+@keyframes sectionFadeIn {
+  from { opacity:0; transform:translateY(6px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.section-tab.skeleton-entered { animation: sectionFadeIn .28s cubic-bezier(.4,0,.2,1) both; }
 
 /* ══ NOTAS ══ */
 .notas-tabs { display:flex; gap:3px; margin-bottom:16px; background:var(--dark4); padding:3px; border-radius:var(--radius-sm); border:1px solid var(--border); width:fit-content; }
@@ -743,6 +1092,229 @@ textarea.form-control { min-height:72px; resize:vertical; }
 .section-tab { display:none; }
 .section-tab.active { display:block; animation:fadeIn .18s ease; }
 .section-eyebrow-old { font-size:9.5px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:.12em; margin-bottom:6px; display:block; }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   MEJORAS MOBILE COMPLETAS — FES Dashboard
+   Diseñado para uso diario en celular por el equipo FES
+═══════════════════════════════════════════════════════════════ */
+@media(max-width:720px) {
+
+  /* ── Layout base ── */
+  .content { padding: 10px 10px 28px; }
+  .section-eyebrow { font-size: 9.5px; margin-bottom: 10px; padding: 7px 11px; }
+
+  /* ── Stats cards: 2 columnas más compactas ── */
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 10px; }
+  .stat-card { padding: 12px 11px 10px; border-radius: 11px; }
+  .stat-icon { width: 30px; height: 30px; font-size: 14px; border-radius: 8px; margin-bottom: 7px; }
+  .stat-label { font-size: 8.5px; letter-spacing: .06em; }
+  .stat-value { font-size: 22px; }
+  .stat-delta { font-size: 9.5px; margin-top: 2px; }
+
+  /* ── Cards ── */
+  .card { border-radius: 11px; margin-bottom: 10px; }
+  .card-header { padding: 11px 13px 9px; }
+  .card-title { font-size: 11px; }
+
+  /* ── Tablas → ocultar columnas secundarias, mostrar solo lo esencial ── */
+  .table-wrap { border-radius: 0; margin: 0 -0px; }
+  table { font-size: 11.5px; }
+  thead th { font-size: 9px; padding: 8px 9px; }
+  tbody td { padding: 9px 9px; }
+
+  /* ── Semana hero banner ── */
+  .semana-hero { border-radius: 11px; }
+  .semana-hero-title { font-size: 17px; }
+  .semana-hero-pct { font-size: 22px; }
+  .semana-hero-right { padding: 8px 12px; min-width: 68px; }
+  .semana-hero-stat { font-size: 10px; padding: 3px 8px; }
+
+  /* ── Week grid: 1 columna en móvil para mejor lectura ── */
+  .week-grid { grid-template-columns: 1fr; gap: 8px; }
+  .day-col { border-radius: 11px; }
+  .day-header { padding: 10px 12px 8px; }
+  .day-name { font-size: 12px; }
+  .day-date { font-size: 10px; }
+  .day-count-badge { font-size: 9.5px; padding: 3px 8px; }
+  .day-body { padding: 6px; gap: 6px; }
+  .visita-card { border-radius: 8px; padding: 9px 10px 8px; }
+  .visita-nombre { font-size: 12.5px; }
+  .visita-meta { gap: 5px; margin-top: 4px; }
+  .visita-hora { font-size: 10px; }
+  .visita-estado { font-size: 10px; padding: 2px 8px; }
+
+  /* ── Chips de zona semanal ── */
+  #zona-chips-semanal { gap: 5px; margin-bottom: 10px; }
+  .zona-chip-btn { font-size: 10.5px; padding: 5px 11px; }
+
+  /* ── Zona tabs (Centros) ── */
+  .zona-tabs { grid-template-columns: repeat(4, 1fr); gap: 5px; }
+  .zona-tab { padding: 9px 3px 7px; border-radius: 9px; }
+  .zona-tab-icon { width: 28px; height: 28px; font-size: 13px; border-radius: 7px; margin-bottom: 4px; }
+  .zona-tab-label { font-size: 9.5px; }
+  .zona-tab-count { font-size: 8.5px; padding: 1px 5px; margin-top: 2px; }
+
+  /* ── Centro cards mobile ── */
+  .centro-cards-grid { display: flex !important; flex-direction: column; gap: 8px; }
+  .centros-table-wrap { display: none !important; }
+  .centro-card-mobile { border-radius: 11px; padding: 12px 14px; }
+
+  /* ── Fortalecedores ── */
+  .fort-card { border-radius: 11px; }
+  .fort-header { padding: 12px 13px 10px; }
+  .fort-nombre { font-size: 13px; }
+
+  /* ── Notas ── */
+  .notas-stats { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .notas-stat { padding: 11px 12px; border-radius: 10px; }
+  .notas-stat-num { font-size: 22px; }
+  .notas-stat-label { font-size: 9px; }
+  .nota-card { border-radius: 11px; padding: 12px 13px 10px; margin-bottom: 8px; }
+  .nota-asunto { font-size: 13px; }
+  .nota-cuerpo { font-size: 12px; }
+
+  /* ── Historial de visitas (acordeón) ── */
+  .visitas-meses-acordeon .mes-acord-header { padding: 11px 13px; }
+  .visitas-meses-acordeon .mes-acord-title { font-size: 12px; }
+  .semana-acord-header { padding: 9px 13px; }
+
+  /* ── Crono grid ── */
+  .crono-grid { grid-template-columns: 1fr; gap: 8px; }
+  .crono-item { border-radius: 10px; padding: 11px 12px 10px 11px; }
+  .crono-fecha { width: 40px; min-width: 40px; }
+  .crono-dia { font-size: 20px; }
+  .crono-titulo { font-size: 12px; }
+  .crono-desc { font-size: 10.5px; }
+
+  /* ── Dashboard KPI ── */
+  .dashboard-kpi-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px; }
+  .dash-kpi { padding: 13px 12px 11px; border-radius: 11px; }
+  .dash-kpi-icon { width: 30px; height: 30px; font-size: 14px; border-radius: 8px; }
+  .dash-kpi-label { font-size: 9px; }
+  .dash-kpi-value { font-size: 22px; }
+  .dash-charts-2col { grid-template-columns: 1fr !important; }
+  .dash-bottom-2col { grid-template-columns: 1fr !important; }
+
+  /* ── Topbar ── */
+  .topbar { padding: 0 11px; height: 50px; }
+  .topbar-title { font-size: 13px; font-weight: 800; }
+  .hamburger-btn { width: 34px; height: 34px; }
+  .topbar-actions { gap: 4px; }
+
+  /* ── Botones de acción ── */
+  .btn { min-height: 38px; font-size: 11.5px; }
+  .btn-sm { min-height: 32px; font-size: 10.5px; padding: 4px 10px; }
+  .form-actions { gap: 6px; }
+  .form-actions .btn { flex: 1; justify-content: center; }
+
+  /* ── Formularios ── */
+  .form-group { margin-bottom: 12px; }
+  .form-group label { font-size: 10px; margin-bottom: 5px; }
+  .form-control { padding: 10px 12px; font-size: 16px; border-radius: 8px; min-height: 46px; }
+  textarea.form-control { min-height: 80px; }
+  .form-row { grid-template-columns: 1fr; gap: 8px; }
+  .wiz-step-title { font-size: 12.5px; }
+
+  /* ── Bottom nav ── */
+  .bottom-nav { padding-bottom: env(safe-area-inset-bottom); }
+  .bnav-logo-strip { padding: 6px 14px 5px; }
+  .bnav-logo-fes { font-size: 15px; letter-spacing: -.5px; }
+  .bnl-main { font-size: 10px; }
+  .bnl-sub { font-size: 7.5px; }
+  .bottom-nav-item { padding: 6px 4px 4px; min-width: 0; }
+  .bottom-nav-item span { font-size: 9px; margin-top: 1px; }
+  .bnav-icon-wrap { width: 32px; height: 32px; border-radius: 10px; font-size: 16px; }
+
+  /* ── FAB ── */
+  .fab { width: 50px; height: 50px; font-size: 20px; bottom: calc(58px + 36px + env(safe-area-inset-bottom) + 12px); right: 14px; }
+
+  /* ── Acordeón territorio ── */
+  .terr-centro-card { border-radius: 10px; margin-bottom: 6px; }
+  .terr-centro-card-header { padding: 11px 13px 11px 15px; gap: 8px; }
+  .terr-cv-nombre { font-size: 12.5px; }
+
+  /* ── Interior ── */
+  .interior-card { border-radius: 11px; padding: 12px 13px; }
+
+  /* ── Subtab scroll ── */
+  .subtab-scroll-wrap { margin: 0 -2px 10px; }
+  .notas-tab-btn { font-size: 11px; padding: 7px 11px; white-space: nowrap; }
+
+  /* ── Visita list card (móvil) ── */
+  .visita-list-card { border-radius: 10px; padding: 11px 12px 9px 16px; margin-bottom: 7px; }
+  .vlc-nombre { font-size: 12.5px; }
+  .vlc-estado { font-size: 10.5px; padding: 3px 9px; }
+  .vlc-edit-hint { font-size: 9.5px; padding-top: 7px; margin-top: 6px; }
+
+  /* ── Estado sheet ── */
+  .estado-btn { min-height: 50px; padding: 11px 14px; font-size: 12.5px; }
+  .estado-btn i { font-size: 18px; }
+  .estado-sheet-centro { font-size: 14px; }
+
+  /* ── Modal ── */
+  .modal-title { font-size: 13.5px; }
+  .modal-body-inner { padding: 14px 14px; }
+
+  /* ── Badges ── */
+  .badge { font-size: 9px; padding: 2px 7px; }
+  .zona-chip { font-size: 9px; padding: 2px 7px; }
+
+  /* ── Acceso rápido dashboard ── */
+  .dash-acceso-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 7px !important; }
+  .dash-acceso-item { padding: 14px 5px 11px !important; border-radius: 10px !important; }
+  .dash-acceso-icon { font-size: 18px !important; margin-bottom: 5px !important; }
+  .dash-acceso-label { font-size: 9px !important; }
+
+  /* ── Skeleton en mobile ── */
+  .skeleton-stat-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .skeleton-acceso-grid { grid-template-columns: repeat(4, 1fr); gap: 7px; }
+  .skeleton-crono-grid { grid-template-columns: 1fr; }
+  .dashboard-kpi-grid .skeleton-kpi { padding: 12px 11px 10px; }
+
+  /* ── Calendario del panel ── */
+  #dash-calendario { padding: 6px 8px 8px !important; }
+  .dash-cal-grid { gap: 1px; }
+  .dash-cal-cell { max-height: 36px; min-height: 28px; border-radius: 6px; padding-top: 4px; }
+  .dash-cal-num { font-size: 10px; }
+  .dash-cal-dot { width: 4px; height: 4px; }
+  .dash-cal-dots { gap: 1px; margin-top: 2px; max-width: 22px; }
+  .dash-cal-dow { font-size: 8px; padding: 3px 0 4px; }
+  .dash-cal-legend { gap: 7px; margin-top: 8px; padding-top: 6px; }
+  .dash-cal-legend-item { font-size: 9px; gap: 3px; }
+
+  /* ── Scroll horizontal en chips/tabs ── */
+  .zona-chips-scroll {
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; display: flex; gap: 6px;
+    padding-bottom: 2px;
+  }
+  .zona-chips-scroll::-webkit-scrollbar { display: none; }
+
+  /* ── Touch targets mínimo 44px ── */
+  button, .btn, .notas-tab-btn, .zona-chip-btn,
+  .bottom-nav-item, .nav-item, .zona-tab { min-height: 44px; }
+  .bnav-icon-wrap, .hamburger-btn { min-height: 44px; min-width: 44px; }
+  
+  /* ── Spacing general ── */
+  .section-eyebrow + * { margin-top: 2px; }
+  h2, .page-title { font-size: 15px; }
+}
+
+/* ── Pantallas muy pequeñas (≤ 380px) ── */
+@media(max-width:380px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .stat-value { font-size: 20px; }
+  .stat-label { font-size: 8px; }
+  .bottom-nav-item span { display: none; }
+  .bnav-icon-wrap { border-radius: 12px; }
+  .zona-tabs { grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .zona-tab-label { font-size: 8.5px; }
+  .content { padding: 8px 8px 24px; }
+  .week-grid { gap: 6px; }
+  .dashboard-kpi-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
 </style>
 </head>
 <style>
@@ -1773,7 +2345,8 @@ textarea.form-control { min-height:72px; resize:vertical; }
 .zona-tab::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
   border-radius: var(--radius) var(--radius) 0 0;
-  background: transparent; transition: background .18s;
+  background: linear-gradient(90deg, var(--border2), var(--border));
+  opacity: 1; transition: background .18s, opacity .18s;
 }
 .zona-tab:active { transform: scale(.95); }
 .zona-tab:hover { border-color: var(--border2); box-shadow: var(--shadow-2); transform: translateY(-1px); }
@@ -1802,33 +2375,51 @@ textarea.form-control { min-height:72px; resize:vertical; }
 .zona-tab.active .zona-tab-count { background: #0057B8; color: #fff; }
 .zona-tab.active { border-color: var(--cyan-border); box-shadow: 0 0 0 1px rgba(0,87,184,.1),var(--shadow-2); }
 
-/* activo Norte */
-.zona-tab.active-norte::before         { background: linear-gradient(90deg,#0057B8,#2186eb); }
-.zona-tab.active-norte .zona-tab-icon  { background: rgba(0,87,184,.1); color: #0057B8; }
-.zona-tab.active-norte .zona-tab-label { color: #0057B8; }
-.zona-tab.active-norte .zona-tab-count { background: #0057B8; color: #fff; }
-.zona-tab.active-norte { border-color: rgba(0,87,184,.3); box-shadow: 0 0 0 1px rgba(0,87,184,.1),var(--shadow-2); }
+/* ── Color permanente por zona (inactivo) ── */
+.zona-tab[data-zona="Norte"] { border-color: rgba(0,87,184,.2); background: linear-gradient(160deg, rgba(0,87,184,.05) 0%, #fff 60%); }
+.zona-tab[data-zona="Norte"]::before { background: linear-gradient(90deg,#0057B8,#2186eb); opacity: .35; }
+.zona-tab[data-zona="Norte"] .zona-tab-icon { background: rgba(0,87,184,.1); color: #0057B8; }
+.zona-tab[data-zona="Norte"] .zona-tab-label { color: #0057B8; }
+.zona-tab[data-zona="Norte"] .zona-tab-count { background: rgba(0,87,184,.1); color: #0057B8; }
 
-/* activo Este */
-.zona-tab.active-este::before         { background: linear-gradient(90deg,#d97706,#f59e0b); }
-.zona-tab.active-este .zona-tab-icon  { background: rgba(217,119,6,.1); color: var(--amber); }
-.zona-tab.active-este .zona-tab-label { color: var(--amber); }
-.zona-tab.active-este .zona-tab-count { background: var(--amber); color: #fff; }
-.zona-tab.active-este { border-color: rgba(217,119,6,.3); box-shadow: 0 0 0 1px rgba(217,119,6,.1),var(--shadow-2); }
+.zona-tab[data-zona="Este"] { border-color: rgba(217,119,6,.22); background: linear-gradient(160deg, rgba(217,119,6,.06) 0%, #fff 60%); }
+.zona-tab[data-zona="Este"]::before { background: linear-gradient(90deg,#d97706,#f59e0b); opacity: .35; }
+.zona-tab[data-zona="Este"] .zona-tab-icon { background: rgba(217,119,6,.1); color: #d97706; }
+.zona-tab[data-zona="Este"] .zona-tab-label { color: #b45309; }
+.zona-tab[data-zona="Este"] .zona-tab-count { background: rgba(217,119,6,.1); color: #b45309; }
 
-/* activo Sur */
-.zona-tab.active-sur::before         { background: linear-gradient(90deg,#1f8f42,#28b055); }
-.zona-tab.active-sur .zona-tab-icon  { background: rgba(31,143,66,.1); color: var(--green); }
-.zona-tab.active-sur .zona-tab-label { color: var(--green); }
-.zona-tab.active-sur .zona-tab-count { background: var(--green); color: #fff; }
-.zona-tab.active-sur { border-color: rgba(31,143,66,.3); box-shadow: 0 0 0 1px rgba(31,143,66,.1),var(--shadow-2); }
+.zona-tab[data-zona="Sur"] { border-color: rgba(31,143,66,.22); background: linear-gradient(160deg, rgba(31,143,66,.06) 0%, #fff 60%); }
+.zona-tab[data-zona="Sur"]::before { background: linear-gradient(90deg,#1f8f42,#28b055); opacity: .35; }
+.zona-tab[data-zona="Sur"] .zona-tab-icon { background: rgba(31,143,66,.1); color: #1f8f42; }
+.zona-tab[data-zona="Sur"] .zona-tab-label { color: #1f8f42; }
+.zona-tab[data-zona="Sur"] .zona-tab-count { background: rgba(31,143,66,.1); color: #1f8f42; }
 
-/* activo Oeste */
-.zona-tab.active-oeste::before         { background: linear-gradient(90deg,#FF6600,#FF8533); }
-.zona-tab.active-oeste .zona-tab-icon  { background: rgba(255,102,0,.1); color: #FF6600; }
-.zona-tab.active-oeste .zona-tab-label { color: #FF6600; }
-.zona-tab.active-oeste .zona-tab-count { background: #FF6600; color: #fff; }
-.zona-tab.active-oeste { border-color: rgba(255,102,0,.3); box-shadow: 0 0 0 1px rgba(255,102,0,.1),var(--shadow-2); }
+.zona-tab[data-zona="Oeste"] { border-color: rgba(255,102,0,.22); background: linear-gradient(160deg, rgba(255,102,0,.06) 0%, #fff 60%); }
+.zona-tab[data-zona="Oeste"]::before { background: linear-gradient(90deg,#FF6600,#FF8533); opacity: .35; }
+.zona-tab[data-zona="Oeste"] .zona-tab-icon { background: rgba(255,102,0,.1); color: #FF6600; }
+.zona-tab[data-zona="Oeste"] .zona-tab-label { color: #d95200; }
+.zona-tab[data-zona="Oeste"] .zona-tab-count { background: rgba(255,102,0,.1); color: #d95200; }
+
+/* ── Activo: fondo más intenso ── */
+.zona-tab.active-norte { border-color: rgba(0,87,184,.4) !important; background: linear-gradient(160deg, rgba(0,87,184,.12) 0%, rgba(0,87,184,.04) 100%) !important; }
+.zona-tab.active-norte::before { opacity: 1 !important; }
+.zona-tab.active-norte .zona-tab-icon { background: rgba(0,87,184,.15) !important; color: #0057B8 !important; }
+.zona-tab.active-norte .zona-tab-count { background: #0057B8 !important; color: #fff !important; }
+
+.zona-tab.active-este { border-color: rgba(217,119,6,.4) !important; background: linear-gradient(160deg, rgba(217,119,6,.13) 0%, rgba(217,119,6,.04) 100%) !important; }
+.zona-tab.active-este::before { opacity: 1 !important; }
+.zona-tab.active-este .zona-tab-icon { background: rgba(217,119,6,.15) !important; color: #d97706 !important; }
+.zona-tab.active-este .zona-tab-count { background: #d97706 !important; color: #fff !important; }
+
+.zona-tab.active-sur { border-color: rgba(31,143,66,.4) !important; background: linear-gradient(160deg, rgba(31,143,66,.13) 0%, rgba(31,143,66,.04) 100%) !important; }
+.zona-tab.active-sur::before { opacity: 1 !important; }
+.zona-tab.active-sur .zona-tab-icon { background: rgba(31,143,66,.15) !important; color: #1f8f42 !important; }
+.zona-tab.active-sur .zona-tab-count { background: #1f8f42 !important; color: #fff !important; }
+
+.zona-tab.active-oeste { border-color: rgba(255,102,0,.4) !important; background: linear-gradient(160deg, rgba(255,102,0,.13) 0%, rgba(255,102,0,.04) 100%) !important; }
+.zona-tab.active-oeste::before { opacity: 1 !important; }
+.zona-tab.active-oeste .zona-tab-icon { background: rgba(255,102,0,.15) !important; color: #FF6600 !important; }
+.zona-tab.active-oeste .zona-tab-count { background: #FF6600 !important; color: #fff !important; }
 
 .dash-cal-grid {
   display: grid;
@@ -1856,6 +2447,7 @@ textarea.form-control { min-height:72px; resize:vertical; }
   cursor: default;
   transition: background .12s;
   min-height: 34px;
+  max-height: 44px;
 }
 .dash-cal-cell:not(.empty):hover { background: var(--dark4); }
 .dash-cal-cell.hoy {
@@ -2063,35 +2655,7 @@ textarea.form-control { min-height:72px; resize:vertical; }
         <!-- 1. Banner estado del día -->
         <div id="banner-hoy"></div>
 
-        <!-- 2. Acceso rápido -->
-        <div class="dash-acceso-grid">
-          <div class="dash-acceso-item cyan"   onclick="showTab('centros')">
-            <i class="ti ti-building-community"></i><span>Centros</span>
-          </div>
-          <div class="dash-acceso-item orange" onclick="showTab('visitas')">
-            <i class="ti ti-map-pin-check"></i><span>Visitas</span>
-          </div>
-          <div class="dash-acceso-item green"  onclick="showTab('fortalecedores')">
-            <i class="ti ti-users-group"></i><span>Equipo</span>
-          </div>
-          <div class="dash-acceso-item pink"   onclick="showTab('actividades')">
-            <i class="ti ti-calendar-event"></i><span>Agenda</span>
-          </div>
-          <div class="dash-acceso-item teal"   onclick="showTab('territorio')">
-            <i class="ti ti-pencil"></i><span>Alumnos</span>
-          </div>
-          <div class="dash-acceso-item amber"  onclick="showTab('notas')">
-            <i class="ti ti-notebook"></i><span>Notas</span>
-          </div>
-          <div class="dash-acceso-item amber"  onclick="showTab('bonos')">
-            <i class="ti ti-coin"></i><span>Bonos</span>
-          </div>
-          <div class="dash-acceso-item purple" onclick="showTab('interior')">
-            <i class="ti ti-map-pin"></i><span>Interior</span>
-          </div>
-        </div>
-
-        <!-- 3. KPI grid -->
+        <!-- 2. KPI grid -->
         <div class="dashboard-kpi-grid" id="dashboard-kpi-grid">
           <!-- filled by renderDashboard() -->
         </div>
@@ -2401,7 +2965,7 @@ textarea.form-control { min-height:72px; resize:vertical; }
             </div>
           </div>
 
-          <!-- Grilla semanal -->
+          <!-- Filtro zona + acciones -->
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;flex-wrap:wrap">
             <span style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--text3)"><i class="ti ti-calendar-week" style="font-size:12px"></i> Vista por día</span>
             <div style="display:flex;gap:6px">
@@ -2409,6 +2973,19 @@ textarea.form-control { min-height:72px; resize:vertical; }
               <button class="btn btn-sm btn-primary" onclick="currentTab='visitas';openModal()"><i class="ti ti-plus"></i> Visita</button>
             </div>
           </div>
+
+          <!-- Chips filtro zona semanal -->
+          <div id="zona-chips-semanal" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+            <button class="zona-chip-btn active" data-zona="" onclick="setZonaSemanal(this,'')"><i class="ti ti-map-2" style="font-size:11px"></i> Todas</button>
+            <button class="zona-chip-btn" data-zona="Norte" onclick="setZonaSemanal(this,'Norte')"><i class="ti ti-circle-filled" style="font-size:7px;color:var(--cyan)"></i> Norte</button>
+            <button class="zona-chip-btn" data-zona="Este" onclick="setZonaSemanal(this,'Este')"><i class="ti ti-circle-filled" style="font-size:7px;color:var(--amber)"></i> Este</button>
+            <button class="zona-chip-btn" data-zona="Sur" onclick="setZonaSemanal(this,'Sur')"><i class="ti ti-circle-filled" style="font-size:7px;color:var(--green)"></i> Sur</button>
+            <button class="zona-chip-btn" data-zona="Oeste" onclick="setZonaSemanal(this,'Oeste')"><i class="ti ti-circle-filled" style="font-size:7px;color:var(--orange)"></i> Oeste</button>
+          </div>
+          <div id="zona-semanal-badge" style="display:none;margin-bottom:10px">
+            <span id="zona-semanal-badge-txt" style="display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;padding:4px 10px 4px 8px;border-radius:20px;background:var(--dark3);border:1px solid var(--border);color:var(--text2)"></span>
+          </div>
+
           <div class="week-grid" id="week-grid-actual"></div>
 
           <!-- Separador historial -->
@@ -2644,12 +3221,37 @@ textarea.form-control { min-height:72px; resize:vertical; }
 </button>
 
 <div class="bottom-nav">
+  <!-- Logo FES centrado arriba de la barra -->
+  <div class="bnav-logo-strip">
+    <div class="bnav-logo-fes">
+      <span class="bnl-f" style="color:#f5a800!important">F</span><span class="bnl-e" style="color:#1ab8e8!important">E</span><span class="bnl-s" style="color:#e8286e!important">S</span>
+    </div>
+    <div class="bnav-logo-text">
+      <div class="bnl-main">La Rioja</div>
+      <div class="bnl-sub">Fortalecimiento Escolar y Social</div>
+    </div>
+  </div>
   <div class="bottom-nav-inner">
-    <div class="bottom-nav-item active" id="bnav-resumen" onclick="showTab('resumen')"><i class="ti ti-layout-dashboard"></i><span>Panel</span></div>
-    <div class="bottom-nav-item" id="bnav-centros" onclick="showTab('centros')"><i class="ti ti-building-community"></i><span>Centros</span></div>
-    <div class="bottom-nav-item" id="bnav-visitas" onclick="showTab('visitas')"><i class="ti ti-map-pin-check"></i><span>Visitas</span></div>
-    <div class="bottom-nav-item" id="bnav-fortalecedores" onclick="showTab('fortalecedores')"><i class="ti ti-users-group"></i><span>Equipo</span></div>
-    <div class="bottom-nav-item" id="bnav-mas" onclick="abrirMasSheet()"><i class="ti ti-grid-dots"></i><span>Más</span></div>
+    <div class="bottom-nav-item active" id="bnav-resumen" onclick="showTab('resumen')">
+      <div class="bnav-icon-wrap"><i class="ti ti-layout-dashboard"></i></div>
+      <span>Panel</span>
+    </div>
+    <div class="bottom-nav-item" id="bnav-centros" onclick="showTab('centros')">
+      <div class="bnav-icon-wrap"><i class="ti ti-building-community"></i></div>
+      <span>Centros</span>
+    </div>
+    <div class="bottom-nav-item bnav-mid" id="bnav-visitas" onclick="showTab('visitas')">
+      <div class="bnav-icon-wrap bnav-icon-mid"><i class="ti ti-map-pin-check"></i></div>
+      <span>Visitas</span>
+    </div>
+    <div class="bottom-nav-item" id="bnav-fortalecedores" onclick="showTab('fortalecedores')">
+      <div class="bnav-icon-wrap"><i class="ti ti-users-group"></i></div>
+      <span>Equipo</span>
+    </div>
+    <div class="bottom-nav-item" id="bnav-mas" onclick="abrirMasSheet()">
+      <div class="bnav-icon-wrap"><i class="ti ti-grid-dots"></i></div>
+      <span>Más</span>
+    </div>
   </div>
 </div>
 
@@ -2734,12 +3336,43 @@ textarea.form-control { min-height:72px; resize:vertical; }
         </div>
         <textarea id="motivo-textarea" placeholder="O escribí el motivo acá…" rows="2"></textarea>
       </div>
+      <!-- Área de foto: aparece solo para Realizada -->
+      <div class="foto-area" id="foto-area">
+        <div class="foto-area-label"><i class="ti ti-camera" style="font-size:11px;margin-right:4px"></i>Foto de evidencia <span style="font-weight:500;text-transform:none;letter-spacing:0;color:var(--text3)">(opcional)</span></div>
+        <input type="file" accept="image/*" capture="environment" id="foto-input" style="display:none" onchange="onFotoSelected(this)">
+        <button class="foto-upload-btn" onclick="document.getElementById('foto-input').click()">
+          <i class="ti ti-camera" style="font-size:16px"></i> Sacar foto / elegir imagen
+        </button>
+        <div class="foto-preview-wrap" id="foto-preview-wrap">
+          <img id="foto-preview-img" src="" alt="Evidencia" class="foto-preview-img">
+          <button class="foto-remove-btn" onclick="quitarFoto()" title="Quitar foto"><i class="ti ti-x"></i></button>
+        </div>
+        <!-- Observación de la visita confirmada -->
+        <div style="margin-top:12px">
+          <div class="foto-area-label" style="margin-bottom:6px">
+            <i class="ti ti-notes" style="font-size:11px;margin-right:4px"></i>Observación <span style="font-weight:500;text-transform:none;letter-spacing:0;color:var(--text3)">(opcional)</span>
+          </div>
+          <textarea
+            id="obs-confirmacion"
+            class="form-control"
+            placeholder="Ej: Docente presente, 12 alumnos, se trabajó comprensión lectora…"
+            rows="3"
+            style="font-size:13px;resize:none"
+          ></textarea>
+        </div>
+      </div>
     </div>
     <div class="estado-sheet-actions">
       <button class="estado-sheet-cancel-btn" onclick="cerrarEstadoSheet()">Cancelar</button>
       <button class="estado-sheet-confirm-btn" id="esh-confirmar" onclick="confirmarEstadoSheet()">Confirmar</button>
     </div>
   </div>
+</div>
+
+<!-- Lightbox para ver foto de evidencia -->
+<div class="foto-lightbox" id="foto-lightbox" onclick="cerrarFotoLightbox()">
+  <button class="foto-lightbox-close" onclick="cerrarFotoLightbox()"><i class="ti ti-x"></i></button>
+  <img id="foto-lightbox-img" src="" alt="Evidencia">
 </div>
 
 <script>
@@ -2775,6 +3408,270 @@ textarea.form-control { min-height:72px; resize:vertical; }
 // ║  PARA RESTAURAR: click en "Restaurar" → carga el JSON del mes anterior  ║
 // ║                                                                          ║
 // ╚══════════════════════════════════════════════════════════════════════════╝
+
+// ╔══════════════════════════════════════════════════════════════════════════╗
+// ║                    CAPA DE ABSTRACCIÓN — SUPABASE                       ║
+// ║                                                                          ║
+// ║  HOY: usa window.storage (localStorage de Claude.ai)                    ║
+// ║  PARA MIGRAR A SUPABASE:                                                 ║
+// ║    1. Crear proyecto en supabase.com                                     ║
+// ║    2. Copiar URL y ANON KEY en SUPABASE_CONFIG abajo                     ║
+// ║    3. Correr el SQL de /docs/supabase_schema.sql en el SQL Editor        ║
+// ║    4. Cambiar USE_SUPABASE = true                                        ║
+// ║    5. Listo — sin tocar nada más en la app                               ║
+// ╚══════════════════════════════════════════════════════════════════════════╝
+
+const USE_SUPABASE = false; // ← cambiar a true cuando tengas Supabase listo
+
+const SUPABASE_CONFIG = {
+  url:     'https://TU_PROYECTO.supabase.co',   // ← pegar tu URL
+  anonKey: 'TU_ANON_KEY_AQUI',                  // ← pegar tu anon key
+};
+
+// ── Tabla → colección local equivalente ──────────────────────────────────
+// supabase tabla       ↔  state.colección
+//  fes_centros         ↔  state.centros
+//  fes_fortalecedores  ↔  state.fortalecedores
+//  fes_visitas         ↔  state.visitas
+//  fes_actividades     ↔  state.actividades
+//  fes_notas           ↔  state.notas
+//  fes_chicos          ↔  state.chicos
+//  fes_bonos           ↔  state.bonos
+//  fes_interior        ↔  state.interior
+//  fes_cronogramas     ↔  state.cronogramas   (JSONB)
+//  fes_fotos_visitas   ↔  Supabase Storage bucket "visitas"
+// ─────────────────────────────────────────────────────────────────────────
+
+// Inicializa el cliente Supabase (solo si USE_SUPABASE=true)
+let _supabase = null;
+function _initSupabase() {
+  if(!USE_SUPABASE) return;
+  if(typeof supabase === 'undefined') {
+    console.warn('FES: Supabase SDK no cargado. Agregá el <script> del CDN.');
+    return;
+  }
+  _supabase = supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+  console.log('FES: Supabase conectado ✓');
+}
+
+// ── _db.load() ────────────────────────────────────────────────────────────
+// Carga todos los datos. Hoy: localStorage. Mañana: Supabase.
+const _db = {
+  async load() {
+    if(USE_SUPABASE && _supabase) {
+      // ── SUPABASE: cargar cada tabla en paralelo ──
+      const [centros, forts, visitas, acts, notas, chicos, bonos, interior, cronos] = await Promise.all([
+        _supabase.from('fes_centros').select('*').order('nombre'),
+        _supabase.from('fes_fortalecedores').select('*').order('nombre'),
+        _supabase.from('fes_visitas').select('*').order('created_at', {ascending:false}),
+        _supabase.from('fes_actividades').select('*').order('anio,mes'),
+        _supabase.from('fes_notas').select('*').order('fecha', {ascending:false}),
+        _supabase.from('fes_chicos').select('*'),
+        _supabase.from('fes_bonos').select('*'),
+        _supabase.from('fes_interior').select('*').order('departamento'),
+        _supabase.from('fes_cronogramas').select('*'),
+      ]);
+      state.centros        = centros.data  || [];
+      state.fortalecedores = forts.data    || [];
+      state.visitas        = visitas.data  || [];
+      state.actividades    = acts.data     || [];
+      state.notas          = notas.data    || [];
+      state.chicos         = chicos.data   || [];
+      state.bonos          = bonos.data    || [];
+      state.interior       = interior.data || [];
+      // cronogramas viene como [{clave:'2026-1', eventos:[...]}, ...]
+      state.cronogramas = {};
+      (cronos.data||[]).forEach(r => { state.cronogramas[r.clave] = r.eventos; });
+      return;
+    }
+    // ── LOCAL: window.storage ──
+    try {
+      const r = await window.storage.get(KEY);
+      if(r && r.value) state = JSON.parse(r.value);
+    } catch(e) {}
+  },
+
+  async save() {
+    if(USE_SUPABASE && _supabase) {
+      // ── SUPABASE: upsert incremental por tabla ──
+      // Nota: en producción conviene guardar solo el registro modificado.
+      // Esta versión hace upsert completo para simplicidad.
+      await Promise.all([
+        _supabase.from('fes_centros').upsert(state.centros),
+        _supabase.from('fes_fortalecedores').upsert(state.fortalecedores),
+        _supabase.from('fes_visitas').upsert(state.visitas),
+        _supabase.from('fes_actividades').upsert(state.actividades),
+        _supabase.from('fes_notas').upsert(state.notas),
+        _supabase.from('fes_chicos').upsert(state.chicos),
+        _supabase.from('fes_bonos').upsert(state.bonos),
+        _supabase.from('fes_interior').upsert(state.interior),
+        _supabase.from('fes_cronogramas').upsert(
+          Object.entries(state.cronogramas).map(([clave, eventos]) => ({clave, eventos}))
+        ),
+      ]);
+      return;
+    }
+    // ── LOCAL ──
+    try { await window.storage.set(KEY, JSON.stringify(state)); } catch(e) {}
+  },
+
+  // ── Fotos de evidencia ──────────────────────────────────────────────────
+  // Hoy: base64 inline en state.visitas[n].fotoEvidencia
+  // Supabase: sube al bucket "visitas" y guarda solo la URL pública
+  async uploadFoto(visitaId, base64DataUrl) {
+    if(USE_SUPABASE && _supabase) {
+      // Convertir base64 a Blob
+      const res  = await fetch(base64DataUrl);
+      const blob = await res.blob();
+      const path = `visita_${visitaId}_${Date.now()}.jpg`;
+      const { data, error } = await _supabase.storage
+        .from('visitas')
+        .upload(path, blob, { contentType:'image/jpeg', upsert:true });
+      if(error) { console.error('FES upload foto:', error); return base64DataUrl; }
+      const { data:{ publicUrl } } = _supabase.storage.from('visitas').getPublicUrl(path);
+      return publicUrl;  // ← guardar esto en v.fotoEvidencia en vez del base64
+    }
+    // ── LOCAL: devolver el base64 tal cual ──
+    return base64DataUrl;
+  },
+};
+
+// Reemplazar las funciones globales para que usen _db
+async function load() {
+  await _db.load();
+  if(!state.actividades) state.actividades = [];
+  if(!state.cronogramas) state.cronogramas = {};
+  if(!state.visitas)     state.visitas = [];
+  if(!state.notas)       state.notas = [];
+  if(!state.asistencia)  state.asistencia = [];
+  if(!state.centros.length) loadDemo();
+  _initSupabase();
+  renderAll();
+  if(typeof hideSplash === 'function') hideSplash();
+}
+async function save() {
+  await _db.save();
+}
+
+/*
+════════════════════════════════════════════════════════════════
+  SQL PARA CREAR LAS TABLAS EN SUPABASE
+  Correr en: Supabase Dashboard → SQL Editor → New query
+════════════════════════════════════════════════════════════════
+
+-- Habilitar UUID
+create extension if not exists "uuid-ossp";
+
+create table fes_centros (
+  id          integer primary key,
+  nombre      text not null,
+  zona        text,
+  barrio      text,
+  horario     text,
+  cambio_horario boolean default false,
+  nuevo_horario  text,
+  activo      boolean default true,
+  lat         numeric, lng numeric,
+  created_at  timestamptz default now()
+);
+
+create table fes_fortalecedores (
+  id          integer primary key,
+  nombre      text not null,
+  dni         text,
+  programa    text,
+  materia     text,
+  turno       text,
+  contacto    text,
+  centro_id   integer references fes_centros(id),
+  activo      boolean default true,
+  created_at  timestamptz default now()
+);
+
+create table fes_visitas (
+  id            integer primary key,
+  centro_id     integer references fes_centros(id),
+  semana        text,
+  mes           text,
+  anio          integer,
+  dia           text,
+  hora          text,
+  estado        text default 'Pendiente',
+  responsable   text,
+  motivo        text,
+  obs           text,
+  obs_confirmacion text,
+  sin_docente   boolean default false,
+  fecha_realizada date,
+  foto_evidencia text,  -- URL de Supabase Storage (o base64 en modo local)
+  created_at    timestamptz default now()
+);
+
+create table fes_actividades (
+  id            integer primary key,
+  titulo        text,
+  tipo          text,
+  mes           text,
+  anio          integer,
+  participantes integer default 0,
+  lugar         text,
+  obs           text,
+  created_at    timestamptz default now()
+);
+
+create table fes_notas (
+  id      integer primary key,
+  tipo    text,
+  asunto  text,
+  cuerpo  text,
+  fecha   text,
+  dest    text,
+  prio    text,
+  created_at timestamptz default now()
+);
+
+create table fes_chicos (
+  id        integer primary key,
+  centro_id integer references fes_centros(id),
+  mes       text,
+  anio      integer,
+  cantidad  integer default 0
+);
+
+create table fes_bonos (
+  id        integer primary key,
+  centro_id integer references fes_centros(id),
+  cobra_bono boolean default true
+);
+
+create table fes_interior (
+  id            integer primary key,
+  departamento  text,
+  centros       integer default 0,
+  fort          integer default 0,
+  marzo         integer default 0,
+  abril         integer default 0,
+  activo        boolean default true
+);
+
+create table fes_cronogramas (
+  clave   text primary key,  -- formato: '2026-6'
+  eventos jsonb default '[]'
+);
+
+-- Storage bucket para fotos
+insert into storage.buckets (id, name, public) values ('visitas', 'visitas', true);
+
+-- RLS: por ahora abierto (ajustar cuando tengas auth)
+alter table fes_centros        enable row level security;
+alter table fes_fortalecedores enable row level security;
+alter table fes_visitas        enable row level security;
+create policy "acceso_publico" on fes_centros        for all using (true);
+create policy "acceso_publico" on fes_fortalecedores for all using (true);
+create policy "acceso_publico" on fes_visitas        for all using (true);
+
+════════════════════════════════════════════════════════════════
+*/
 
 // ═══════════════════════════════════════════════
 // STATE & CONSTANTS
@@ -2934,19 +3831,7 @@ const PROG_COLOR = {'FES':'var(--orange)','Familia Riojanas':'var(--cyan)','Form
 // ═══════════════════════════════════════════════
 // STORAGE
 // ═══════════════════════════════════════════════
-async function load() {
-  try { const r = await window.storage.get(KEY); if(r&&r.value) state=JSON.parse(r.value); } catch(e){}
-  if(!state.actividades) state.actividades = [];
-  if(!state.cronogramas) state.cronogramas = {};
-  if(!state.visitas)     state.visitas = [];
-  if(!state.notas)       state.notas = [];
-  if(!state.asistencia)  state.asistencia = [];
-  if(!state.centros.length) loadDemo();
-  renderAll();
-}
-async function save() {
-  try { await window.storage.set(KEY, JSON.stringify(state)); } catch(e){}
-}
+// load() y save() definidas en la capa _db arriba ↑
 
 // ═══════════════════════════════════════════════
 // DEMO DATA
@@ -3369,6 +4254,119 @@ function renderAll() {
   populateFiltros();
 }
 
+// ═══════════════════════════════════════════════
+// SKELETON SCREENS — helpers
+// ═══════════════════════════════════════════════
+function _skStatGrid(n) {
+  return '<div class="skeleton-stat-grid">'+Array.from({length:n},()=>
+    '<div class="skeleton-stat">'+
+      '<div class="sk-icon skeleton"></div>'+
+      '<div class="sk-label skeleton"></div>'+
+      '<div class="sk-value skeleton"></div>'+
+    '</div>').join('')+'</div>';
+}
+
+function _skTableRows(n) {
+  return Array.from({length:n},()=>
+    '<div class="skeleton-table-row">'+
+      '<div class="sk-dot skeleton"></div>'+
+      '<div class="sk-line-long skeleton"></div>'+
+      '<div class="sk-chip skeleton"></div>'+
+      '<div class="sk-line-mid skeleton"></div>'+
+      '<div class="sk-btn skeleton"></div>'+
+    '</div>').join('');
+}
+
+function _skCard(headerWidth, rows) {
+  return '<div class="skeleton-card">'+
+    '<div class="skeleton-header">'+
+      '<div class="skeleton" style="height:10px;width:'+(headerWidth||140)+'px;border-radius:20px"></div>'+
+    '</div>'+
+    '<div>'+_skTableRows(rows||5)+'</div>'+
+  '</div>';
+}
+
+function _skKpiGrid(n) {
+  return '<div class="dashboard-kpi-grid">'+Array.from({length:n},()=>
+    '<div class="skeleton-kpi">'+
+      '<div class="sk-kpi-icon skeleton"></div>'+
+      '<div class="sk-kpi-label skeleton"></div>'+
+      '<div class="sk-kpi-value skeleton"></div>'+
+    '</div>').join('')+'</div>';
+}
+
+function _skCronoGrid(n) {
+  return '<div class="skeleton-crono-grid">'+Array.from({length:n},()=>
+    '<div class="skeleton-crono-item">'+
+      '<div class="sk-fecha skeleton"></div>'+
+      '<div class="sk-crono-body">'+
+        '<div class="sk-title skeleton"></div>'+
+        '<div class="sk-desc skeleton"></div>'+
+        '<div class="sk-desc2 skeleton"></div>'+
+      '</div>'+
+    '</div>').join('')+'</div>';
+}
+
+function _skNotas(n) {
+  return Array.from({length:n},()=>
+    '<div class="skeleton-nota">'+
+      '<div class="sk-nota-header">'+
+        '<div class="sk-nota-asunto skeleton"></div>'+
+        '<div class="sk-nota-fecha skeleton"></div>'+
+      '</div>'+
+      '<div class="sk-nota-line skeleton" style="width:92%"></div>'+
+      '<div class="sk-nota-line skeleton" style="width:65%"></div>'+
+    '</div>').join('');
+}
+
+function _skAccesoGrid(n) {
+  return '<div class="skeleton-acceso-grid">'+Array.from({length:n},()=>
+    '<div class="skeleton-acceso-item">'+
+      '<div class="sk-acc-icon skeleton"></div>'+
+      '<div class="sk-acc-label skeleton"></div>'+
+    '</div>').join('')+'</div>';
+}
+
+const SKELETON_FOR = {
+  resumen:       function(){ return _skAccesoGrid(8)+_skKpiGrid(5)+_skCard(180,6)+_skCard(150,4); },
+  centros:       function(){ return _skStatGrid(5)+_skCard(200,8); },
+  fortalecedores:function(){ return _skStatGrid(3)+_skCard(180,7); },
+  territorio:    function(){ return _skStatGrid(4)+_skCard(200,6); },
+  visitas:       function(){ return _skStatGrid(4)+_skCronoGrid(6); },
+  actividades:   function(){ return _skStatGrid(3)+_skCronoGrid(4); },
+  bonos:         function(){ return _skStatGrid(3)+_skCard(160,8); },
+  notas:         function(){ return _skStatGrid(3)+_skNotas(4); },
+  interior:      function(){ return _skStatGrid(4)+_skCard(180,6); },
+};
+
+function _showSkeleton(tabId) {
+  const panel = document.getElementById('tab-'+tabId);
+  if(!panel) return;
+  const fn = SKELETON_FOR[tabId];
+  if(!fn) return;
+  const hasContent = panel.querySelector('.stat-card,.card,.nota-card,.crono-item,.dash-kpi,.terr-centro-card');
+  if(hasContent) return;
+  if(document.getElementById('skeleton-'+tabId)) return;
+  const sk = document.createElement('div');
+  sk.id = 'skeleton-'+tabId;
+  sk.innerHTML = fn();
+  panel.prepend(sk);
+}
+
+function _removeSkeleton(tabId) {
+  const sk = document.getElementById('skeleton-'+tabId);
+  if(sk) {
+    sk.style.transition = 'opacity .18s ease';
+    sk.style.opacity = '0';
+    setTimeout(function(){ sk.remove(); }, 200);
+  }
+  const panel = document.getElementById('tab-'+tabId);
+  if(panel) {
+    panel.classList.add('skeleton-entered');
+    setTimeout(function(){ panel.classList.remove('skeleton-entered'); }, 400);
+  }
+}
+
 function updateBadges() {
   const activos = state.centros.filter(c=>c.activo).length;
   const setBadge = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
@@ -3743,7 +4741,10 @@ function renderVisitas() {
   if(!currentHeroSemana) currentHeroSemana = semanaHoyKey;
   const semActualKey = currentHeroSemana;
   const esHeroSemanaActual = semActualKey === semanaHoyKey;
-  const visActual = state.visitas.filter(v => v.semana === semActualKey);
+  const visActualTodas = state.visitas.filter(v => v.semana === semActualKey);
+  const visActual = zonaSemanalActiva
+    ? visActualTodas.filter(v => getZona(v.centroId) === zonaSemanalActiva)
+    : visActualTodas;
   const realAct = visActual.filter(v=>v.estado==='Realizada').length;
   const pendAct = visActual.filter(v=>v.estado==='Pendiente').length;
   const cancAct = visActual.filter(v=>v.estado==='Cancelada').length;
@@ -3822,6 +4823,8 @@ function renderVisitas() {
                 ${zona ? `<span class="zona-chip ${zonaClass(zona)}" style="font-size:8px;padding:1px 6px;margin-top:3px;display:inline-block">${zona}</span>` : ''}
                 ${v.responsable ? `<div style="font-size:9.5px;color:var(--text3);margin-top:3px"><i class="ti ti-user" style="font-size:9px"></i> ${v.responsable}</div>` : ''}
                 ${v.motivo ? `<div class="vlc-motivo"><i class="ti ti-alert-circle"></i>${v.motivo}</div>` : ''}
+                ${v.obsConfirmacion ? `<div class="vlc-motivo" style="color:var(--text2);font-style:normal"><i class="ti ti-notes" style="color:var(--green)"></i>${v.obsConfirmacion}</div>` : ''}
+                ${v.fotoEvidencia ? `<div class="foto-badge" onclick="verFotoEvidencia('${v.fotoEvidencia}',event)"><i class="ti ti-camera-filled"></i>Ver foto</div>` : ''}
               </div>
               <div class="visita-actions" onclick="event.stopPropagation()">
                 <button class="btn btn-sm btn-icon" onclick="editVisita(${v.id})"><i class="ti ti-edit"></i></button>
@@ -3990,6 +4993,7 @@ function deleteVisita(id) {
 // ═══════════════════════════════════════════════
 let visitaVistaActiva = 'semanal'; // 'semanal' | 'anual'
 let currentHeroSemana = null; // semana mostrada en el hero banner (null = semana actual)
+let zonaSemanalActiva = '';   // '' = todas las zonas
 let visitaMesActivo = { mes: MESES[new Date().getMonth()], anio: new Date().getFullYear() };
 let visitaSubTab = 'resumen';
 
@@ -4278,6 +5282,27 @@ function navegarHeroSemana(delta) {
   const lunes = lunesDeSemanaISO(currentHeroSemana);
   lunes.setDate(lunes.getDate() + delta * 7);
   currentHeroSemana = semanaISOdeDate(lunes);
+  renderVisitas();
+}
+
+function setZonaSemanal(btn, zona) {
+  zonaSemanalActiva = zona;
+  // Actualizar estado visual de los chips
+  document.querySelectorAll('#zona-chips-semanal .zona-chip-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Badge informativo
+  const badge    = document.getElementById('zona-semanal-badge');
+  const badgeTxt = document.getElementById('zona-semanal-badge-txt');
+  const ZONA_COLOR_MAP = {Norte:'var(--cyan)',Este:'var(--amber)',Sur:'var(--green)',Oeste:'var(--orange)'};
+  if(zona && badge && badgeTxt) {
+    const centrosZona = state.centros.filter(c => c.zona === zona && c.activo !== false).length;
+    badgeTxt.innerHTML = '<i class="ti ti-filter" style="font-size:10px"></i> Zona ' + zona +
+      ' &nbsp;·&nbsp; <span style="color:' + (ZONA_COLOR_MAP[zona]||'var(--accent)') + '">' +
+      centrosZona + ' centros</span>';
+    badge.style.display = 'block';
+  } else if(badge) {
+    badge.style.display = 'none';
+  }
   renderVisitas();
 }
 
@@ -5442,8 +6467,14 @@ function showTab(tab) {
   if(pdfBtn){const lbl=document.querySelector('#btn-pdf-section .pdf-btn-label');if(lbl)lbl.textContent=pdfLabels[tab]||'PDF';}
   closeSidebar();
   _updateFab();
-  renderAll();
-  window.scrollTo(0,0);
+  // Mostrar skeleton solo en el tab destino antes de renderizar
+  _showSkeleton(tab);
+  // Pequeño delay para que el skeleton sea visible antes del render síncrono
+  setTimeout(function(){
+    renderAll();
+    _removeSkeleton(tab);
+    window.scrollTo(0,0);
+  }, 80);
 }
 
 // ═══════════════════════════════════════════════
@@ -5670,6 +6701,15 @@ function buildForm() {
     const hoy = new Date();
     mt.textContent = editId ? 'Editar Visita' : 'Nueva Visita';
 
+    // Mes y día por defecto: sacarlos de la semana activa en el hero
+    const semHero  = currentHeroSemana || semanaISOdeDate(hoy);
+    const lunesHero = lunesDeSemanaISO(semHero);
+    const mesHero  = lunesHero ? MESES[lunesHero.getMonth()] : MESES[hoy.getMonth()];
+    const anioHero = lunesHero ? lunesHero.getFullYear() : hoy.getFullYear();
+    const diaHero  = visitaDiaTarget?.dia || v.dia || 'Lunes';
+    const mesDefault  = v.mes  || mesHero;
+    const anioDefault = v.anio || anioHero;
+
     // Build centro picker options
     const centros = (state.centros||[]).filter(c=>c.activo!==false).sort((a,b)=>a.nombre.localeCompare(b.nombre));
     const selectedCentroId = v.centroId || '';
@@ -5704,18 +6744,18 @@ function buildForm() {
           <div class="form-group">
             <label>Semana / Mes *</label>
             <select class="form-control" id="f-mes-visita">
-              ${MESES.map(m=>`<option ${(v.mes||MESES[hoy.getMonth()])===m?'selected':''}>${m}</option>`).join('')}
+              ${MESES.map(m=>`<option ${mesDefault===m?'selected':''}>${m}</option>`).join('')}
             </select>
           </div>
           <div class="form-group">
             <label>Año *</label>
             <input class="form-control" id="f-anio-visita" type="number" inputmode="numeric"
-              value="${v.anio||hoy.getFullYear()}" min="2020" max="2030">
+              value="${anioDefault}" min="2020" max="2030">
           </div>
           <div class="form-group">
             <label>Día de la semana</label>
             <select class="form-control" id="f-dia">
-              ${DIAS_SEMANA.map(d=>`<option ${d===(v.dia||'Lunes')?'selected':''}>${d}</option>`).join('')}
+              ${DIAS_SEMANA.map(d=>`<option ${d===diaHero?'selected':''}>${d}</option>`).join('')}
             </select>
           </div>
           <div class="form-group">
@@ -6244,19 +7284,30 @@ function _pickCentro(id, el) {
 function saveVisita() {
   const centroId=parseInt(document.getElementById('f-centro').value);
   if(!centroId){alert('El centro vecinal es obligatorio');return;}
-  const mes=document.getElementById('f-mes-visita').value;
-  const anio=parseInt(document.getElementById('f-anio-visita').value)||new Date().getFullYear();
-  const dia=document.getElementById('f-dia').value;
-  const hora=document.getElementById('f-hora').value;
-  const estado=document.getElementById('f-estado').value;
-  const responsable=document.getElementById('f-resp').value;
-  const sinDocente=document.getElementById('f-sin-docente').checked;
-  const obs=document.getElementById('f-obs').value;
-  const obj={centroId,mes,anio,dia,hora,estado,responsable,sinDocente,obs};
-  if(editId) Object.assign(state.visitas.find(x=>x.id==editId),obj);
-  else{obj.id=uid(state.visitas);state.visitas.push(obj);}
+
+  // Semana: usar la semana activa en el hero (o la actual si no hay ninguna)
+  const semana = visitaDiaTarget?.semana || currentHeroSemana || _getSemanaActual();
+
+  const mes     = document.getElementById('f-mes-visita').value;
+  const anio    = parseInt(document.getElementById('f-anio-visita').value)||new Date().getFullYear();
+  const dia     = visitaDiaTarget?.dia || document.getElementById('f-dia').value;
+  const hora    = document.getElementById('f-hora').value;
+  const estado  = document.getElementById('f-estado').value;
+  const responsable = document.getElementById('f-resp').value;
+  const sinDocente  = document.getElementById('f-sin-docente').checked;
+  const obs     = document.getElementById('f-obs').value;
+
+  const obj = {centroId, semana, mes, anio, dia, hora, estado, responsable, sinDocente, obs};
+  if(editId) Object.assign(state.visitas.find(x=>x.id==editId), obj);
+  else { obj.id=uid(state.visitas); state.visitas.push(obj); }
+
   visitaDiaTarget=null;
-  save();closeModal();renderVisitas();updateBadges();
+  save(); closeModal(); renderVisitas(); updateBadges();
+}
+
+function _getSemanaActual() {
+  const hoy = new Date();
+  return semanaISOdeDate(hoy);
 }
 
 // ─── Bottom Sheet — Estado rápido ───
@@ -6279,6 +7330,21 @@ function abrirEstadoSheet(id) {
   // Restaurar motivo previo si tiene
   document.getElementById('motivo-textarea').value = v.motivo || '';
 
+  // Restaurar observación de confirmación previa
+  const obsEl = document.getElementById('obs-confirmacion');
+  if(obsEl) obsEl.value = v.obsConfirmacion || '';
+
+  // Restaurar foto si la visita ya tenía una
+  _resetFoto();
+  if(v.estado === 'Realizada' && v.fotoEvidencia) {
+    _fotoEvidenciaData = v.fotoEvidencia;
+    document.getElementById('foto-preview-img').src = v.fotoEvidencia;
+    document.getElementById('foto-preview-wrap').classList.add('has-foto');
+    document.getElementById('foto-area').classList.add('visible');
+  } else if(v.estado === 'Realizada') {
+    document.getElementById('foto-area').classList.add('visible');
+  }
+
   // Activar el botón del estado actual
   actualizarBotonesEstado(v.estado);
 
@@ -6292,6 +7358,7 @@ function cerrarEstadoSheet(e) {
   document.body.style.overflow = '';
   _estadoSheetId = null;
   _estadoSeleccionado = null;
+  _resetFoto();
 }
 
 function seleccionarEstado(estado) {
@@ -6299,16 +7366,23 @@ function seleccionarEstado(estado) {
   actualizarBotonesEstado(estado);
   const area  = document.getElementById('motivo-area');
   const label = document.getElementById('motivo-label');
+  const fotoA = document.getElementById('foto-area');
   if(estado === 'Cancelada') {
     area.classList.add('visible');
     label.textContent = 'Motivo de cancelación';
     _resetChips();
+    fotoA.classList.remove('visible');
   } else if(estado === 'Suspendida') {
     area.classList.add('visible');
     label.textContent = 'Motivo de suspensión';
     _resetChips();
+    fotoA.classList.remove('visible');
+  } else if(estado === 'Realizada') {
+    area.classList.remove('visible');
+    fotoA.classList.add('visible');
   } else {
     area.classList.remove('visible');
+    fotoA.classList.remove('visible');
   }
 }
 
@@ -6331,19 +7405,88 @@ function confirmarEstadoSheet() {
     const m = String(hoy.getMonth()+1).padStart(2,'0');
     v.diaNumero = `${d}/${m}`;
     v.motivo = '';
+    v.obsConfirmacion = (document.getElementById('obs-confirmacion')?.value || '').trim();
+    if(_fotoEvidenciaData) {
+      // _db.uploadFoto sube a Supabase si está activo, o devuelve base64 en local
+      _db.uploadFoto(v.id, _fotoEvidenciaData).then(url => {
+        v.fotoEvidencia = url;
+        save();
+      });
+    } else {
+      save();
+    }
   } else {
     v.fechaRealizada = null;
     v.diaNumero = null;
+    v.obsConfirmacion = '';
     v.motivo = document.getElementById('motivo-textarea').value.trim();
+    save();
   }
-  save(); renderVisitas(); updateBadges();
+  renderVisitas(); updateBadges();
   document.getElementById('estado-sheet-overlay').classList.remove('open');
   document.body.style.overflow = '';
   _estadoSheetId = null;
   _estadoSeleccionado = null;
+  _resetFoto();
 }
 
-// Chip de motivo rápido
+// ── Foto de evidencia ──────────────────────────────
+let _fotoEvidenciaData = null; // base64 de la foto seleccionada en el sheet actual
+
+function onFotoSelected(input) {
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    // Comprimir antes de guardar
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      const MAX = 900;
+      let w = img.width, h = img.height;
+      if(w > MAX || h > MAX) {
+        if(w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else       { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      _fotoEvidenciaData = canvas.toDataURL('image/jpeg', 0.78);
+      document.getElementById('foto-preview-img').src = _fotoEvidenciaData;
+      document.getElementById('foto-preview-wrap').classList.add('has-foto');
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function quitarFoto() {
+  _fotoEvidenciaData = null;
+  document.getElementById('foto-preview-img').src = '';
+  document.getElementById('foto-preview-wrap').classList.remove('has-foto');
+}
+
+function _resetFoto() {
+  _fotoEvidenciaData = null;
+  const prev = document.getElementById('foto-preview-wrap');
+  if(prev) { prev.classList.remove('has-foto'); document.getElementById('foto-preview-img').src = ''; }
+  const area = document.getElementById('foto-area');
+  if(area) area.classList.remove('visible');
+}
+
+function verFotoEvidencia(base64, event) {
+  if(event) event.stopPropagation();
+  document.getElementById('foto-lightbox-img').src = base64;
+  document.getElementById('foto-lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarFotoLightbox() {
+  document.getElementById('foto-lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── Chip de motivo rápido
 function _chipMotivo(el, texto) {
   document.querySelectorAll('.motivo-chip').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
@@ -7478,6 +8621,8 @@ load();
   } else {
     window.addEventListener('load', ()=> setTimeout(dismissLoader, 1800));
   }
+  // También cerrar cuando load() termine (lo que ocurra primero)
+  window.hideSplash = dismissLoader;
 })();
 </script>
 <!-- ══ BUSCADOR DE FORTALECEDORES ══ -->
@@ -7635,6 +8780,454 @@ load();
     </div>
   </div>
 </div>
+
+<!-- ══ BANNER SIN CONEXIÓN ══ -->
+<div id="offline-banner" style="
+  display:none; position:fixed; bottom:calc(var(--bottom-nav-h,64px) + 36px + env(safe-area-inset-bottom) + 8px);
+  left:50%; transform:translateX(-50%);
+  background:#1a1a2e; color:#fff;
+  padding:10px 16px 10px 13px;
+  border-radius:12px;
+  box-shadow:0 4px 20px rgba(0,0,0,.35);
+  display:none; align-items:center; gap:10px;
+  font-family:'Poppins',sans-serif; font-size:12px; font-weight:600;
+  z-index:9999; white-space:nowrap;
+  border:1px solid rgba(255,255,255,.1);
+  animation:offlineBannerIn .3s cubic-bezier(.34,1.4,.64,1) both;
+">
+  <span style="width:28px;height:28px;border-radius:8px;background:rgba(255,102,0,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">📡</span>
+  <div>
+    <div style="font-size:12px;font-weight:700;color:#fff;line-height:1.3">Sin conexión a internet</div>
+    <div style="font-size:10.5px;color:rgba(255,255,255,.55);font-weight:500">Los íconos y fuentes pueden no verse correctamente</div>
+  </div>
+  <button onclick="document.getElementById('offline-banner').style.display='none'" style="
+    background:rgba(255,255,255,.1); border:none; border-radius:6px;
+    color:rgba(255,255,255,.6); width:24px; height:24px;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:14px; flex-shrink:0; margin-left:4px;
+    font-family:sans-serif; line-height:1;
+  ">✕</button>
+</div>
+
+<style>
+@keyframes offlineBannerIn {
+  from { opacity:0; transform:translateX(-50%) translateY(12px); }
+  to   { opacity:1; transform:translateX(-50%) translateY(0); }
+}
+</style>
+
+<script>
+(function(){
+  const banner = document.getElementById('offline-banner');
+  function show(){ banner.style.display = 'flex'; }
+  function hide(){ banner.style.display = 'none'; }
+  if(!navigator.onLine) show();
+  window.addEventListener('offline', show);
+  window.addEventListener('online',  hide);
+})();
+</script>
+
+<!-- ══ PWA: MANIFEST + SERVICE WORKER (inline, sin archivos externos) ══ -->
+<script>
+// ── Manifest embebido ──────────────────────────────────────────
+const manifestData = {
+  name: "FES — Fortalecimiento Escolar y Social",
+  short_name: "FES La Rioja",
+  description: "Programa Fortalecimiento Escolar y Social · Ministerio de Desarrollo, Igualdad e Integración Social",
+  start_url: "./",
+  display: "standalone",
+  orientation: "portrait",
+  background_color: "#0f1623",
+  theme_color: "#0f1623",
+  lang: "es-AR",
+  icons: [
+    {
+      src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%230f1623'/%3E%3Crect width='512' height='512' rx='110' fill='url(%23g)'/%3E%3Cdefs%3E%3CradialGradient id='g' cx='70%25' cy='20%25'%3E%3Cstop offset='0' stop-color='%23f5a80022'/%3E%3Cstop offset='100' stop-color='transparent'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ctext x='256' y='340' font-family='Arial Black,sans-serif' font-size='260' font-weight='900' text-anchor='middle'%3E%3Ctspan fill='%23f5a800'%3EF%3C/tspan%3E%3Ctspan fill='%231ab8e8'%3EE%3C/tspan%3E%3Ctspan fill='%23e8286e'%3ES%3C/tspan%3E%3C/text%3E%3C/svg%3E",
+      sizes: "512x512",
+      type: "image/svg+xml",
+      purpose: "any maskable"
+    },
+    {
+      src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='42' fill='%230f1623'/%3E%3Ctext x='96' y='128' font-family='Arial Black,sans-serif' font-size='98' font-weight='900' text-anchor='middle'%3E%3Ctspan fill='%23f5a800'%3EF%3C/tspan%3E%3Ctspan fill='%231ab8e8'%3EE%3C/tspan%3E%3Ctspan fill='%23e8286e'%3ES%3C/tspan%3E%3C/text%3E%3C/svg%3E",
+      sizes: "192x192",
+      type: "image/svg+xml",
+      purpose: "any"
+    }
+  ]
+};
+
+// Inyectar el manifest como blob URL
+try {
+  const blob = new Blob([JSON.stringify(manifestData)], {type:'application/json'});
+  const url  = URL.createObjectURL(blob);
+  const link = document.querySelector('link[rel="manifest"]');
+  if(link) link.href = url;
+} catch(e) { console.warn('PWA manifest:', e); }
+
+// ── Service Worker ─────────────────────────────────────────────
+// Funciona solo cuando el archivo está en un servidor HTTPS (Supabase).
+// En local (file://) se omite automáticamente.
+
+if('serviceWorker' in navigator && location.protocol === 'https:') {
+  navigator.serviceWorker.register('./sw.js', {scope: './'})
+    .then(r => console.log('FES PWA: SW registrado', r.scope))
+    .catch(e => console.warn('FES PWA: SW error', e));
+}
+
+// ── Banner "Agregar a pantalla de inicio" ──────────────────────
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Mostrar banner de instalación después de 3 segundos
+  setTimeout(mostrarBannerInstalar, 3000);
+});
+
+function mostrarBannerInstalar() {
+  if(!deferredPrompt) return;
+  if(localStorage.getItem('fes-pwa-dismissed')) return;
+
+  const b = document.createElement('div');
+  b.id = 'pwa-install-banner';
+  b.innerHTML = `
+    <div style="display:flex;align-items:center;gap:11px;flex:1;min-width:0">
+      <div style="width:40px;height:40px;border-radius:11px;background:linear-gradient(145deg,#1a2540,#243058);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:Arial Black,sans-serif;font-size:14px;font-weight:900;flex-shrink:0;letter-spacing:-1px"><span style="color:#f5a800">F</span><span style="color:#1ab8e8">E</span><span style="color:#e8286e">S</span></div>
+      <div style="min-width:0">
+        <div style="font-size:12.5px;font-weight:700;color:#fff;line-height:1.2">Instalar FES La Rioja</div>
+        <div style="font-size:10.5px;color:rgba(255,255,255,.5);margin-top:1px">Agregá la app a tu pantalla de inicio</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:7px;flex-shrink:0">
+      <button id="pwa-install-ok" style="background:#1ab8e8;border:none;border-radius:8px;color:#fff;font-size:11.5px;font-weight:700;padding:8px 14px;cursor:pointer;font-family:Poppins,sans-serif">Instalar</button>
+      <button id="pwa-install-no" style="background:rgba(255,255,255,.08);border:none;border-radius:8px;color:rgba(255,255,255,.5);font-size:11.5px;font-weight:600;padding:8px 10px;cursor:pointer;font-family:Poppins,sans-serif">Ahora no</button>
+    </div>
+  `;
+  b.style.cssText = `
+    position:fixed;bottom:calc(var(--bottom-nav-h,64px) + env(safe-area-inset-bottom) + 10px);
+    left:10px;right:10px;
+    background:#1a2540;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:16px;
+    padding:12px 14px;
+    display:flex;align-items:center;gap:10px;
+    box-shadow:0 8px 32px rgba(0,0,0,.5);
+    z-index:9998;
+    animation:offlineBannerIn .35s cubic-bezier(.34,1.4,.64,1) both;
+    font-family:Poppins,sans-serif;
+  `;
+  document.body.appendChild(b);
+
+  document.getElementById('pwa-install-ok').onclick = async () => {
+    b.remove();
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if(outcome === 'accepted') console.log('FES PWA: instalada');
+    deferredPrompt = null;
+  };
+  document.getElementById('pwa-install-no').onclick = () => {
+    b.remove();
+    localStorage.setItem('fes-pwa-dismissed', '1');
+  };
+}
+
+// Detectar si ya está instalada como PWA
+window.addEventListener('appinstalled', () => {
+  console.log('FES PWA: app instalada correctamente');
+  deferredPrompt = null;
+  const b = document.getElementById('pwa-install-banner');
+  if(b) b.remove();
+});
+</script>
+
+<!-- ══ GESTOS DESLIZAMIENTO ══ -->
+<script>
+(function(){
+  // Orden de tabs en el bottom nav (igual que los botones)
+  const SWIPE_TABS = ['resumen','centros','visitas','fortalecedores'];
+
+  // Configuración
+  const MIN_X     = 55;   // px mínimos horizontales para contar como swipe
+  const MAX_Y     = 80;   // px máximos verticales (evita conflicto con scroll)
+  const MAX_TIME  = 400;  // ms máximo para el gesto
+
+  let t0, x0, y0, locked = false;
+
+  const area = document.getElementById('app-content') || document.body;
+
+  area.addEventListener('touchstart', e => {
+    if(e.touches.length !== 1) return;
+    const t = e.touches[0];
+    x0 = t.clientX;
+    y0 = t.clientY;
+    t0 = Date.now();
+    locked = false;
+  }, {passive:true});
+
+  area.addEventListener('touchmove', e => {
+    if(locked || !x0) return;
+    const dx = Math.abs(e.touches[0].clientX - x0);
+    const dy = Math.abs(e.touches[0].clientY - y0);
+    // Si el movimiento es más vertical que horizontal, bloqueamos
+    if(dy > dx && dy > 12) locked = true;
+  }, {passive:true});
+
+  area.addEventListener('touchend', e => {
+    if(locked || !x0) return;
+    const t   = e.changedTouches[0];
+    const dx  = t.clientX - x0;
+    const dy  = Math.abs(t.clientY - y0);
+    const dt  = Date.now() - t0;
+
+    x0 = null;
+
+    // Validar gesto
+    if(Math.abs(dx) < MIN_X) return;
+    if(dy > MAX_Y)            return;
+    if(dt > MAX_TIME)         return;
+
+    // Ignorar si el toque empezó dentro de un elemento scrollable horizontal
+    const target = e.target;
+    if(target.closest('.zona-chips-scroll, .subtab-scroll-wrap, #zona-chips-semanal, .inner-tabs, .notas-inner-tabs')) return;
+
+    // Calcular tab destino
+    const activeTab = document.querySelector('.section-tab.active')?.id?.replace('tab-','') || 'resumen';
+    const idx = SWIPE_TABS.indexOf(activeTab);
+    if(idx === -1) return;
+
+    let nextIdx;
+    if(dx < 0) {
+      // Deslizar izquierda → siguiente tab
+      nextIdx = idx + 1;
+    } else {
+      // Deslizar derecha → tab anterior
+      nextIdx = idx - 1;
+    }
+
+    if(nextIdx < 0 || nextIdx >= SWIPE_TABS.length) {
+      // Vibración suave al llegar al límite
+      if(navigator.vibrate) navigator.vibrate(30);
+      return;
+    }
+
+    // Feedback háptico
+    if(navigator.vibrate) navigator.vibrate(18);
+
+    // Animación de salida/entrada direccional
+    const content = document.querySelector('.content');
+    const outX = dx < 0 ? '-18px' : '18px';
+    const inX  = dx < 0 ? '18px'  : '-18px';
+
+    if(content) {
+      content.style.transition = 'opacity .12s ease, transform .12s ease';
+      content.style.opacity    = '0';
+      content.style.transform  = `translateX(${outX})`;
+    }
+
+    setTimeout(() => {
+      showTab(SWIPE_TABS[nextIdx]);
+      if(content) {
+        content.style.transition = 'none';
+        content.style.transform  = `translateX(${inX})`;
+        content.style.opacity    = '0';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            content.style.transition = 'opacity .18s ease, transform .18s ease';
+            content.style.opacity    = '1';
+            content.style.transform  = 'translateX(0)';
+          });
+        });
+      }
+    }, 100);
+
+  }, {passive:true});
+
+  // Indicadores de swipe (puntos debajo del bottom nav)
+  function renderDots(activeTab) {
+    let dots = document.getElementById('swipe-dots');
+    if(!dots) {
+      dots = document.createElement('div');
+      dots.id = 'swipe-dots';
+      dots.style.cssText = `
+        position:fixed;
+        bottom:calc(var(--bottom-nav-h,64px) + env(safe-area-inset-bottom) + 6px);
+        left:50%; transform:translateX(-50%);
+        display:flex; gap:5px; align-items:center;
+        z-index:100; pointer-events:none;
+        transition:opacity .3s;
+      `;
+      document.body.appendChild(dots);
+    }
+    dots.innerHTML = SWIPE_TABS.map((tab, i) => {
+      const isActive = tab === activeTab;
+      return `<div style="
+        width:${isActive ? '16px' : '5px'};
+        height:5px;
+        border-radius:20px;
+        background:${isActive ? 'var(--accent,#3b82f6)' : 'rgba(255,255,255,.2)'};
+        transition:width .2s cubic-bezier(.34,1.4,.64,1), background .2s;
+      "></div>`;
+    }).join('');
+  }
+
+  // Hook en showTab para actualizar los dots
+  const _origShowTab = window.showTab;
+  window.showTab = function(tab) {
+    _origShowTab(tab);
+    renderDots(tab);
+  };
+
+  // Init dots
+  setTimeout(() => renderDots('resumen'), 800);
+
+})();
+</script>
+
+<!-- ══ FORMULARIOS RÁPIDOS — teclado mobile ══ -->
+<script>
+(function(){
+  if(!window.visualViewport) return; // solo mobile moderno
+
+  const vv = window.visualViewport;
+
+  function ajustarModal() {
+    const modal   = document.querySelector('.modal-overlay.open .modal');
+    const overlay = document.querySelector('.modal-overlay.open');
+    if(!modal || !overlay) return;
+
+    const kbHeight = window.innerHeight - vv.height; // altura del teclado
+    const safeBot  = parseFloat(getComputedStyle(document.documentElement)
+                       .getPropertyValue('--safe-area-inset-bottom') || '0') || 0;
+
+    if(kbHeight > 80) {
+      // Teclado visible — subir el modal
+      const maxH = vv.height - 52; // 52px para el header topbar
+      modal.style.maxHeight  = maxH + 'px';
+      modal.style.transition = 'max-height .2s ease, transform .2s ease';
+      overlay.style.alignItems = 'flex-end';
+
+      // Scroll al campo activo dentro del modal
+      const active = modal.querySelector('input:focus, select:focus, textarea:focus');
+      if(active) scrollToField(active);
+
+    } else {
+      // Teclado oculto — restaurar
+      modal.style.maxHeight  = '';
+      modal.style.transform  = '';
+      overlay.style.alignItems = '';
+    }
+  }
+
+  function scrollToField(el) {
+    const body = el.closest('.modal-body-inner, .modal-body');
+    if(!body) return;
+    const elRect   = el.getBoundingClientRect();
+    const bodyRect = body.getBoundingClientRect();
+    // Si el campo está tapado por el teclado, scroll para mostrarlo
+    const offset = elRect.top - bodyRect.top - 80; // 80px de margen arriba
+    if(offset > 0) {
+      body.scrollBy({ top: offset, behavior: 'smooth' });
+    }
+  }
+
+  // Escuchar cambios del viewport (teclado sube/baja)
+  vv.addEventListener('resize', ajustarModal);
+  vv.addEventListener('scroll', ajustarModal);
+
+  // Al hacer focus en cualquier campo del modal, scroll automático
+  document.addEventListener('focusin', e => {
+    const field = e.target;
+    if(!field.matches('input, select, textarea')) return;
+    if(!field.closest('.modal-overlay')) return;
+
+    // Pequeño delay para que el teclado termine de subir
+    setTimeout(() => {
+      ajustarModal();
+      scrollToField(field);
+    }, 320);
+  }, true);
+
+  // Al cerrar el modal, limpiar estilos
+  const observer = new MutationObserver(() => {
+    const overlay = document.querySelector('.modal-overlay');
+    if(overlay && !overlay.classList.contains('open')) {
+      const modal = overlay.querySelector('.modal');
+      if(modal) {
+        modal.style.maxHeight = '';
+        modal.style.transform = '';
+      }
+      overlay.style.alignItems = '';
+    }
+  });
+  const overlay = document.querySelector('.modal-overlay');
+  if(overlay) observer.observe(overlay, { attributes:true, attributeFilter:['class'] });
+
+})();
+</script>
+
+<!-- ══ MODO RETRATO FORZADO ══ -->
+<div id="rotate-warning" style="
+  display:none; position:fixed; inset:0; z-index:999999;
+  background:#0f1623;
+  flex-direction:column; align-items:center; justify-content:center;
+  gap:16px; text-align:center; padding:32px;
+">
+  <div style="font-size:52px; animation:rotateHint 1.2s ease-in-out infinite alternate;">📱</div>
+  <div style="font-family:'Poppins',Arial,sans-serif; font-size:17px; font-weight:700; color:#fff; line-height:1.3;">
+    Girá el celular
+  </div>
+  <div style="font-family:'Poppins',Arial,sans-serif; font-size:12px; color:rgba(255,255,255,.45); font-weight:500; max-width:220px; line-height:1.6;">
+    FES está optimizada para usarse en modo vertical
+  </div>
+  <div style="
+    margin-top:8px;
+    display:flex; align-items:center; gap:7px;
+    font-family:'Poppins',Arial,sans-serif;
+    font-size:11px; font-weight:700;
+    background:linear-gradient(135deg,#1a2540,#243058);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:12px; padding:9px 16px;
+    color:rgba(255,255,255,.6);
+  ">
+    <span style="color:#f5a800">F</span><span style="color:#1ab8e8">E</span><span style="color:#e8286e">S</span>
+    <span style="margin-left:4px">La Rioja</span>
+  </div>
+</div>
+
+<style>
+@keyframes rotateHint {
+  from { transform: rotate(-15deg); }
+  to   { transform: rotate(15deg); }
+}
+</style>
+
+<script>
+(function(){
+  const warn = document.getElementById('rotate-warning');
+
+  // 1. Screen Orientation API (Chrome Android, Samsung Browser)
+  if(screen.orientation && screen.orientation.lock) {
+    screen.orientation.lock('portrait').catch(() => {});
+  }
+
+  // 2. CSS + JS fallback — mostrar aviso si está en landscape en mobile
+  function checkOrientation() {
+    if(!warn) return;
+    const isLandscape = window.innerWidth > window.innerHeight;
+    const isMobile    = window.innerWidth <= 900 || navigator.maxTouchPoints > 0;
+    if(isLandscape && isMobile) {
+      warn.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    } else {
+      warn.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  }
+
+  window.addEventListener('orientationchange', () => setTimeout(checkOrientation, 120));
+  window.addEventListener('resize', checkOrientation);
+  checkOrientation();
+})();
+</script>
 
 </body>
 </html>
