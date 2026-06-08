@@ -3556,6 +3556,7 @@ const _db = {
 
 // Reemplazar las funciones globales para que usen _db
 async function load() {
+  _initSupabase(); // ← debe ir ANTES de _db.load() para que _supabase no sea null
   await _db.load();
   if(!state.actividades) state.actividades = [];
   if(!state.cronogramas) state.cronogramas = {};
@@ -3563,7 +3564,6 @@ async function load() {
   if(!state.notas)       state.notas = [];
   if(!state.asistencia)  state.asistencia = [];
   if(!state.centros.length) loadDemo();
-  _initSupabase();
   renderAll();
   if(typeof hideSplash === 'function') hideSplash();
 }
