@@ -14,6 +14,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="description" content="Programa Fortalecimiento Escolar y Social — La Rioja">
 <link rel="manifest" href="manifest.json">
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
 <!-- Íconos iOS (inline SVG como data URI para no depender de archivos externos) -->
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230f1623'/%3E%3Ctext x='90' y='118' font-family='Arial Black,sans-serif' font-size='88' font-weight='900' text-anchor='middle'%3E%3Ctspan fill='%23f5a800'%3EF%3C/tspan%3E%3Ctspan fill='%231ab8e8'%3EE%3C/tspan%3E%3Ctspan fill='%23e8286e'%3ES%3C/tspan%3E%3C/text%3E%3C/svg%3E">
@@ -725,7 +727,17 @@ textarea.form-control { min-height:72px; resize:vertical; }
 @media(max-width:400px) { .pdf-btn-label { display:none; } .search-input { width:90px; } .topbar-title { font-size:12px; } }
 @media print { .sidebar,.topbar,.bottom-nav,.modal-overlay { display:none !important; } .section-tab { display:block !important; } body { background:#fff; color:#111; } }
 
-/* ── Zona chip buttons (filtro semanal visitas) ── */
+/* ── Sync indicator ── */
+#sync-indicator                          { user-select:none; }
+#sync-indicator.sync-ok                  { background:rgba(31,143,66,.1); border-color:rgba(31,143,66,.3); color:#1f8f42; }
+#sync-indicator.sync-ok #sync-icon      { color:#1f8f42; }
+#sync-indicator.sync-syncing             { background:rgba(33,134,235,.1); border-color:rgba(33,134,235,.3); color:#2186eb; }
+#sync-indicator.sync-syncing #sync-icon { color:#2186eb; animation:syncSpin .8s linear infinite; }
+#sync-indicator.sync-error               { background:rgba(220,53,69,.1); border-color:rgba(220,53,69,.3); color:#dc3545; }
+#sync-indicator.sync-error #sync-icon   { color:#dc3545; }
+#sync-indicator.sync-offline             { background:var(--dark3); border-color:var(--border); color:var(--text3); }
+@keyframes syncSpin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+@media(max-width:720px) { #sync-label { display:none !important; } }
 .zona-chip-btn {
   display: inline-flex;
   align-items: center;
@@ -2631,6 +2643,12 @@ textarea.form-control { min-height:72px; resize:vertical; }
         <div class="topbar-title" id="topbar-title">Resumen General</div>
       </div>
       <div class="topbar-right">
+        <!-- Indicador de sincronización Supabase -->
+        <div id="sync-indicator" title="Estado de sincronización" style="display:flex;align-items:center;gap:5px;padding:5px 9px;border-radius:20px;background:var(--dark3);border:1.5px solid var(--border);cursor:default;transition:all .3s;font-size:10.5px;font-weight:700;color:var(--text3)">
+          <i id="sync-icon" class="ti ti-cloud" style="font-size:14px;transition:color .3s"></i>
+          <span id="sync-label" style="display:none">Sincronizado</span>
+        </div>
+
         <div class="search-wrap search-wrap-desktop" id="search-wrap-desktop">
           <i class="ti ti-search"></i>
           <input type="text" class="search-input" placeholder="Buscar…" id="search-input" oninput="buscar(this.value)" autocomplete="off">
@@ -3421,11 +3439,11 @@ textarea.form-control { min-height:72px; resize:vertical; }
 // ║    5. Listo — sin tocar nada más en la app                               ║
 // ╚══════════════════════════════════════════════════════════════════════════╝
 
-const USE_SUPABASE = false; // ← cambiar a true cuando tengas Supabase listo
+const USE_SUPABASE = true; // ✅ Activado para producción
 
 const SUPABASE_CONFIG = {
-  url:     'https://TU_PROYECTO.supabase.co',   // ← pegar tu URL
-  anonKey: 'TU_ANON_KEY_AQUI',                  // ← pegar tu anon key
+  url:     'https://uldfcnulajyepjklhlxu.supabase.co',
+  anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVsZGZjbnVsYWp5ZXBqa2xobHh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NzgzNDAsImV4cCI6MjA5NjQ1NDM0MH0.3MNJCbtzRnh85bYLm2JnXfjil_hMBm7UOxC3WURsQLY',
 };
 
 // ── Tabla → colección local equivalente ──────────────────────────────────
@@ -3550,7 +3568,14 @@ async function load() {
   if(typeof hideSplash === 'function') hideSplash();
 }
 async function save() {
-  await _db.save();
+  if(typeof syncSetState === 'function') syncSetState('syncing');
+  try {
+    await _db.save();
+    if(typeof syncOk === 'function') syncOk();
+  } catch(e) {
+    if(typeof syncSetState === 'function') syncSetState('error');
+    throw e;
+  }
 }
 
 /*
@@ -9226,6 +9251,70 @@ window.addEventListener('appinstalled', () => {
   window.addEventListener('orientationchange', () => setTimeout(checkOrientation, 120));
   window.addEventListener('resize', checkOrientation);
   checkOrientation();
+})();
+</script>
+
+<!-- ══ INDICADOR SINCRONIZACIÓN ══ -->
+<script>
+(function(){
+  const IND   = document.getElementById('sync-indicator');
+  const ICON  = document.getElementById('sync-icon');
+  const LABEL = document.getElementById('sync-label');
+
+  const ESTADOS = {
+    idle:     { cls:'',             icon:'ti-cloud',          label:'',             title:'Sin sincronizar' },
+    syncing:  { cls:'sync-syncing', icon:'ti-refresh',        label:'Guardando…',   title:'Sincronizando con Supabase' },
+    ok:       { cls:'sync-ok',      icon:'ti-cloud-check',    label:'Sincronizado', title:'Sincronizado con Supabase' },
+    error:    { cls:'sync-error',   icon:'ti-cloud-x',        label:'Error',        title:'Error al sincronizar' },
+    offline:  { cls:'sync-offline', icon:'ti-cloud-off',      label:'Sin internet', title:'Sin conexión a internet' },
+  };
+
+  function setState(s) {
+    const e = ESTADOS[s] || ESTADOS.idle;
+    IND.className = 'sync-indicator-base ' + e.cls;
+    // Reapply base styles inline since we changed className
+    IND.style.cssText = 'display:flex;align-items:center;gap:5px;padding:5px 9px;border-radius:20px;background:var(--dark3);border:1.5px solid var(--border);cursor:default;transition:all .3s;font-size:10.5px;font-weight:700;color:var(--text3)';
+    IND.id    = 'sync-indicator';
+    IND.title = e.title;
+    ICON.className = 'ti ' + e.icon;
+    ICON.style.fontSize = '14px';
+    ICON.style.transition = 'color .3s';
+    if(LABEL) {
+      LABEL.textContent = e.label;
+      LABEL.style.display = e.label ? '' : 'none';
+    }
+    // Aplicar color según estado
+    const colors = {
+      syncing: { bg:'rgba(33,134,235,.1)', border:'rgba(33,134,235,.3)', color:'#2186eb' },
+      ok:      { bg:'rgba(31,143,66,.1)',  border:'rgba(31,143,66,.3)',  color:'#1f8f42' },
+      error:   { bg:'rgba(220,53,69,.1)',  border:'rgba(220,53,69,.3)',  color:'#dc3545' },
+      offline: { bg:'var(--dark3)',        border:'var(--border)',        color:'var(--text3)' },
+      idle:    { bg:'var(--dark3)',        border:'var(--border)',        color:'var(--text3)' },
+    };
+    const c = colors[s] || colors.idle;
+    IND.style.background   = c.bg;
+    IND.style.borderColor  = c.border;
+    IND.style.color        = c.color;
+    ICON.style.color       = c.color;
+    if(s === 'syncing') ICON.style.animation = 'syncSpin .8s linear infinite';
+    else ICON.style.animation = '';
+  }
+
+  // Exponer globalmente para que save() y load() lo llamen
+  window.syncSetState = setState;
+
+  // Estado inicial
+  setState(navigator.onLine ? 'idle' : 'offline');
+  window.addEventListener('online',  () => setState('idle'));
+  window.addEventListener('offline', () => setState('offline'));
+
+  // Auto-ocultar label "Sincronizado" después de 3 segundos
+  window._syncOkTimer = null;
+  window.syncOk = function() {
+    setState('ok');
+    clearTimeout(window._syncOkTimer);
+    window._syncOkTimer = setTimeout(() => setState('idle'), 3000);
+  };
 })();
 </script>
 
