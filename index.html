@@ -446,7 +446,7 @@ tr.pending-sync-row { background:rgba(217,119,6,.04) !important; }
 .estado-sheet-cancel-btn { flex:1; padding:13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); background:var(--dark4); font-family:'Poppins',sans-serif; font-size:13px; font-weight:600; color:var(--text2); cursor:pointer; transition:all var(--transition); }
 .estado-sheet-confirm-btn { flex:2; padding:13px; border:none; border-radius:var(--radius-sm); background:linear-gradient(135deg,#0057B8,#003d8a); font-family:'Poppins',sans-serif; font-size:13px; font-weight:700; color:#fff; cursor:pointer; transition:all var(--transition); box-shadow:0 3px 12px rgba(0,87,184,.28); }
 .estado-sheet-confirm-btn:active { opacity:.9; transform:scale(.98); }
-@media(max-width:700px) { .visita-card { cursor:pointer; } .visita-actions { display:flex !important; } .visita-quick-btns { display:none !important; } .table-wrap table { display:none; } .visitas-mobile-list { display:block !important; } }
+@media(max-width:700px) { .visita-card { cursor:pointer; } .visita-actions { display:flex !important; } .visita-quick-btns { display:none !important; } #tab-visitas .table-wrap table { display:none; } .visitas-mobile-list { display:block !important; } }
 @media(min-width:701px) { .visitas-mobile-list { display:none !important; } }
 
 /* ══ VISITA MOBILE LIST ══ */
@@ -9154,7 +9154,6 @@ load();
     }, 350);
   }
 
-  // El splash se cierra únicamente cuando load() termine de verdad y llame hideSplash().
   window.hideSplash = dismissLoader;
 })();
 </script>
