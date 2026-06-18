@@ -3537,7 +3537,7 @@ function _initSupabase() {
     function intentar(tries) {
       if(typeof supabase !== 'undefined') {
         _supabase = supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
-        _setSyncIndicator('ok');
+        _setSyncIndicator('syncing'); // datos todavía no cargaron; 'ok' lo dispara load()
         resolve();
         return;
       }
@@ -3714,6 +3714,8 @@ async function load() {
   _initInformeMesSelect();
   renderAll();
   if(typeof hideSplash === 'function') hideSplash();
+  // Verde recién acá: los datos llegaron, renderAll() corrió, splash cerrado.
+  _setSyncIndicator('ok');
 }
 
 // Setea el select de "Nuevo informe" (dashboard) en el mes/año actual real,
@@ -9153,12 +9155,8 @@ load();
     }, 350);
   }
 
-  if(document.readyState === 'complete'){
-    setTimeout(dismissLoader, 1800);
-  } else {
-    window.addEventListener('load', ()=> setTimeout(dismissLoader, 1800));
-  }
-  // También cerrar cuando load() termine (lo que ocurra primero)
+  // El splash se cierra únicamente cuando load() termine de verdad y llame hideSplash().
+  // No usamos timer: en red lenta el timer ganaba la carrera y la app aparecía vacía.
   window.hideSplash = dismissLoader;
 })();
 </script>
