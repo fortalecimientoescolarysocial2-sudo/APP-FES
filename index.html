@@ -432,6 +432,12 @@ tbody td:first-child { color:var(--text); font-weight:600; }
 .foto-remove-btn { position:absolute; top:6px; right:6px; background:rgba(200,32,32,.85); border:none; border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px; cursor:pointer; }
 .foto-badge { display:inline-flex; align-items:center; gap:3px; font-size:9px; font-weight:700; color:var(--green); background:var(--green-dim); border-radius:20px; padding:2px 7px; cursor:pointer; }
 .foto-badge i { font-size:10px; }
+/* ══ PENDING SYNC BADGE ══ */
+.pending-sync-badge { display:inline-flex; align-items:center; gap:3px; font-size:8.5px; font-weight:800; color:var(--amber); background:var(--amber-dim); border:1px solid rgba(217,119,6,.25); padding:1px 6px; border-radius:20px; white-space:nowrap; }
+.pending-sync-badge i { font-size:9px; }
+tr.pending-sync-row td:first-child { position:relative; }
+tr.pending-sync-row { background:rgba(217,119,6,.04) !important; }
+.visita-card.pending-sync { outline:1.5px solid rgba(217,119,6,.45); }
 .foto-lightbox { display:none; position:fixed; inset:0; background:rgba(0,10,30,.85); z-index:600; align-items:center; justify-content:center; padding:20px; }
 .foto-lightbox.open { display:flex; }
 .foto-lightbox img { max-width:100%; max-height:85vh; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.5); }
@@ -530,6 +536,7 @@ textarea.form-control { min-height:72px; resize:vertical; }
 .empty-state { display:flex; flex-direction:column; align-items:center; padding:40px 20px; gap:10px; color:var(--text3); }
 .empty-state i { font-size:38px; opacity:.35; }
 .empty-state p { font-size:12px; text-align:center; line-height:1.5; }
+.empty-state small { font-size:10.5px; text-align:center; color:var(--text3); opacity:.7; margin-top:-4px; line-height:1.5; }
 
 /* ══ CENTRO CARDS MOBILE ══ */
 .centro-cards-grid { display:none; gap:10px; flex-direction:column; }
@@ -1008,8 +1015,11 @@ textarea.form-control { min-height:72px; resize:vertical; }
 .confirm-actions { display:flex; gap:8px; justify-content:flex-end; }
 .confirm-actions .btn-confirm-cancel { flex:1; padding:10px; border-radius:var(--radius-sm); border:1px solid var(--border); background:var(--dark3); font-family:'Poppins',sans-serif; font-size:12px; font-weight:600; color:var(--text2); cursor:pointer; transition:all var(--transition); }
 .confirm-actions .btn-confirm-cancel:hover { background:var(--dark4); color:var(--text); }
-.confirm-actions .btn-confirm-ok { flex:1; padding:10px; border-radius:var(--radius-sm); border:none; background:linear-gradient(135deg,#c82020,#ef4444); font-family:'Poppins',sans-serif; font-size:12px; font-weight:700; color:#fff; cursor:pointer; box-shadow:0 3px 14px rgba(200,32,32,.3); transition:all var(--transition); }
-.confirm-actions .btn-confirm-ok:hover { opacity:.9; transform:translateY(-1px); }
+.confirm-actions .btn-confirm-ok { flex:1; padding:10px; border-radius:var(--radius-sm); border:none; background:linear-gradient(135deg,#c82020,#ef4444); font-family:'Poppins',sans-serif; font-size:12px; font-weight:700; color:#fff; cursor:pointer; box-shadow:0 3px 14px rgba(200,32,32,.3); transition:all var(--transition); position:relative; overflow:hidden; user-select:none; -webkit-user-select:none; }
+.confirm-actions .btn-confirm-ok:hover { opacity:.9; }
+.confirm-btn-fill { position:absolute; inset:0; background:rgba(255,255,255,.22); transform:scaleX(0); transform-origin:left; transition:none; border-radius:inherit; }
+.confirm-btn-fill.running { transition:transform var(--confirm-hold-ms,1400ms) linear; transform:scaleX(1); }
+.confirm-btn-label { position:relative; z-index:1; pointer-events:none; }
 
 /* ══ TERRITORIO PREMIUM ══ */
 .terr-zona-block { margin-bottom:26px; }
@@ -1818,7 +1828,7 @@ textarea.form-control { min-height:72px; resize:vertical; }
   margin-bottom: 16px;
 }
 @media (min-width: 600px) { .dashboard-kpi-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 900px) { .dashboard-kpi-grid { grid-template-columns: repeat(5, 1fr); } }
+@media (min-width: 900px) { .dashboard-kpi-grid { grid-template-columns: repeat(6, 1fr); } }
 
 .dash-kpi {
   background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius);
@@ -2106,6 +2116,52 @@ textarea.form-control { min-height:72px; resize:vertical; }
 }
 .search-hint-chip:hover { background: rgba(26,184,232,.18); }
 .search-hint-chip i { font-size: 13px; }
+/* ── Resultados búsqueda global ── */
+.search-results-wrap { padding: 0 16px 20px; display: none; }
+.search-results-wrap.visible { display: block; }
+.search-result-section {
+  margin-bottom: 18px;
+}
+.search-result-section-title {
+  font-size: 9px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--text3);
+  margin-bottom: 8px; padding-left: 2px;
+  display: flex; align-items: center; gap: 6px;
+}
+.search-result-section-title i { font-size: 11px; }
+.search-result-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: var(--radius-sm);
+  background: var(--surface); border: 1px solid var(--border);
+  margin-bottom: 6px; cursor: pointer;
+  transition: background .12s, border-color .12s;
+  -webkit-tap-highlight-color: transparent;
+}
+.search-result-item:active { background: var(--dark4); border-color: var(--border2); }
+.search-result-icon {
+  width: 34px; height: 34px; border-radius: 9px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.search-result-icon.icon-fort  { background: var(--green-dim);  color: var(--green); }
+.search-result-icon.icon-centro{ background: var(--cyan-dim);   color: var(--cyan); }
+.search-result-icon.icon-visita{ background: var(--orange-dim); color: var(--orange); }
+.search-result-body { flex: 1; min-width: 0; }
+.search-result-name {
+  font-size: 13px; font-weight: 600; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.search-result-meta {
+  font-size: 11px; color: var(--text3); margin-top: 1px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.search-result-arrow { color: var(--text3); font-size: 14px; flex-shrink: 0; }
+.search-no-results {
+  text-align: center; padding: 32px 16px;
+  color: var(--text3); font-size: 13px;
+}
+.search-no-results i { font-size: 36px; display: block; margin-bottom: 8px; opacity:.4; }
+.search-no-results strong { display: block; font-weight: 700; color: var(--text2); margin-bottom: 4px; }
 /* ══ FAB ══ */
 .fab {
   position: fixed;
@@ -2449,7 +2505,6 @@ textarea.form-control { min-height:72px; resize:vertical; }
 }
 .dash-cal-cell {
   position: relative;
-  aspect-ratio: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2460,6 +2515,7 @@ textarea.form-control { min-height:72px; resize:vertical; }
   transition: background .12s;
   min-height: 34px;
   max-height: 44px;
+  height: 38px;
 }
 .dash-cal-cell:not(.empty):hover { background: var(--dark4); }
 .dash-cal-cell.hoy {
@@ -2689,19 +2745,19 @@ textarea.form-control { min-height:72px; resize:vertical; }
           </div>
           <div class="dash-accion-body">
             <div style="position:relative;flex:1;min-width:0">
-              <select class="dash-accion-select" id="informe-mes-select">
-                <option value="1">Enero 2026</option>
-                <option value="2">Febrero 2026</option>
-                <option value="3">Marzo 2026</option>
-                <option value="4">Abril 2026</option>
-                <option value="5" selected>Mayo 2026</option>
-                <option value="6">Junio 2026</option>
-                <option value="7">Julio 2026</option>
-                <option value="8">Agosto 2026</option>
-                <option value="9">Septiembre 2026</option>
-                <option value="10">Octubre 2026</option>
-                <option value="11">Noviembre 2026</option>
-                <option value="12">Diciembre 2026</option>
+              <select class="dash-accion-select" id="informe-mes-select" data-anio="2026">
+                <option value="1">Enero</option>
+                <option value="2">Febrero</option>
+                <option value="3">Marzo</option>
+                <option value="4">Abril</option>
+                <option value="5">Mayo</option>
+                <option value="6">Junio</option>
+                <option value="7">Julio</option>
+                <option value="8">Agosto</option>
+                <option value="9">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
               </select>
               <i class="ti ti-calendar" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#0057B8;font-size:14px;pointer-events:none"></i>
             </div>
@@ -2863,7 +2919,13 @@ textarea.form-control { min-height:72px; resize:vertical; }
         <div class="card">
           <div class="card-header">
             <span class="card-title"><i class="ti ti-building-community"></i><span id="centros-title">Centros Vecinales — Capital</span></span>
-            <button class="btn btn-sm btn-primary" id="btn-add-centro" onclick="currentTab='centros';openModal()"><i class="ti ti-plus"></i> Nuevo Centro</button>
+            <div style="display:flex;gap:8px;align-items:center">
+              <select class="form-control" style="width:auto;font-size:11px;padding:5px 24px 5px 8px" id="filtro-zona-centros" onchange="filtrarZonaSelect(this.value)">
+                <option value="">Todas las zonas</option>
+                <option>Norte</option><option>Este</option><option>Sur</option><option>Oeste</option>
+              </select>
+              <button class="btn btn-sm btn-primary" id="btn-add-centro" onclick="currentTab='centros';openModal()"><i class="ti ti-plus"></i> Nuevo Centro</button>
+            </div>
           </div>
           <div class="centros-table-wrap table-wrap">
             <table>
@@ -3209,7 +3271,7 @@ textarea.form-control { min-height:72px; resize:vertical; }
       <i class="ti ti-search" style="font-size:18px;color:var(--text3);flex-shrink:0"></i>
       <input type="text" class="search-overlay-input" id="search-overlay-input"
         placeholder="Buscar centros, fortalecedores..."
-        oninput="buscar(this.value);syncSearchInputs(this.value)"
+        oninput="onSearchOverlayInput(this.value)"
         autocomplete="off" autocorrect="off" spellcheck="false">
       <button class="search-overlay-clear" id="search-overlay-clear" onclick="clearSearch()" style="display:none">
         <i class="ti ti-x"></i>
@@ -3218,7 +3280,7 @@ textarea.form-control { min-height:72px; resize:vertical; }
     <button class="search-overlay-cancel" onclick="closeSearchOverlay()">Cancelar</button>
   </div>
   <!-- Sugerencias rápidas -->
-  <div class="search-overlay-hints">
+  <div class="search-overlay-hints" id="search-overlay-hints">
     <div class="search-hint-label">Búsquedas frecuentes</div>
     <div class="search-hints-row">
       <button class="search-hint-chip" onclick="applyHint('Norte')"><i class="ti ti-map-2"></i> Zona Norte</button>
@@ -3227,6 +3289,8 @@ textarea.form-control { min-height:72px; resize:vertical; }
       <button class="search-hint-chip" onclick="applyHint('Oeste')"><i class="ti ti-map-2"></i> Zona Oeste</button>
     </div>
   </div>
+  <!-- Resultados búsqueda global -->
+  <div class="search-results-wrap" id="search-results-wrap"></div>
 </div>
 
 <!-- Sidebar overlay -->
@@ -3307,7 +3371,10 @@ textarea.form-control { min-height:72px; resize:vertical; }
     <div class="confirm-name" id="confirm-name"></div>
     <div class="confirm-actions">
       <button class="btn-confirm-cancel" onclick="closeConfirm()">Cancelar</button>
-      <button class="btn-confirm-ok" id="confirm-ok-btn">Sí, eliminar</button>
+      <button class="btn-confirm-ok" id="confirm-ok-btn">
+        <span class="confirm-btn-fill" id="confirm-btn-fill"></span>
+        <span class="confirm-btn-label" id="confirm-btn-label">Mantené presionado</span>
+      </button>
     </div>
   </div>
 </div>
@@ -3465,12 +3532,36 @@ let _supabase = null;
 function _initSupabase() {
   if(!USE_SUPABASE) return;
   if(typeof supabase === 'undefined') {
-    console.warn('FES: Supabase SDK no cargado. Agregá el <script> del CDN.');
+    _setSyncIndicator('error');
     return;
   }
   _supabase = supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
-  console.log('FES: Supabase conectado ✓');
+  _setSyncIndicator('ok');
 }
+// Helper tolerante: si el script del indicador (al pie del HTML) todavía
+// no corrió, reintenta unas veces antes de descartar la llamada.
+function _setSyncIndicator(state, tries) {
+  tries = tries || 0;
+  if(window.syncSetState) {
+    state === 'ok' && window.syncOk ? window.syncOk() : window.syncSetState(state);
+    return;
+  }
+  if(tries < 20) setTimeout(() => _setSyncIndicator(state, tries + 1), 50);
+}
+
+// Mapa de nombre lógico → tabla en Supabase (compartido por save y delete)
+const SUPABASE_TABLES = {
+  centros:        'fes_centros',
+  fortalecedores: 'fes_fortalecedores',
+  visitas:        'fes_visitas',
+  actividades:    'fes_actividades',
+  notas:          'fes_notas',
+  chicos:         'fes_chicos',
+  bonos:          'fes_bonos',
+  interior:       'fes_interior',
+  cronogramas:    'fes_cronogramas',
+  // 'asistencia' es localStorage-only; no tiene tabla en Supabase
+};
 
 // ── _db.load() ────────────────────────────────────────────────────────────
 // Carga todos los datos. Hoy: localStorage. Mañana: Supabase.
@@ -3509,28 +3600,60 @@ const _db = {
     } catch(e) {}
   },
 
-  async save() {
+  // tabla: nombre de la key en state ('visitas', 'centros', etc.) — si se omite hace upsert completo
+  // registros: array ya modificado (se ignora para 'cronogramas', que siempre lee state.cronogramas)
+  async save(tabla, registros) {
     if(USE_SUPABASE && _supabase) {
-      // ── SUPABASE: upsert incremental por tabla ──
-      // Nota: en producción conviene guardar solo el registro modificado.
-      // Esta versión hace upsert completo para simplicidad.
-      await Promise.all([
-        _supabase.from('fes_centros').upsert(state.centros),
-        _supabase.from('fes_fortalecedores').upsert(state.fortalecedores),
-        _supabase.from('fes_visitas').upsert(state.visitas),
-        _supabase.from('fes_actividades').upsert(state.actividades),
-        _supabase.from('fes_notas').upsert(state.notas),
-        _supabase.from('fes_chicos').upsert(state.chicos),
-        _supabase.from('fes_bonos').upsert(state.bonos),
-        _supabase.from('fes_interior').upsert(state.interior),
-        _supabase.from('fes_cronogramas').upsert(
-          Object.entries(state.cronogramas).map(([clave, eventos]) => ({clave, eventos}))
-        ),
-      ]);
+      if(tabla && SUPABASE_TABLES[tabla]) {
+        // ── Upsert selectivo: solo la tabla modificada ──
+        if(tabla === 'cronogramas') {
+          const rows = Object.entries(state.cronogramas).map(([clave, eventos]) => ({clave, eventos}));
+          const { error } = await _supabase.from('fes_cronogramas').upsert(rows);
+          if(error) throw error;
+        } else {
+          const rows = registros || state[tabla];
+          const { error } = await _supabase.from(SUPABASE_TABLES[tabla]).upsert(rows);
+          if(error) throw error;
+        }
+        // Siempre persiste también en local para que offline funcione
+        try { await window.storage.set(KEY, JSON.stringify(state)); } catch(e) {}
+        return;
+      }
+
+      // ── Sin tabla o tabla desconocida → upsert completo (loadDemo / restore) ──
+      const { error: e1 } = await _supabase.from('fes_centros').upsert(state.centros);
+      const { error: e2 } = await _supabase.from('fes_fortalecedores').upsert(state.fortalecedores);
+      const { error: e3 } = await _supabase.from('fes_visitas').upsert(state.visitas);
+      const { error: e4 } = await _supabase.from('fes_actividades').upsert(state.actividades);
+      const { error: e5 } = await _supabase.from('fes_notas').upsert(state.notas);
+      const { error: e6 } = await _supabase.from('fes_chicos').upsert(state.chicos);
+      const { error: e7 } = await _supabase.from('fes_bonos').upsert(state.bonos);
+      const { error: e8 } = await _supabase.from('fes_interior').upsert(state.interior);
+      const { error: e9 } = await _supabase.from('fes_cronogramas').upsert(
+        Object.entries(state.cronogramas).map(([clave, eventos]) => ({clave, eventos}))
+      );
+      const firstError = e1||e2||e3||e4||e5||e6||e7||e8||e9;
+      if(firstError) throw firstError;
+      try { await window.storage.set(KEY, JSON.stringify(state)); } catch(e) {}
       return;
     }
     // ── LOCAL ──
     try { await window.storage.set(KEY, JSON.stringify(state)); } catch(e) {}
+  },
+
+  // ── Eliminar un registro de Supabase ─────────────────────────────────────
+  // Debe llamarse ANTES de filtrar el array local, para que si falla Supabase
+  // el estado local no quede desincronizado con la DB.
+  async delete(tabla, id) {
+    if(USE_SUPABASE && _supabase) {
+      if(!SUPABASE_TABLES[tabla]) return; // tabla localStorage-only (ej: asistencia)
+      const { error } = await _supabase
+        .from(SUPABASE_TABLES[tabla])
+        .delete()
+        .eq('id', id);
+      if(error) throw error;
+    }
+    // localStorage: se actualiza en el save() que llama el caller
   },
 
   // ── Fotos de evidencia ──────────────────────────────────────────────────
@@ -3564,17 +3687,101 @@ async function load() {
   if(!state.notas)       state.notas = [];
   if(!state.asistencia)  state.asistencia = [];
   if(!state.centros.length) loadDemo();
+  _initInformeMesSelect();
   renderAll();
   if(typeof hideSplash === 'function') hideSplash();
 }
-async function save() {
+
+// Setea el select de "Nuevo informe" (dashboard) en el mes/año actual real,
+// en vez de quedar fijo en un mes pasado.
+function _initInformeMesSelect() {
+  const sel = document.getElementById('informe-mes-select');
+  if(!sel) return;
+  const hoy = new Date();
+  sel.value = String(hoy.getMonth() + 1); // value del <option> es 1-12
+  sel.dataset.anio = String(hoy.getFullYear());
+}
+// IDs de los registros modificados en la operación actual de save
+window._pendingSyncIds = new Set();
+
+// Llaman a esto las funciones save*() para registrar qué IDs se están guardando
+function _markPendingSync(ids) {
+  ids.forEach(id => window._pendingSyncIds.add(id));
+}
+
+function _setPendingSyncFlag(ids, val) {
+  const TABLES = ['visitas','actividades','centros','fortalecedores','notas','chicos','bonos','interior'];
+  TABLES.forEach(t => {
+    if(!state[t]) return;
+    state[t].forEach(r => { if(ids.has(r.id)) r._pendingSync = val; });
+  });
+}
+
+// tabla: key de state a sincronizar ('visitas', 'centros', …). Sin argumento → upsert completo.
+// registros: el array ya mutado (se pasa para marcar _pendingSync correctamente si hay error).
+async function save(tabla, registros) {
+  if(typeof syncSetState === 'function') syncSetState('syncing');
+
+  const ALL_TABLES = ['visitas','actividades','centros','fortalecedores','notas','chicos','bonos','interior'];
+
+  // Qué registros trackear para _pendingSync (cronogramas es objeto, no array → se omite)
+  const targetRows = (tabla && tabla !== 'cronogramas')
+    ? (registros || (state[tabla] ? state[tabla] : []))
+    : null; // null ⇒ operar sobre ALL_TABLES
+
+  const offline = !navigator.onLine;
+  if(offline) {
+    if(targetRows) {
+      targetRows.forEach(r => { if(!r._pendingSync) r._pendingSync = true; });
+    } else {
+      ALL_TABLES.forEach(t => { if(state[t]) state[t].forEach(r => { if(!r._pendingSync) r._pendingSync = true; }); });
+    }
+    if(typeof syncSetState === 'function') syncSetState('offline');
+    return;
+  }
+
+  try {
+    await _db.save(tabla, registros);
+
+    // Limpiar flags solo en los registros afectados
+    if(targetRows) {
+      targetRows.forEach(r => { delete r._pendingSync; });
+    } else {
+      ALL_TABLES.forEach(t => { if(state[t]) state[t].forEach(r => { delete r._pendingSync; }); });
+    }
+    window._pendingSyncIds.clear();
+    if(typeof syncOk === 'function') syncOk();
+  } catch(e) {
+    // Marcar como pendientes solo los registros afectados
+    if(targetRows) {
+      targetRows.forEach(r => { r._pendingSync = true; });
+    } else {
+      ALL_TABLES.forEach(t => { if(state[t]) state[t].forEach(r => { r._pendingSync = true; }); });
+    }
+    if(typeof syncSetState === 'function') syncSetState('error');
+    throw e;
+  }
+}
+
+// Persiste solo en local (window.storage), sin tocar Supabase.
+// Se usa tras un _dbDelete exitoso: el borrado en la nube ya ocurrió,
+// así que NO hace falta (ni conviene) re-upsertear toda la tabla.
+async function _persistLocal() {
+  try { await window.storage.set(KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+// Wrapper global para eliminar un registro de Supabase + localStorage.
+// Maneja el indicador de sync igual que save(). Si falla Supabase, lanza
+// el error para que el caller no modifique el estado local.
+async function _dbDelete(tabla, id) {
   if(typeof syncSetState === 'function') syncSetState('syncing');
   try {
-    await _db.save();
+    await _db.delete(tabla, id);
     if(typeof syncOk === 'function') syncOk();
   } catch(e) {
     if(typeof syncSetState === 'function') syncSetState('error');
-    throw e;
+    console.error(`FES delete ${tabla}#${id}:`, e);
+    throw e; // re-lanza para que el callback aborte el filter local
   }
 }
 
@@ -3588,7 +3795,7 @@ async function save() {
 create extension if not exists "uuid-ossp";
 
 create table fes_centros (
-  id          integer primary key,
+  id          bigint primary key,
   nombre      text not null,
   zona        text,
   barrio      text,
@@ -3601,21 +3808,21 @@ create table fes_centros (
 );
 
 create table fes_fortalecedores (
-  id          integer primary key,
+  id          bigint primary key,
   nombre      text not null,
   dni         text,
   programa    text,
   materia     text,
   turno       text,
   contacto    text,
-  centro_id   integer references fes_centros(id),
+  centro_id   bigint  references fes_centros(id),
   activo      boolean default true,
   created_at  timestamptz default now()
 );
 
 create table fes_visitas (
-  id            integer primary key,
-  centro_id     integer references fes_centros(id),
+  id            bigint  primary key,
+  centro_id     bigint  references fes_centros(id),
   semana        text,
   mes           text,
   anio          integer,
@@ -3633,7 +3840,7 @@ create table fes_visitas (
 );
 
 create table fes_actividades (
-  id            integer primary key,
+  id            bigint  primary key,
   titulo        text,
   tipo          text,
   mes           text,
@@ -3645,7 +3852,7 @@ create table fes_actividades (
 );
 
 create table fes_notas (
-  id      integer primary key,
+  id      bigint  primary key,
   tipo    text,
   asunto  text,
   cuerpo  text,
@@ -3656,21 +3863,21 @@ create table fes_notas (
 );
 
 create table fes_chicos (
-  id        integer primary key,
-  centro_id integer references fes_centros(id),
+  id        bigint  primary key,
+  centro_id bigint  references fes_centros(id),
   mes       text,
   anio      integer,
   cantidad  integer default 0
 );
 
 create table fes_bonos (
-  id        integer primary key,
-  centro_id integer references fes_centros(id),
+  id        bigint  primary key,
+  centro_id bigint  references fes_centros(id),
   cobra_bono boolean default true
 );
 
 create table fes_interior (
-  id            integer primary key,
+  id            bigint  primary key,
   departamento  text,
   centros       integer default 0,
   fort          integer default 0,
@@ -3839,8 +4046,8 @@ let searchVal = '';
 let zonaFiltro = '';
 let zonaTerrFiltro = '';
 let vistaChicos = 'pivot';
-let cronoMesActivo = { anio:2026, mes:4 };
-let actMesActivo   = { anio:2026, mes:4 };
+let cronoMesActivo = { anio: new Date().getFullYear(), mes: new Date().getMonth() };
+let actMesActivo   = { anio: new Date().getFullYear(), mes: new Date().getMonth() };
 let visitaDiaTarget = null;
 let notasTabActivo = 'env';
 
@@ -3924,14 +4131,12 @@ function loadDemo() {
     {id:59,nombre:'Polideportivo Juan Domingo Perón',zona:'Oeste',barrio:'',horario:'',cambioHorario:false,nuevoHorario:'',activo:true},
   ].map(c => {
     // Add mock premium data to demo centers
-    const hasRef = Math.random() > 0.3;
-    const refNames = ['María González', 'Carlos Ruiz', 'Ana López', 'Jorge Martínez'];
     return {
       ...c,
       direccion: c.barrio ? `Barrio ${c.barrio}, Calle Principal S/N` : 'Dirección no especificada',
       mapsUrl: 'https://maps.google.com/?q=La+Rioja',
-      referenteNombre: hasRef ? refNames[Math.floor(Math.random()*refNames.length)] : '',
-      referenteContacto: hasRef ? '3804123456' : '',
+      referenteNombre: '',
+      referenteContacto: '',
       dias: {
         lunes: {activo:true, horaInicio:'15:00', horaFin:'18:00'},
         martes: {activo:true, horaInicio:'15:00', horaFin:'18:00'},
@@ -4192,7 +4397,7 @@ function loadDemo() {
 // ═══════════════════════════════════════════════
 // HELPERS
 // ═══════════════════════════════════════════════
-const uid = arr => arr.length ? Math.max(...arr.map(x=>x.id))+1 : 1;
+const uid = () => crypto.randomUUID();
 const getNombre = id => (state.centros.find(x=>x.id==id)||{}).nombre||'–';
 const getZona   = id => (state.centros.find(x=>x.id==id)||{}).zona||'';
 const getFortCount = id => state.fortalecedores.filter(f=>f.centroId==id&&f.activo).length;
@@ -4353,7 +4558,7 @@ function _skAccesoGrid(n) {
 }
 
 const SKELETON_FOR = {
-  resumen:       function(){ return _skAccesoGrid(8)+_skKpiGrid(5)+_skCard(180,6)+_skCard(150,4); },
+  resumen:       function(){ return _skAccesoGrid(8)+_skKpiGrid(6)+_skCard(180,6)+_skCard(150,4); },
   centros:       function(){ return _skStatGrid(5)+_skCard(200,8); },
   fortalecedores:function(){ return _skStatGrid(3)+_skCard(180,7); },
   territorio:    function(){ return _skStatGrid(4)+_skCard(200,6); },
@@ -4416,6 +4621,9 @@ function filtrarZona(el, zona) {
   if(zona) el.classList.add('active-'+zona.toLowerCase());
   else el.classList.add('active');
   document.getElementById('centros-title').textContent = zona ? `Centros Vecinales — Zona ${zona}` : 'Centros Vecinales — Capital';
+  // Sincronizar select
+  const sel = document.getElementById('filtro-zona-centros');
+  if(sel) sel.value = zona;
   _updateZonaCounts();
   renderCentros(searchVal);
 }
@@ -4428,6 +4636,23 @@ function _updateZonaCounts() {
   set('ztc-este',  c.filter(x=>x.zona==='Este').length);
   set('ztc-sur',   c.filter(x=>x.zona==='Sur').length);
   set('ztc-oeste', c.filter(x=>x.zona==='Oeste').length);
+}
+
+function filtrarZonaSelect(zona) {
+  zonaFiltro = zona;
+  // Sincronizar zona-tabs visuales
+  const tabs = document.querySelectorAll('#zona-tabs .zona-tab');
+  tabs.forEach(t => t.classList.remove('active','active-norte','active-este','active-sur','active-oeste'));
+  tabs.forEach(t => {
+    if(t.dataset.zona === zona) {
+      if(zona) t.classList.add('active-' + zona.toLowerCase());
+      else t.classList.add('active');
+    }
+  });
+  if(!zona) { const all = document.querySelector('#zona-tabs .zona-tab[data-zona=""]'); if(all) all.classList.add('active'); }
+  document.getElementById('centros-title').textContent = zona ? `Centros Vecinales — Zona ${zona}` : 'Centros Vecinales — Capital';
+  _updateZonaCounts();
+  renderCentros(searchVal);
 }
 
 function filtrarZonaTerr(el, zona) {
@@ -4475,12 +4700,15 @@ function renderStats() {
   if(si){
     const totalI=state.interior.filter(d=>d.activo).length;
     const totalCentros=state.interior.reduce((s,d)=>s+(d.activo?d.centros:0),0);
-    const totalEst=state.interior.filter(d=>d.activo).reduce((s,d)=>s+d.abril,0);
+    const mesesInterior=['marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const ultimoMesInterior=mesesInterior.slice().reverse().find(m=>state.interior.some(d=>d.activo&&d[m]>0))||'abril';
+    const totalEst=state.interior.filter(d=>d.activo).reduce((s,d)=>s+(d[ultimoMesInterior]||0),0);
     const totalFort=state.interior.reduce((s,d)=>s+d.fort,0);
+    const labelMesInterior=ultimoMesInterior.charAt(0).toUpperCase()+ultimoMesInterior.slice(1);
     si.innerHTML=`
       <div class="stat-card orange"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-map-pin"></i></div><div class="stat-label">Departamentos</div><div class="stat-value">${totalI}</div></div>
       <div class="stat-card cyan"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-building-community"></i></div><div class="stat-label">Centros</div><div class="stat-value">${totalCentros}</div></div>
-      <div class="stat-card green"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-school"></i></div><div class="stat-label">Estud. Abril</div><div class="stat-value">${totalEst}</div></div>
+      <div class="stat-card green"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-school"></i></div><div class="stat-label">Estud. ${labelMesInterior}</div><div class="stat-value">${totalEst}</div></div>
       <div class="stat-card amber"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-users"></i></div><div class="stat-label">Fortalecedores</div><div class="stat-value">${totalFort}</div></div>`;
   }
 
@@ -4699,7 +4927,7 @@ function renderTerritorio() {
   }).join('');
 
   if(!body.innerHTML.trim()) {
-    body.innerHTML = `<div class="empty-state"><i class="ti ti-map-off"></i><p>Sin centros para mostrar</p></div>`;
+    body.innerHTML = `<div class="empty-state"><i class="ti ti-map-search"></i><p>Ningún centro coincide con la búsqueda</p><small>Revisá el nombre, zona o barrio</small></div>`;
   }
 }
 
@@ -4837,10 +5065,11 @@ function renderVisitas() {
             const ec = v.estado==='Realizada'?'var(--green)':v.estado==='Cancelada'?'var(--red)':v.estado==='Suspendida'?'#7C3AED':'var(--amber)';
             const eb = v.estado==='Realizada'?'rgba(46,158,79,.1)':v.estado==='Cancelada'?'var(--red-dim)':v.estado==='Suspendida'?'rgba(124,58,237,.1)':'var(--amber-dim)';
             return `
-            <div class="visita-card" onclick="abrirEstadoSheet(${v.id})" style="cursor:pointer">
+            <div class="visita-card${v._pendingSync?' pending-sync':''}" onclick="abrirEstadoSheet(${v.id})" style="cursor:pointer">
               <div class="visita-card-accent" style="background:${zColor}"></div>
               <div style="padding-left:6px;flex:1;min-width:0">
                 <div class="visita-nombre" title="${getNombre(v.centroId)}">${getNombre(v.centroId)}</div>
+                ${v._pendingSync ? `<span class="pending-sync-badge" title="Sin sincronizar"><i class="ti ti-cloud-upload"></i>Sin sync</span>` : ''}
                 <div class="visita-meta">
                   <span class="visita-hora"><i class="ti ti-clock" style="font-size:9px"></i> ${v.hora||'–'}</span>
                   <span class="visita-estado ${(v.estado||'').toLowerCase()}" style="background:${eb};color:${ec}">${v.estado}</span>
@@ -4888,13 +5117,13 @@ function renderVisitas() {
       const filasVisitas = visitas.map(v => {
         const ec = v.estado==='Realizada'?'var(--green)':v.estado==='Cancelada'?'var(--red)':v.estado==='Suspendida'?'#7C3AED':'var(--amber)';
         const eb = v.estado==='Realizada'?'rgba(46,158,79,.1)':v.estado==='Cancelada'?'rgba(212,43,43,.1)':v.estado==='Suspendida'?'rgba(124,58,237,.1)':'rgba(245,168,0,.1)';
-        return `<tr>
+        return `<tr${v._pendingSync?' class="pending-sync-row"':''}>
           <td style="font-size:10px;color:var(--text3);font-family:var(--font-mono);white-space:nowrap">${getDayFecha(sk,v.dia)} · ${(v.dia||'').substring(0,3)}</td>
           <td style="font-weight:600;font-size:12px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${getNombre(v.centroId)}">${getNombre(v.centroId)}</td>
           <td><span class="zona-chip ${zonaClass(getZona(v.centroId))}" style="font-size:9px">${getZona(v.centroId)||'–'}</span></td>
           <td style="font-family:var(--font-mono);font-size:11px;color:var(--text3)">${v.hora||'–'}</td>
           <td style="font-size:11px;color:var(--text2);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${v.responsable||'–'}</td>
-          <td><span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;background:${eb};color:${ec}">${v.estado}</span></td>
+          <td><span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;background:${eb};color:${ec}">${v.estado}</span>${v._pendingSync?` <span class="pending-sync-badge" title="Sin sincronizar"><i class="ti ti-cloud-upload"></i>Sin sync</span>`:''}</td>
           <td style="font-size:10px;color:var(--text3);font-style:italic;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${v.obs||'–'}</td>
           <td><div style="display:flex;gap:4px">
             <button class="btn btn-sm btn-icon" onclick="editVisita(${v.id})"><i class="ti ti-edit"></i></button>
@@ -5007,9 +5236,10 @@ function editVisita(id) {
 function deleteVisita(id) {
   const v = state.visitas.find(x => x.id === id);
   const label = v ? `${getNombre(v.centroId)} — ${v.dia} ${v.hora}` : 'esta visita';
-  confirmarEliminar(label, () => {
+  confirmarEliminar(label, async () => {
+    try { await _dbDelete('visitas', id); } catch(e) { return; }
     state.visitas = state.visitas.filter(x => x.id !== id);
-    save(); renderVisitas();
+    _persistLocal(); renderVisitas();
   });
 }
 
@@ -5377,7 +5607,13 @@ function renderCentros(filtro='') {
   if(zonaFiltro) data = data.filter(c=>c.zona===zonaFiltro);
   if(filtro) data = data.filter(c=>c.nombre.toLowerCase().includes(filtro.toLowerCase())||c.zona.toLowerCase().includes(filtro.toLowerCase())||((c.barrio||'').toLowerCase().includes(filtro.toLowerCase())));
 
-  const emptyHtml = `<div class="empty-state"><i class="ti ti-building-community"></i><p>No hay centros registrados</p></div>`;
+  const totalData = data;
+  const limite = (window._centrosLimite||30);
+  data = totalData.slice(0, limite);
+  const verMasHtml = totalData.length>limite ? `<tr><td colspan="6" style="text-align:center;padding:10px"><button class="btn btn-sm" onclick="window._centrosLimite=${limite+30};renderCentros('${filtro.replace(/'/g,"\\'")}')">Mostrar más (${totalData.length-limite} restantes)</button></td></tr>` : '';
+  const verMasCardsHtml = totalData.length>limite ? `<div style="text-align:center;padding:10px"><button class="btn btn-sm" onclick="window._centrosLimite=${limite+30};renderCentros('${filtro.replace(/'/g,"\\'")}')">Mostrar más (${totalData.length-limite} restantes)</button></div>` : '';
+
+  const emptyHtml = `<div class="empty-state"><i class="ti ti-building-community"></i><p>Todavía no cargaste ningún centro vecinal</p><small>Usá el botón "+ Centro" para agregar el primero</small></div>`;
 
   // ── Tabla (desktop) ──
   if(tbody){
@@ -5406,9 +5642,8 @@ function renderCentros(filtro='') {
         </tr>`;
       }).join('');
     }
+    tbody.innerHTML += verMasHtml;
   }
-
-  // ── Tarjetas (mobile) ──
   if(cardsEl){
     if(!data.length){
       cardsEl.innerHTML = emptyHtml;
@@ -5443,6 +5678,7 @@ function renderCentros(filtro='') {
         </div>`;
       }).join('');
     }
+    cardsEl.innerHTML += verMasCardsHtml;
   }
 }
 
@@ -5450,7 +5686,7 @@ function renderInterior(filtro='') {
   const tbody = document.getElementById('body-interior');
   let data = state.interior;
   if(filtro) data = data.filter(d=>d.departamento.toLowerCase().includes(filtro));
-  if(!data.length){ tbody.innerHTML=`<tr><td colspan="8"><div class="empty-state"><i class="ti ti-map-pin"></i><p>Sin datos</p></div></td></tr>`; return; }
+  if(!data.length){ tbody.innerHTML=`<tr><td colspan="8"><div class="empty-state"><i class="ti ti-map-2"></i><p>Sin datos del Interior cargados</p><small>Cargá los datos por departamento desde el módulo Interior</small></div></td></tr>`; return; }
   const totCentros = data.reduce((s,d)=>s+d.centros,0);
   const totMarzo   = data.reduce((s,d)=>s+d.marzo,0);
   const totAbril   = data.reduce((s,d)=>s+d.abril,0);
@@ -5494,7 +5730,11 @@ function renderFortalecedores(filtro='') {
   let data = [...state.fortalecedores].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
   if(filtro) data = data.filter(f=>f.nombre.toLowerCase().includes(filtro)||getNombre(f.centroId).toLowerCase().includes(filtro));
   if(prog) data = data.filter(f=>f.programa===prog);
-  if(!data.length){ tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><i class="ti ti-users"></i><p>Sin fortalecedores</p></div></td></tr>`; return; }
+  if(!data.length){ tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><i class="ti ti-${(filtro||prog)?'user-search':'user-plus'}"></i><p>${(filtro||prog)?'Ningún fortalecedor coincide con los filtros aplicados':'Todavía no cargaste fortalecedores'}</p>${(filtro||prog)?'<small>Probá con otro nombre o programa</small>':'<small>Usá "+ Nuevo" para registrar el primero</small>'}</div></td></tr>`; return; }
+  const totalFortData = data;
+  const limiteF = (window._fortsLimite||30);
+  data = totalFortData.slice(0, limiteF);
+  const verMasFortHtml = totalFortData.length>limiteF ? `<tr><td colspan="7" style="text-align:center;padding:10px"><button class="btn btn-sm" onclick="window._fortsLimite=${limiteF+30};renderFortalecedores('${filtro.replace(/'/g,"\\'")}')">Mostrar más (${totalFortData.length-limiteF} restantes)</button></td></tr>` : '';
   tbody.innerHTML = data.map((f,i)=>`
     <tr style="${!f.activo?'opacity:.5':''}">
       <td style="color:var(--text3);font-size:10px;font-family:var(--font-mono)">${i+1}</td>
@@ -5507,7 +5747,7 @@ function renderFortalecedores(filtro='') {
         <button class="btn btn-sm" onclick="openEdit('fortalecedores',${f.id})"><i class="ti ti-edit"></i></button>
         <button class="btn btn-sm btn-danger" onclick="deleteFort(${f.id})"><i class="ti ti-trash"></i></button>
       </div></td>
-    </tr>`).join('');
+    </tr>`).join('') + verMasFortHtml;
 }
 
 function renderFortalecedoresCv(filtro='') {
@@ -5517,7 +5757,11 @@ function renderFortalecedoresCv(filtro='') {
   let data = [...state.fortalecedores].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
   if(filtro) data = data.filter(f=>f.nombre.toLowerCase().includes(filtro)||getNombre(f.centroId).toLowerCase().includes(filtro));
   if(prog) data = data.filter(f=>f.programa===prog);
-  if(!data.length){ tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><i class="ti ti-users"></i><p>Sin fortalecedores registrados</p></div></td></tr>`; return; }
+  if(!data.length){ tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><i class="ti ti-${(filtro||prog)?'user-search':'user-plus'}"></i><p>${(filtro||prog)?'Ningún fortalecedor coincide con los filtros aplicados':'Todavía no cargaste fortalecedores'}</p>${(filtro||prog)?'<small>Probá con otro nombre o programa</small>':'<small>Usá "+ Nuevo" para registrar el primero</small>'}</div></td></tr>`; return; }
+  const totalFortCvData = data;
+  const limiteFCv = (window._fortsLimite||30);
+  data = totalFortCvData.slice(0, limiteFCv);
+  const verMasFortCvHtml = totalFortCvData.length>limiteFCv ? `<tr><td colspan="7" style="text-align:center;padding:10px"><button class="btn btn-sm" onclick="window._fortsLimite=${limiteFCv+30};renderFortalecedoresCv('${filtro.replace(/'/g,"\\'")}')">Mostrar más (${totalFortCvData.length-limiteFCv} restantes)</button></td></tr>` : '';
   tbody.innerHTML = data.map((f,i)=>`
     <tr style="${!f.activo?'opacity:.5':''}">
       <td style="color:var(--text3);font-size:10px;font-family:var(--font-mono)">${i+1}</td>
@@ -5533,7 +5777,7 @@ function renderFortalecedoresCv(filtro='') {
         <button class="btn btn-sm" onclick="openEdit('fortalecedores',${f.id})"><i class="ti ti-edit"></i></button>
         <button class="btn btn-sm btn-danger" onclick="deleteFort(${f.id})"><i class="ti ti-trash"></i></button>
       </div></td>
-    </tr>`).join('');
+    </tr>`).join('') + verMasFortCvHtml;
 }
 
 function setVistaChicos(vista) {
@@ -5566,7 +5810,7 @@ function renderChicosPivot() {
     return tiene&&zonaOk;
   });
   if(!mesesPresentes.length||!centros.length){
-    body.innerHTML=`<tr><td colspan="10"><div class="empty-state"><i class="ti ti-school"></i><p>Sin registros</p></div></td></tr>`;
+    body.innerHTML=`<tr><td colspan="10"><div class="empty-state"><i class="ti ti-school-off"></i><p>Sin inscriptos registrados aún</p><small>Cargá datos de inscripción desde "Registrar" en el módulo Estudiantes</small></div></td></tr>`;
     header.innerHTML=''; return;
   }
   header.innerHTML=`<tr><th>#</th><th>Centro</th><th>Zona</th>${mesesPresentes.map(m=>`<th class="pivot-mes-header">${m.substring(0,3).toUpperCase()}</th>`).join('')}<th class="pivot-mes-header" style="color:var(--cyan)">TOTAL</th></tr>`;
@@ -5598,7 +5842,7 @@ function renderChicosLista(filtro='') {
   if(filtro) data=data.filter(c=>getNombre(c.centroId).toLowerCase().includes(filtro));
   if(fa&&fa.value) data=data.filter(c=>c.anio==fa.value);
   if(fm&&fm.value) data=data.filter(c=>c.mes===fm.value);
-  if(!data.length){ tbody.innerHTML=`<tr><td colspan="4"><div class="empty-state"><i class="ti ti-school"></i><p>Sin registros</p></div></td></tr>`; return; }
+  if(!data.length){ tbody.innerHTML=`<tr><td colspan="4"><div class="empty-state"><i class="ti ti-school-off"></i><p>Sin inscriptos para el período seleccionado</p><small>Probá con otro mes o año, o registrá datos nuevos</small></div></td></tr>`; return; }
   tbody.innerHTML=data.map(c=>`
     <tr>
       <td style="font-size:11.5px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${getNombre(c.centroId)}</td>
@@ -5640,7 +5884,7 @@ function renderAsistencia() {
   } else if(statsEl) statsEl.innerHTML='';
 
   if(!data.length) {
-    tbody.innerHTML=`<tr><td colspan="9"><div class="empty-state"><i class="ti ti-calendar-off"></i><p>Sin registros de asistencia. Usá "Registrar" para cargar datos.</p></div></td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="9"><div class="empty-state"><i class="ti ti-calendar-stats"></i><p>Sin registros de asistencia para este período</p><small>Usá "Registrar" para cargar los datos del mes</small></div></td></tr>`;
     return;
   }
 
@@ -5685,9 +5929,10 @@ function openEditAsist(id) {
 function deleteAsistencia(id) {
   const a = state.asistencia.find(x => x.id === id);
   const label = a ? `${getNombre(a.centroId)} — ${a.mes} ${a.anio}` : 'este registro de asistencia';
-  confirmarEliminar(label, () => {
+  confirmarEliminar(label, async () => {
+    try { await _dbDelete('asistencia', id); } catch(e) { return; }
     state.asistencia = state.asistencia.filter(x => x.id !== id);
-    save(); renderAsistencia();
+    save('asistencia', state.asistencia); renderAsistencia();
   });
 }
 
@@ -5704,15 +5949,15 @@ function saveAsistencia() {
   const obj = {centroId, anio, mes, diasHabiles:diasHab, diasAbierto:diasAb, promedioDiario:prom, obs};
   if(!state.asistencia) state.asistencia=[];
   if(editId) Object.assign(state.asistencia.find(x=>x.id==editId), obj);
-  else { obj.id = uid(state.asistencia); state.asistencia.push(obj); }
-  save(); closeModal(); renderAsistencia();
+  else { obj.id = uid(); state.asistencia.push(obj); }
+  save('asistencia', state.asistencia); closeModal(); renderAsistencia();
 }
 
 function renderBonos(filtro='') {
   const tbody=document.getElementById('body-bonos');
   let data=state.bonos;
   if(filtro) data=data.filter(b=>getNombre(b.centroId).toLowerCase().includes(filtro));
-  if(!data.length){ tbody.innerHTML=`<tr><td colspan="5"><div class="empty-state"><i class="ti ti-receipt-2"></i><p>Sin registros</p></div></td></tr>`; return; }
+  if(!data.length){ tbody.innerHTML=`<tr><td colspan="5"><div class="empty-state"><i class="ti ti-coin-off"></i><p>Ningún centro tiene bono registrado</p><small>Cargá los centros primero y luego asignales estado de bono</small></div></td></tr>`; return; }
   tbody.innerHTML=data.map(b=>`
     <tr>
       <td style="font-size:11.5px;font-weight:600;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${getNombre(b.centroId)}</td>
@@ -5752,6 +5997,13 @@ function renderDashboard() {
   // ── KPI cards ──
   const kpiEl = document.getElementById('dashboard-kpi-grid');
   if(kpiEl) kpiEl.innerHTML = `
+    <div class="dash-kpi green" onclick="showTab('fortalecedores')" style="cursor:pointer" title="Ver fortalecedores">
+      <div class="dash-kpi-accent" style="background:linear-gradient(90deg,#1f8f42,#28b055)"></div>
+      <div class="dash-kpi-icon" style="background:rgba(31,143,66,.1);color:#1f8f42"><i class="ti ti-id-badge-2"></i></div>
+      <div class="dash-kpi-label">Fortalecedores</div>
+      <div class="dash-kpi-value">${totalForts}</div>
+      <div class="dash-kpi-sub">activos</div>
+    </div>
     <div class="dash-kpi cyan">
       <div class="dash-kpi-accent" style="background:linear-gradient(90deg,#0057B8,#0070E0)"></div>
       <div class="dash-kpi-icon" style="background:rgba(0,87,184,.1);color:#0057B8"><i class="ti ti-building-community"></i></div>
@@ -5957,7 +6209,8 @@ function renderDashCalendario() {
   };
 
   // Eventos del cronograma para este mes
-  const cronoKey = `${anio}-${mes}`;
+  // state.cronogramas usa índice 0-11 igual que cronoMesActivo
+  const cronoKey = `${anio}-${mes-1}`;
   const eventosCrono = (state.cronogramas[cronoKey]||[]);
 
   // Actividades registradas para este mes (no tienen día, las ponemos en día 1 como marcador de mes)
@@ -6201,9 +6454,11 @@ function _renderDonut(svgId, segments) {
 
 function generarInformeMensual() {
   const sel = document.getElementById('informe-mes-select');
-  const mes = sel ? MESES[parseInt(sel.value)-1] : 'Mayo';
+  const hoy = new Date();
+  const mes = sel ? MESES[parseInt(sel.value)-1] : MESES[hoy.getMonth()];
+  const anioInforme = sel ? parseInt(sel.dataset.anio) || hoy.getFullYear() : hoy.getFullYear();
   // Build a comprehensive multi-section PDF report
-  const {doc} = pdfBase(`Informe Mensual — ${mes} 2026`, `Programa FES · La Rioja · ${mes} 2026`);
+  const {doc} = pdfBase(`Informe Mensual — ${mes} ${anioInforme}`, `Programa FES · La Rioja · ${mes} ${anioInforme}`);
   const meses=[...new Set(state.chicos.map(c=>c.mes))].sort((a,b)=>MESES.indexOf(a)-MESES.indexOf(b));
   const ultimoMes=meses[meses.length-1]||mes;
   let curY = 45;
@@ -6283,7 +6538,7 @@ function generarInformeMensual() {
   });
 
   pdfFooter(doc);
-  doc.save(`FES_Informe_${mes}_2026.pdf`);
+  doc.save(`FES_Informe_${mes}_${anioInforme}.pdf`);
 }
 
 // ═══════════════════════════════════════════════
@@ -6354,7 +6609,7 @@ function agregarMesCrono() {
   const key=`${nextAnio}-${nextMes}`;
   if(!state.cronogramas[key]) state.cronogramas[key]=[];
   cronoMesActivo={anio:nextAnio,mes:nextMes};
-  save(); renderCronograma();
+  save('cronogramas'); renderCronograma();
 }
 
 function editEventoCrono(key,idx) { editId={key,idx}; currentTab='cronograma'; buildForm(); document.getElementById('modal').classList.add('open'); }
@@ -6363,7 +6618,7 @@ function deleteEventoCrono(key, idx) {
   const label = ev ? (ev.titulo || 'este evento') : 'este evento del calendario';
   confirmarEliminar(label, () => {
     state.cronogramas[key].splice(idx, 1);
-    save(); renderCronograma();
+    save('cronogramas'); renderCronograma();
   });
 }
 
@@ -6425,8 +6680,14 @@ function populateFiltros() {
 // ═══════════════════════════════════════════════
 // SEARCH
 // ═══════════════════════════════════════════════
-function buscar(v) {
+function debounce(fn, ms) {
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
+function _buscarInmediato(v) {
   searchVal=v.toLowerCase();
+  window._centrosLimite=30; window._fortsLimite=30;
   if(currentTab==='centros') renderCentros(searchVal);
   else if(currentTab==='interior') renderInterior(searchVal);
   else if(currentTab==='fortalecedores') { renderFortalecedores(searchVal); renderFortalecedoresCv(searchVal); }
@@ -6434,6 +6695,7 @@ function buscar(v) {
   else if(currentTab==='bonos') renderBonos(searchVal);
   else if(currentTab==='territorio') { renderTerritorio(); }
 }
+const buscar = debounce(_buscarInmediato, 300);
 
 // ═══════════════════════════════════════════════
 // TAB NAVIGATION
@@ -6686,7 +6948,7 @@ function _fssSeleccionar(fortId) {
 
   // Asignar el fort al centro
   f.centroId = _fssTargetCentroId;
-  save(); renderAll(); updateBadges();
+  save('fortalecedores', [f]); renderAll(); updateBadges();
 
   // Cerrar sheet y mostrar toast
   document.getElementById('fort-search-overlay').classList.remove('open');
@@ -7323,11 +7585,12 @@ function saveVisita() {
   const obs     = document.getElementById('f-obs').value;
 
   const obj = {centroId, semana, mes, anio, dia, hora, estado, responsable, sinDocente, obs};
-  if(editId) Object.assign(state.visitas.find(x=>x.id==editId), obj);
-  else { obj.id=uid(state.visitas); state.visitas.push(obj); }
+  let registro;
+  if(editId) { registro = state.visitas.find(x=>x.id==editId); Object.assign(registro, obj); }
+  else { obj.id=uid(); state.visitas.push(obj); registro = obj; }
 
   visitaDiaTarget=null;
-  save(); closeModal(); renderVisitas(); updateBadges();
+  save('visitas', [registro]); closeModal(); renderVisitas(); updateBadges();
 }
 
 function _getSemanaActual() {
@@ -7435,17 +7698,17 @@ function confirmarEstadoSheet() {
       // _db.uploadFoto sube a Supabase si está activo, o devuelve base64 en local
       _db.uploadFoto(v.id, _fotoEvidenciaData).then(url => {
         v.fotoEvidencia = url;
-        save();
+        save('visitas', [v]);
       });
     } else {
-      save();
+      save('visitas', [v]);
     }
   } else {
     v.fechaRealizada = null;
     v.diaNumero = null;
     v.obsConfirmacion = '';
     v.motivo = document.getElementById('motivo-textarea').value.trim();
-    save();
+    save('visitas', [v]);
   }
   renderVisitas(); updateBadges();
   document.getElementById('estado-sheet-overlay').classList.remove('open');
@@ -7628,23 +7891,25 @@ function guardarPlanificacion() {
   }
 
   let creadas = 0;
+  const nuevas = [];
   checks.forEach(chk => {
     const idStr = chk.id.replace('plan-chk-','');
     const centroId = parseInt(idStr);
     const dia  = document.getElementById('plan-dia-'+idStr)?.value || 'Lunes';
     const hora = document.getElementById('plan-hora-'+idStr)?.value || '09:00';
-    const nextId = Math.max(0, ...(state.visitas||[]).map(v=>v.id||0)) + 1 + creadas;
-    state.visitas.push({
-      id: nextId,
+    const nueva = {
+      id: uid(),
       centroId, semana: semKey, dia, hora,
       mes, anio, estado: 'Pendiente',
       responsable: '', obs: '', motivo: '',
       sinDocente: false
-    });
+    };
+    state.visitas.push(nueva);
+    nuevas.push(nueva);
     creadas++;
   });
 
-  save(); renderVisitas(); updateBadges();
+  save('visitas', nuevas); renderVisitas(); updateBadges();
   cerrarPlanificar();
 
   // Feedback toast
@@ -7671,7 +7936,7 @@ function cambiarEstadoVisita(id, nuevoEstado) {
     v.fechaRealizada = null;
     v.diaNumero = null;
   }
-  save(); renderVisitas(); if(visitaVistaActiva==='anual') renderVisitasAnual(); updateBadges();
+  save('visitas', [v]); renderVisitas(); if(visitaVistaActiva==='anual') renderVisitasAnual(); updateBadges();
 }
 
 function saveEventoCrono(key) {
@@ -7682,17 +7947,18 @@ function saveEventoCrono(key) {
   if(!state.cronogramas[key]) state.cronogramas[key]=[];
   if(editId&&editId.key) state.cronogramas[editId.key][editId.idx]=obj;
   else state.cronogramas[key].push(obj);
-  save();closeModal();renderCronograma();
+  save('cronogramas');closeModal();renderCronograma();
 }
 
 function saveActividad() {
   const titulo=document.getElementById('f-titulo').value.trim();
   if(!titulo){alert('El título es obligatorio');return;}
   const obj={titulo,tipo:document.getElementById('f-tipo').value,anio:parseInt(document.getElementById('f-anio').value),mes:document.getElementById('f-mes').value,participantes:parseInt(document.getElementById('f-part').value)||0,lugar:document.getElementById('f-lugar').value,obs:document.getElementById('f-obs').value};
-  if(editId) Object.assign(state.actividades.find(x=>x.id==editId),obj);
-  else{obj.id=uid(state.actividades);state.actividades.push(obj);}
+  let registro;
+  if(editId) { registro = state.actividades.find(x=>x.id==editId); Object.assign(registro,obj); }
+  else{obj.id=uid();state.actividades.push(obj);registro=obj;}
   actMesActivo={anio:obj.anio,mes:MESES.indexOf(obj.mes)};
-  save();closeModal();renderActividades();updateBadges();
+  save('actividades', [registro]);closeModal();renderActividades();updateBadges();
 }
 
 function saveCentro() {
@@ -7724,8 +7990,9 @@ function saveCentro() {
     activo:document.getElementById('f-activo').value==='1'
   };
   
-  if(editId) Object.assign(state.centros.find(x=>x.id==editId),obj); else{obj.id=uid(state.centros);state.centros.push(obj);}
-  save();closeModal();renderAll();
+  let registro;
+  if(editId) { registro = state.centros.find(x=>x.id==editId); Object.assign(registro,obj); } else{obj.id=uid();state.centros.push(obj);registro=obj;}
+  save('centros', [registro]);closeModal();renderAll();
 }
 
 function saveInterior() {
@@ -7734,8 +8001,9 @@ function saveInterior() {
   const mar=parseInt(document.getElementById('f-marzo').value)||0;
   const abr=parseInt(document.getElementById('f-abril').value)||0;
   const obj={departamento:d,centros:parseInt(document.getElementById('f-centros').value)||0,marzo:mar,abril:abr,var:abr-mar,fort:parseInt(document.getElementById('f-fort').value)||0,activo:document.getElementById('f-activo').value==='1'};
-  if(editId) Object.assign(state.interior.find(x=>x.id==editId),obj); else{obj.id=uid(state.interior);state.interior.push(obj);}
-  save();closeModal();renderAll();
+  let registro;
+  if(editId) { registro = state.interior.find(x=>x.id==editId); Object.assign(registro,obj); } else{obj.id=uid();state.interior.push(obj);registro=obj;}
+  save('interior', [registro]);closeModal();renderAll();
 }
 
 function saveFort() {
@@ -7753,21 +8021,24 @@ function saveFort() {
     programa:document.getElementById('f-programa').value,
     activo:document.getElementById('f-activo').value==='1'
   };
-  if(editId) Object.assign(state.fortalecedores.find(x=>x.id==editId),obj); else{obj.id=uid(state.fortalecedores);state.fortalecedores.push(obj);}
-  save();closeModal();renderAll();
+  let registro;
+  if(editId) { registro = state.fortalecedores.find(x=>x.id==editId); Object.assign(registro,obj); } else{obj.id=uid();state.fortalecedores.push(obj);registro=obj;}
+  save('fortalecedores', [registro]);closeModal();renderAll();
 }
 
 function saveChico() {
   const obj={centroId:parseInt(document.getElementById('f-centro').value),anio:parseInt(document.getElementById('f-anio').value),mes:document.getElementById('f-mes').value,cantidad:parseInt(document.getElementById('f-cantidad').value)||0,obs:''};
-  if(editId) Object.assign(state.chicos.find(x=>x.id==editId),obj); else{obj.id=uid(state.chicos);state.chicos.push(obj);}
-  save();closeModal();renderAll();
+  let registro;
+  if(editId) { registro = state.chicos.find(x=>x.id==editId); Object.assign(registro,obj); } else{obj.id=uid();state.chicos.push(obj);registro=obj;}
+  save('chicos', [registro]);closeModal();renderAll();
 }
 
 function saveBono() {
   const cobra=document.getElementById('f-cobra').value==='1';
   const obj={centroId:parseInt(document.getElementById('f-centro').value),cobraBono:cobra,monto:cobra?MONTO_BONO:0,obs:''};
-  if(editId) Object.assign(state.bonos.find(x=>x.id==editId),obj); else{obj.id=uid(state.bonos);state.bonos.push(obj);}
-  save();closeModal();renderAll();
+  let registro;
+  if(editId) { registro = state.bonos.find(x=>x.id==editId); Object.assign(registro,obj); } else{obj.id=uid();state.bonos.push(obj);registro=obj;}
+  save('bonos', [registro]);closeModal();renderAll();
 }
 
 // ═══════════════════════════════════════════════
@@ -7931,8 +8202,12 @@ let _confirmCallback = null;
 function confirmarEliminar(nombre, callback) {
   document.getElementById('confirm-name').textContent = nombre;
   _confirmCallback = callback;
+  // Reset estado del botón hold
+  const fill  = document.getElementById('confirm-btn-fill');
+  const label = document.getElementById('confirm-btn-label');
+  if(fill)  { fill.classList.remove('running'); void fill.offsetWidth; }
+  if(label) label.textContent = 'Mantené presionado';
   document.getElementById('confirm-overlay').classList.add('open');
-  document.getElementById('confirm-ok-btn').focus();
 }
 
 function closeConfirm() {
@@ -7940,10 +8215,47 @@ function closeConfirm() {
   _confirmCallback = null;
 }
 
-document.getElementById('confirm-ok-btn').addEventListener('click', () => {
-  if (_confirmCallback) { _confirmCallback(); }
-  closeConfirm();
-});
+// ── Hold-to-confirm ──────────────────────────────────────────────────────────
+(function(){
+  const HOLD_MS = 1400;
+  const btn   = document.getElementById('confirm-ok-btn');
+  const fill  = document.getElementById('confirm-btn-fill');
+  const label = document.getElementById('confirm-btn-label');
+  let timer = null;
+  let active = false;
+
+  function startHold(e) {
+    e.preventDefault();
+    if(active) return;
+    active = true;
+    label.textContent = 'Soltá para cancelar…';
+    // Forzar reflow para que la transición arranque desde 0
+    fill.classList.remove('running');
+    void fill.offsetWidth;
+    btn.style.setProperty('--confirm-hold-ms', HOLD_MS + 'ms');
+    fill.classList.add('running');
+    timer = setTimeout(() => {
+      if(_confirmCallback) _confirmCallback();
+      closeConfirm();
+    }, HOLD_MS);
+  }
+
+  function cancelHold() {
+    if(!active) return;
+    active = false;
+    clearTimeout(timer);
+    fill.classList.remove('running');
+    void fill.offsetWidth; // reset sin transición
+    label.textContent = 'Mantené presionado';
+  }
+
+  btn.addEventListener('pointerdown', startHold);
+  btn.addEventListener('pointerup',   cancelHold);
+  btn.addEventListener('pointerleave',cancelHold);
+  btn.addEventListener('pointercancel',cancelHold);
+  // Prevenir click accidental en desktop
+  btn.addEventListener('click', e => e.preventDefault());
+})();
 
 document.getElementById('confirm-overlay').addEventListener('click', (e) => {
   if (e.target === document.getElementById('confirm-overlay')) closeConfirm();
@@ -7954,58 +8266,65 @@ document.getElementById('confirm-overlay').addEventListener('click', (e) => {
 // ═══════════════════════════════════════════════
 function deleteCentro(id) {
   const c = state.centros.find(x => x.id === id);
-  confirmarEliminar(c ? c.nombre : 'este centro', () => {
+  confirmarEliminar(c ? c.nombre : 'este centro', async () => {
+    try { await _dbDelete('centros', id); } catch(e) { return; }
     state.centros = state.centros.filter(x => x.id !== id);
-    save(); renderAll();
+    _persistLocal(); renderAll();
   });
 }
 
 function deleteInterior(id) {
   const d = state.interior.find(x => x.id === id);
-  confirmarEliminar(d ? `${d.nombre} — ${d.localidad}` : 'esta delegación', () => {
+  confirmarEliminar(d ? `${d.nombre} — ${d.localidad}` : 'esta delegación', async () => {
+    try { await _dbDelete('interior', id); } catch(e) { return; }
     state.interior = state.interior.filter(x => x.id !== id);
-    save(); renderAll();
+    _persistLocal(); renderAll();
   });
 }
 
 function deleteFort(id) {
   const f = state.fortalecedores.find(x => x.id === id);
-  confirmarEliminar(f ? f.nombre : 'este fortalecedor/a', () => {
+  confirmarEliminar(f ? f.nombre : 'este fortalecedor/a', async () => {
+    try { await _dbDelete('fortalecedores', id); } catch(e) { return; }
     state.fortalecedores = state.fortalecedores.filter(x => x.id !== id);
-    save(); renderAll();
+    _persistLocal(); renderAll();
   });
 }
 
 function deleteChico(id) {
   const ch = state.chicos.find(x => x.id === id);
   const centro = ch ? getNombre(ch.centroId) : '';
-  confirmarEliminar(ch ? `${centro} — ${ch.mes} ${ch.anio} (${ch.cantidad} estud.)` : 'este registro', () => {
+  confirmarEliminar(ch ? `${centro} — ${ch.mes} ${ch.anio} (${ch.cantidad} estud.)` : 'este registro', async () => {
+    try { await _dbDelete('chicos', id); } catch(e) { return; }
     state.chicos = state.chicos.filter(x => x.id !== id);
-    save(); renderAll();
+    _persistLocal(); renderAll();
   });
 }
 
 function deleteBono(id) {
   const b = state.bonos.find(x => x.id === id);
-  confirmarEliminar(b ? getNombre(b.centroId) : 'este bono', () => {
+  confirmarEliminar(b ? getNombre(b.centroId) : 'este bono', async () => {
+    try { await _dbDelete('bonos', id); } catch(e) { return; }
     state.bonos = state.bonos.filter(x => x.id !== id);
-    save(); renderAll();
+    _persistLocal(); renderAll();
   });
 }
 
 function deleteActividad(id) {
   const a = state.actividades.find(x => x.id === id);
-  confirmarEliminar(a ? (a.titulo || 'esta actividad') : 'esta actividad', () => {
+  confirmarEliminar(a ? (a.titulo || 'esta actividad') : 'esta actividad', async () => {
+    try { await _dbDelete('actividades', id); } catch(e) { return; }
     state.actividades = state.actividades.filter(x => x.id !== id);
-    save(); renderActividades(); updateBadges();
+    _persistLocal(); renderActividades(); updateBadges();
   });
 }
 
 function deleteNota(id) {
   const n = state.notas.find(x => x.id === id);
-  confirmarEliminar(n ? (n.asunto || 'esta nota') : 'esta nota', () => {
+  confirmarEliminar(n ? (n.asunto || 'esta nota') : 'esta nota', async () => {
+    try { await _dbDelete('notas', id); } catch(e) { return; }
     state.notas = state.notas.filter(x => x.id !== id);
-    save(); renderNotas(); updateBadges();
+    _persistLocal(); renderNotas(); updateBadges();
   });
 }
 
@@ -8088,9 +8407,10 @@ function saveNota() {
     prioridad:document.getElementById('f-prioridad').value,
     etiqueta:document.getElementById('f-etiqueta').value.trim(),
   };
-  if(editId) Object.assign(state.notas.find(x=>x.id==editId),obj);
-  else{obj.id=uid(state.notas);state.notas.push(obj);}
-  save();closeModal();renderNotas();updateBadges();
+  let registro;
+  if(editId) { registro = state.notas.find(x=>x.id==editId); Object.assign(registro,obj); }
+  else{obj.id=uid();state.notas.push(obj);registro=obj;}
+  save('notas', [registro]);closeModal();renderNotas();updateBadges();
 }
 
 // ═══════════════════════════════════════════════
@@ -8099,6 +8419,8 @@ function saveNota() {
 function openSearchOverlay() {
   const overlay = document.getElementById('search-overlay');
   overlay.classList.add('open');
+  // Limpiar estado anterior
+  _searchOverlayReset();
   setTimeout(() => {
     const inp = document.getElementById('search-overlay-input');
     if (inp) inp.focus();
@@ -8107,12 +8429,21 @@ function openSearchOverlay() {
 
 function closeSearchOverlay() {
   document.getElementById('search-overlay').classList.remove('open');
+  _searchOverlayReset();
+}
+
+function _searchOverlayReset() {
+  const inp = document.getElementById('search-overlay-input');
+  if (inp) inp.value = '';
+  document.getElementById('search-overlay-clear').style.display = 'none';
+  document.getElementById('search-overlay-hints').style.display = '';
+  const wrap = document.getElementById('search-results-wrap');
+  if (wrap) { wrap.classList.remove('visible'); wrap.innerHTML = ''; }
 }
 
 function syncSearchInputs(val) {
   const desktop = document.getElementById('search-input');
   if (desktop) desktop.value = val;
-  // mostrar/ocultar botón de limpiar
   const clr = document.getElementById('search-overlay-clear');
   if (clr) clr.style.display = val ? 'flex' : 'none';
 }
@@ -8123,17 +8454,171 @@ function clearSearch() {
   if (inp) { inp.value = ''; inp.focus(); }
   if (desktop) desktop.value = '';
   document.getElementById('search-overlay-clear').style.display = 'none';
+  document.getElementById('search-overlay-hints').style.display = '';
+  const wrap = document.getElementById('search-results-wrap');
+  if (wrap) { wrap.classList.remove('visible'); wrap.innerHTML = ''; }
   buscar('');
 }
 
 function applyHint(val) {
-  const inp = document.getElementById('search-overlay-input');
-  const desktop = document.getElementById('search-input');
-  if (inp) inp.value = val;
-  if (desktop) desktop.value = val;
-  syncSearchInputs(val);
-  buscar(val);
   closeSearchOverlay();
+  // Navegar a centros y filtrar por zona
+  showTab('centros');
+  setTimeout(() => {
+    const inp = document.getElementById('search-input');
+    if (inp) { inp.value = val; buscar(val); }
+  }, 120);
+}
+
+// ── Input handler del overlay: decide global vs tab ──
+function onSearchOverlayInput(val) {
+  syncSearchInputs(val);
+  const hints = document.getElementById('search-overlay-hints');
+  const wrap  = document.getElementById('search-results-wrap');
+  if (!val || val.trim() === '') {
+    hints.style.display = '';
+    wrap.classList.remove('visible');
+    wrap.innerHTML = '';
+    buscar('');
+    return;
+  }
+  hints.style.display = 'none';
+  wrap.classList.add('visible');
+  buscarGlobal(val.trim());
+  // También filtrar tab activa (para que el desktop search siga funcionando)
+  buscar(val);
+}
+
+// ── Búsqueda global cross-módulo ──
+function buscarGlobal(q) {
+  const wrap = document.getElementById('search-results-wrap');
+  if (!wrap) return;
+  const lq = q.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+  // ── Fortalecedores ──
+  const forts = (state.fortalecedores||[]).filter(f =>
+    norm(f.nombre).includes(lq) ||
+    norm(f.programa).includes(lq) ||
+    (f.dni||'').includes(q)
+  ).slice(0, 6);
+
+  // ── Centros Capital ──
+  const centros = (state.centros||[]).filter(c =>
+    norm(c.nombre).includes(lq) ||
+    norm(c.zona).includes(lq) ||
+    norm(c.barrio).includes(lq)
+  ).slice(0, 5);
+
+  // ── Departamentos Interior ──
+  const interior = (state.interior||[]).filter(d =>
+    norm(d.departamento).includes(lq)
+  ).slice(0, 4);
+
+  // ── Visitas ──
+  const visitas = (state.visitas||[]).filter(v => {
+    const cn = norm(getNombre(v.centroId));
+    return cn.includes(lq) || norm(v.estado).includes(lq);
+  }).slice(0, 4);
+
+  const total = forts.length + centros.length + interior.length + visitas.length;
+
+  if (total === 0) {
+    wrap.innerHTML = `<div class="search-no-results">
+      <i class="ti ti-search-off"></i>
+      <strong>Sin resultados para "${_escHtml(q)}"</strong>
+      Probá con otro nombre o zona.
+    </div>`;
+    return;
+  }
+
+  let html = '';
+
+  if (forts.length) {
+    html += `<div class="search-result-section">
+      <div class="search-result-section-title"><i class="ti ti-users"></i> Fortalecedores</div>`;
+    forts.forEach(f => {
+      const centroId = f.centroId;
+      const centroNombre = centroId ? getNombre(centroId) : '';
+      const meta = [f.programa, centroNombre].filter(Boolean).join(' · ');
+      html += `<div class="search-result-item" onclick="buscarGlobalIr('fortalecedores','${_escHtml(f.nombre)}')">
+        <div class="search-result-icon icon-fort"><i class="ti ti-user-check"></i></div>
+        <div class="search-result-body">
+          <div class="search-result-name">${_escHtml(f.nombre)}</div>
+          ${meta ? `<div class="search-result-meta">${_escHtml(meta)}</div>` : ''}
+        </div>
+        <i class="ti ti-chevron-right search-result-arrow"></i>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  if (centros.length) {
+    html += `<div class="search-result-section">
+      <div class="search-result-section-title"><i class="ti ti-building-community"></i> Centros — Capital</div>`;
+    centros.forEach(c => {
+      const meta = [c.zona ? `Zona ${c.zona}` : '', c.barrio].filter(Boolean).join(' · ');
+      html += `<div class="search-result-item" onclick="buscarGlobalIr('centros','${_escHtml(c.nombre)}')">
+        <div class="search-result-icon icon-centro"><i class="ti ti-home-2"></i></div>
+        <div class="search-result-body">
+          <div class="search-result-name">${_escHtml(c.nombre)}</div>
+          ${meta ? `<div class="search-result-meta">${_escHtml(meta)}</div>` : ''}
+        </div>
+        <i class="ti ti-chevron-right search-result-arrow"></i>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  if (interior.length) {
+    html += `<div class="search-result-section">
+      <div class="search-result-section-title"><i class="ti ti-map-pin"></i> Interior</div>`;
+    interior.forEach(d => {
+      const meta = `${d.centros} centro${d.centros!==1?'s':''} · ${d.fort} fort.`;
+      html += `<div class="search-result-item" onclick="buscarGlobalIr('interior','${_escHtml(d.departamento)}')">
+        <div class="search-result-icon icon-centro" style="background:rgba(124,58,237,.1);color:#7C3AED"><i class="ti ti-map"></i></div>
+        <div class="search-result-body">
+          <div class="search-result-name">${_escHtml(d.departamento)}</div>
+          <div class="search-result-meta">${_escHtml(meta)}</div>
+        </div>
+        <i class="ti ti-chevron-right search-result-arrow"></i>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  if (visitas.length) {
+    html += `<div class="search-result-section">
+      <div class="search-result-section-title"><i class="ti ti-map-pin-check"></i> Visitas</div>`;
+    visitas.forEach(v => {
+      const cn = getNombre(v.centroId);
+      const meta = [v.estado, v.semana||v.fecha||''].filter(Boolean).join(' · ');
+      html += `<div class="search-result-item" onclick="buscarGlobalIr('visitas','${_escHtml(cn)}')">
+        <div class="search-result-icon icon-visita"><i class="ti ti-calendar-check"></i></div>
+        <div class="search-result-body">
+          <div class="search-result-name">${_escHtml(cn)}</div>
+          ${meta ? `<div class="search-result-meta">${_escHtml(meta)}</div>` : ''}
+        </div>
+        <i class="ti ti-chevron-right search-result-arrow"></i>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  wrap.innerHTML = html;
+}
+
+function buscarGlobalIr(tab, query) {
+  closeSearchOverlay();
+  showTab(tab);
+  setTimeout(() => {
+    const inp = document.getElementById('search-input');
+    if (inp) { inp.value = query; buscar(query); }
+  }, 120);
+}
+
+function _escHtml(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
 // Cerrar overlay con tecla Escape
@@ -8150,7 +8635,7 @@ function closeSidebar(){document.querySelector('.sidebar')?.classList.remove('mo
 // ═══════════════════════════════════════════════
 // EXPORT / BACKUP
 // ═══════════════════════════════════════════════
-function exportPDF(){window.print();}
+function exportPDF(){abrirPdfSheet();}
 function exportBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`fes_respaldo_${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url);}
 function importBackup(event) {
   const file = event.target.files[0];
@@ -8165,7 +8650,7 @@ function importBackup(event) {
       document.querySelector('.confirm-title').textContent = '¿Restaurar respaldo?';
       document.querySelector('.confirm-subtitle').textContent = 'Se reemplazarán todos los datos actuales con los del archivo:';
       document.querySelector('.confirm-icon i').className = 'ti ti-upload';
-      document.getElementById('confirm-ok-btn').textContent = 'Sí, restaurar';
+      document.getElementById('confirm-btn-label').textContent = 'Mantené presionado';
       _confirmCallback = () => {
         state = imported;
         if (!state.actividades) state.actividades = [];
@@ -8175,7 +8660,7 @@ function importBackup(event) {
         document.querySelector('.confirm-title').textContent = '¿Eliminar registro?';
         document.querySelector('.confirm-subtitle').textContent = 'Esta acción no se puede deshacer. Se eliminará permanentemente:';
         document.querySelector('.confirm-icon i').className = 'ti ti-trash';
-        document.getElementById('confirm-ok-btn').textContent = 'Sí, eliminar';
+        document.getElementById('confirm-btn-label').textContent = 'Mantené presionado';
         save(); renderAll();
       };
       document.getElementById('confirm-overlay').classList.add('open');
@@ -8255,7 +8740,8 @@ function descargarPdf(tab) {
 }
 
 function pdfResumen() {
-  const {doc, startY} = pdfBase('Resumen General', `Panorama · Mayo 2026`);
+  const _hoy = new Date();
+  const {doc, startY} = pdfBase('Resumen General', `Panorama · ${MESES[_hoy.getMonth()]} ${_hoy.getFullYear()}`);
   const activos = state.centros.filter(c=>c.activo).length;
   const forts   = state.fortalecedores.filter(f=>f.activo).length;
   const bonos   = state.bonos.length;
@@ -8486,6 +8972,7 @@ function pdfInterior() {
     d.fort||0,
     d.marzo||0,
     d.abril||0,
+    d.mayo||0,
     d.activo?'Activo':'Inactivo'
   ]);
   // Totales
@@ -8493,19 +8980,20 @@ function pdfInterior() {
   const totF = state.interior.reduce((s,d)=>s+(parseInt(d.fort)||0),0);
   const totM = state.interior.reduce((s,d)=>s+(parseInt(d.marzo)||0),0);
   const totA = state.interior.reduce((s,d)=>s+(parseInt(d.abril)||0),0);
+  const totMy = state.interior.reduce((s,d)=>s+(parseInt(d.mayo)||0),0);
   doc.autoTable({
     startY,
-    head:[['#','Departamento / Localidad','Centros','Forts.','Estud. Marzo','Estud. Abril','Estado']],
-    body: rows.length ? rows : [['Sin datos','','','','','','']],
-    foot:[['','TOTAL', totC, totF, totM, totA, '']],
+    head:[['#','Departamento / Localidad','Centros','Forts.','Estud. Marzo','Estud. Abril','Estud. Mayo','Estado']],
+    body: rows.length ? rows : [['Sin datos','','','','','','','']],
+    foot:[['','TOTAL', totC, totF, totM, totA, totMy, '']],
     theme:'striped',
     headStyles:{fillColor:[124,58,237],textColor:255,fontStyle:'bold',fontSize:8},
     footStyles:{fillColor:[230,220,255],textColor:[60,20,140],fontStyle:'bold',fontSize:8},
     bodyStyles:{fontSize:8},
-    columnStyles:{2:{halign:'center'},3:{halign:'center'},4:{halign:'center'},5:{halign:'center'}},
+    columnStyles:{2:{halign:'center'},3:{halign:'center'},4:{halign:'center'},5:{halign:'center'},6:{halign:'center'}},
     margin:{left:14,right:14},
     didParseCell: d => {
-      if(d.section==='body'&&d.column.index===6){
+      if(d.section==='body'&&d.column.index===7){
         d.cell.styles.textColor = d.cell.raw==='Activo'?[46,196,90]:[232,40,74];
         d.cell.styles.fontStyle='bold';
       }
@@ -8894,9 +9382,7 @@ try {
 // En local (file://) se omite automáticamente.
 
 if('serviceWorker' in navigator && location.protocol === 'https:') {
-  navigator.serviceWorker.register('./sw.js', {scope: './'})
-    .then(r => console.log('FES PWA: SW registrado', r.scope))
-    .catch(e => console.warn('FES PWA: SW error', e));
+  navigator.serviceWorker.register('./sw.js', {scope: './'}).catch(() => {});
 }
 
 // ── Banner "Agregar a pantalla de inicio" ──────────────────────
@@ -9305,8 +9791,23 @@ window.addEventListener('appinstalled', () => {
 
   // Estado inicial
   setState(navigator.onLine ? 'idle' : 'offline');
-  window.addEventListener('online',  () => setState('idle'));
+  window.addEventListener('online',  () => {
+    setState('idle');
+    // Reintentar sync si hay registros pendientes
+    const hasPending = ['visitas','actividades','centros','fortalecedores','notas','chicos','bonos','interior']
+      .some(t => state[t] && state[t].some(r => r._pendingSync));
+    if(hasPending) save();
+  });
   window.addEventListener('offline', () => setState('offline'));
+
+  // Advertir al cerrar/recargar si hay cambios pendientes de sincronizar
+  window.addEventListener('beforeunload', e => {
+    const hasPending = window._pendingSyncIds && window._pendingSyncIds.size > 0;
+    if (hasPending) {
+      e.preventDefault();
+      e.returnValue = ''; // Requerido por Chrome/Firefox para mostrar el diálogo nativo
+    }
+  });
 
   // Auto-ocultar label "Sincronizado" después de 3 segundos
   window._syncOkTimer = null;
