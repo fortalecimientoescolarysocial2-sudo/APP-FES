@@ -3528,15 +3528,28 @@ const SUPABASE_CONFIG = {
 // ─────────────────────────────────────────────────────────────────────────
 
 // Inicializa el cliente Supabase (solo si USE_SUPABASE=true)
+// Devuelve una Promise para que load() pueda esperar a que termine
+// (el script de supabase-js puede tardar en cargar en conexiones lentas/celulares).
 let _supabase = null;
 function _initSupabase() {
-  if(!USE_SUPABASE) return;
-  if(typeof supabase === 'undefined') {
-    _setSyncIndicator('error');
-    return;
-  }
-  _supabase = supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
-  _setSyncIndicator('ok');
+  return new Promise(resolve => {
+    if(!USE_SUPABASE) { resolve(); return; }
+    function intentar(tries) {
+      if(typeof supabase !== 'undefined') {
+        _supabase = supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+        _setSyncIndicator('ok');
+        resolve();
+        return;
+      }
+      if(tries < 40) {
+        setTimeout(() => intentar(tries + 1), 100);
+        return;
+      }
+      _setSyncIndicator('error');
+      resolve();
+    }
+    intentar(0);
+  });
 }
 // Helper tolerante: si el script del indicador (al pie del HTML) todavía
 // no corrió, reintenta unas veces antes de descartar la llamada.
@@ -3569,7 +3582,7 @@ const _db = {
   async load() {
     if(USE_SUPABASE && _supabase) {
       // ── SUPABASE: cargar cada tabla en paralelo ──
-      const [centros, forts, visitas, acts, notas, chicos, bonos, interior, cronos] = await Promise.all([
+      const results = await Promise.allSettled([
         _supabase.from('fes_centros').select('*').order('nombre'),
         _supabase.from('fes_fortalecedores').select('*').order('nombre'),
         _supabase.from('fes_visitas').select('*').order('created_at', {ascending:false}),
@@ -3580,17 +3593,28 @@ const _db = {
         _supabase.from('fes_interior').select('*').order('departamento'),
         _supabase.from('fes_cronogramas').select('*'),
       ]);
-      state.centros        = centros.data  || [];
-      state.fortalecedores = forts.data    || [];
-      state.visitas        = visitas.data  || [];
-      state.actividades    = acts.data     || [];
-      state.notas          = notas.data    || [];
-      state.chicos         = chicos.data   || [];
-      state.bonos          = bonos.data    || [];
-      state.interior       = interior.data || [];
+      const [centros, forts, visitas, acts, notas, chicos, bonos, interior, cronos] = results;
+      const fallidas = [];
+      const val = (r, nombre) => {
+        if(r.status === 'fulfilled' && !r.value.error) return r.value.data || [];
+        fallidas.push(nombre);
+        return [];
+      };
+      state.centros        = val(centros, 'centros');
+      state.fortalecedores = val(forts, 'fortalecedores');
+      state.visitas        = val(visitas, 'visitas');
+      state.actividades    = val(acts, 'actividades');
+      state.notas          = val(notas, 'notas');
+      state.chicos         = val(chicos, 'chicos');
+      state.bonos          = val(bonos, 'bonos');
+      state.interior       = val(interior, 'interior');
       // cronogramas viene como [{clave:'2026-1', eventos:[...]}, ...]
       state.cronogramas = {};
-      (cronos.data||[]).forEach(r => { state.cronogramas[r.clave] = r.eventos; });
+      const cronosData = val(cronos, 'cronogramas');
+      cronosData.forEach(r => { state.cronogramas[r.clave] = r.eventos; });
+      if(fallidas.length) {
+        alert('⚠️ No se pudieron cargar algunos datos desde la nube (' + fallidas.join(', ') + '). Revisá tu conexión y recargá la página antes de seguir trabajando.');
+      }
       return;
     }
     // ── LOCAL: window.storage ──
@@ -3679,7 +3703,7 @@ const _db = {
 
 // Reemplazar las funciones globales para que usen _db
 async function load() {
-  _initSupabase(); // ← debe ir ANTES de _db.load() para que _supabase no sea null
+  await _initSupabase(); // ← esperamos a que termine (con reintentos) ANTES de _db.load()
   await _db.load();
   if(!state.actividades) state.actividades = [];
   if(!state.cronogramas) state.cronogramas = {};
@@ -8648,7 +8672,7 @@ function importBackup(event) {
       // Reutilizamos el modal de confirmación con texto de restauración
       document.getElementById('confirm-name').textContent = `📂 ${file.name}`;
       document.querySelector('.confirm-title').textContent = '¿Restaurar respaldo?';
-      document.querySelector('.confirm-subtitle').textContent = 'Se reemplazarán todos los datos actuales con los del archivo:';
+      document.querySelector('.confirm-subtitle').textContent = 'Se reemplazarán TODOS los datos de la nube (centros, fortalecedores, visitas, etc.) con los de este archivo. Afecta a todos los usuarios:';
       document.querySelector('.confirm-icon i').className = 'ti ti-upload';
       document.getElementById('confirm-btn-label').textContent = 'Mantené presionado';
       _confirmCallback = () => {
