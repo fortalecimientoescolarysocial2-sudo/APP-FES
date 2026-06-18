@@ -2942,7 +2942,7 @@ textarea.form-control { min-height:72px; resize:vertical; }
               <tbody id="body-centros"></tbody>
             </table>
           </div>
-          <div id="centros-cards" style="padding:10px;display:none"></div>
+          <div id="centros-cards" class="centro-cards-grid" style="padding:10px"></div>
         </div>
 
       </div>
@@ -3537,7 +3537,7 @@ function _initSupabase() {
     function intentar(tries) {
       if(typeof supabase !== 'undefined') {
         _supabase = supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
-        _setSyncIndicator('syncing'); // datos todavía no cargaron; 'ok' lo dispara load()
+        _setSyncIndicator('syncing');
         resolve();
         return;
       }
@@ -3714,7 +3714,6 @@ async function load() {
   _initInformeMesSelect();
   renderAll();
   if(typeof hideSplash === 'function') hideSplash();
-  // Verde recién acá: los datos llegaron, renderAll() corrió, splash cerrado.
   _setSyncIndicator('ok');
 }
 
@@ -9156,7 +9155,6 @@ load();
   }
 
   // El splash se cierra únicamente cuando load() termine de verdad y llame hideSplash().
-  // No usamos timer: en red lenta el timer ganaba la carrera y la app aparecía vacía.
   window.hideSplash = dismissLoader;
 })();
 </script>
