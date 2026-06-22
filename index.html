@@ -1186,8 +1186,6 @@ textarea.form-control { min-height:72px; resize:vertical; }
   .fort-card { border-radius: 11px; }
   .fort-header { padding: 12px 13px 10px; }
   .fort-nombre { font-size: 13px; }
-  .fort-cards-mobile { display: flex !important; flex-direction: column; gap: 8px; padding: 10px; }
-  #tab-fortalecedores .table-wrap { display: none !important; }
 
   /* ── Notas ── */
   .notas-stats { grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -2263,10 +2261,9 @@ textarea.form-control { min-height:72px; resize:vertical; }
 /* ══ BETTER MOBILE TABLES ══ */
 @media(max-width:720px) {
   .table-mobile-hide { display: none !important; }
-  .table-wrap table thead th:nth-child(n+4),
-  .table-wrap table tbody td:nth-child(n+4) { display: none; }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .table-wrap table { min-width: max-content; }
 }
-.fort-cards-mobile { display: none; }
 
 /* ══ SECTION CONTENT padding ══ */
 @media(max-width:720px) {
@@ -3222,7 +3219,6 @@ textarea.form-control { min-height:72px; resize:vertical; }
             <table><thead><tr><th>#</th><th>Nombre</th><th>DNI</th><th>Programa</th><th>Contacto</th><th>Estado</th><th>Acc.</th></tr></thead>
             <tbody id="body-fortalecedores"></tbody></table>
           </div>
-          <div id="fort-cards-mobile" class="fort-cards-mobile"></div>
         </div>
       </div>
 
@@ -5754,18 +5750,12 @@ function renderInterior(filtro='') {
 
 function renderFortalecedores(filtro='') {
   const tbody = document.getElementById('body-fortalecedores');
-  const cardsEl = document.getElementById('fort-cards-mobile');
   if(!tbody) return;
   const prog = document.getElementById('filtro-programa')?.value||'';
   let data = [...state.fortalecedores].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
   if(filtro) data = data.filter(f=>f.nombre.toLowerCase().includes(filtro)||getNombre(f.centroId).toLowerCase().includes(filtro));
   if(prog) data = data.filter(f=>f.programa===prog);
-  if(!data.length){
-    const empty = `<div class="empty-state"><i class="ti ti-${(filtro||prog)?'user-search':'user-plus'}"></i><p>${(filtro||prog)?'Ningún fortalecedor coincide con los filtros aplicados':'Todavía no cargaste fortalecedores'}</p>${(filtro||prog)?'<small>Probá con otro nombre o programa</small>':'<small>Usá "+ Nuevo" para registrar el primero</small>'}</div>`;
-    tbody.innerHTML=`<tr><td colspan="7">${empty}</td></tr>`;
-    if(cardsEl) cardsEl.innerHTML=empty;
-    return;
-  }
+  if(!data.length){ tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><i class="ti ti-${(filtro||prog)?'user-search':'user-plus'}"></i><p>${(filtro||prog)?'Ningún fortalecedor coincide con los filtros aplicados':'Todavía no cargaste fortalecedores'}</p>${(filtro||prog)?'<small>Probá con otro nombre o programa</small>':'<small>Usá "+ Nuevo" para registrar el primero</small>'}</div></td></tr>`; return; }
   const totalFortData = data;
   const limiteF = (window._fortsLimite||30);
   data = totalFortData.slice(0, limiteF);
@@ -5783,28 +5773,6 @@ function renderFortalecedores(filtro='') {
         <button class="btn btn-sm btn-danger" onclick="deleteFort(${f.id})"><i class="ti ti-trash"></i></button>
       </div></td>
     </tr>`).join('') + verMasFortHtml;
-  // Cards para mobile
-  if(cardsEl) {
-    const verMasCardsHtml = totalFortData.length>limiteF ? `<button class="btn btn-sm" style="width:100%;margin-top:4px" onclick="window._fortsLimite=${limiteF+30};renderFortalecedores('${filtro.replace(/'/g,"\\'")}')">Mostrar más (${totalFortData.length-limiteF} restantes)</button>` : '';
-    cardsEl.innerHTML = data.map(f=>`
-      <div style="background:var(--dark3);border:1px solid var(--border);border-radius:11px;padding:12px 14px;opacity:${f.activo?1:.5}">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
-          <div>
-            <div style="font-weight:700;font-size:13px;color:var(--text)">${f.nombre}</div>
-            <div style="font-size:10px;color:var(--text3);font-family:var(--font-mono);margin-top:2px">DNI ${f.dni||'–'}</div>
-          </div>
-          ${f.activo?'<span class="badge badge-green">Activo</span>':'<span class="badge badge-red">Inactivo</span>'}
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px">
-          <span class="badge ${programaBadge(f.programa)}" style="font-size:9px">${f.programa}</span>
-          ${f.contacto?`<span style="font-size:11px;color:var(--text2)"><i class="ti ti-phone" style="font-size:10px"></i> ${f.contacto}</span>`:''}
-        </div>
-        <div style="display:flex;gap:6px">
-          <button class="btn btn-sm" style="flex:1" onclick="openEdit('fortalecedores',${f.id})"><i class="ti ti-edit"></i> Editar</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteFort(${f.id})"><i class="ti ti-trash"></i></button>
-        </div>
-      </div>`).join('') + verMasCardsHtml;
-  }
 }
 
 function renderFortalecedoresCv(filtro='') {
