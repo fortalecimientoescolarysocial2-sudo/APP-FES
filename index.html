@@ -1123,21 +1123,21 @@ textarea.form-control { min-height:72px; resize:vertical; }
 @media(max-width:720px) {
 
   /* ── Layout base ── */
-  .content { padding: 10px 10px 28px; }
-  .section-eyebrow { font-size: 9.5px; margin-bottom: 10px; padding: 7px 11px; }
+  .content { padding: 14px 12px 32px; }
+  .section-eyebrow { font-size: 10.5px; margin-bottom: 12px; padding: 8px 13px; }
 
-  /* ── Stats cards: 2 columnas más compactas ── */
-  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 10px; }
-  .stat-card { padding: 12px 11px 10px; border-radius: 11px; }
-  .stat-icon { width: 30px; height: 30px; font-size: 14px; border-radius: 8px; margin-bottom: 7px; }
-  .stat-label { font-size: 8.5px; letter-spacing: .06em; }
-  .stat-value { font-size: 22px; }
-  .stat-delta { font-size: 9.5px; margin-top: 2px; }
+  /* ── Stats cards: 2 columnas con más respiro ── */
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
+  .stat-card { padding: 16px 14px 13px; border-radius: 14px; }
+  .stat-icon { width: 36px; height: 36px; font-size: 17px; border-radius: 10px; margin-bottom: 10px; }
+  .stat-label { font-size: 10px; letter-spacing: .05em; }
+  .stat-value { font-size: 28px; }
+  .stat-delta { font-size: 11px; margin-top: 3px; }
 
   /* ── Cards ── */
-  .card { border-radius: 11px; margin-bottom: 10px; }
-  .card-header { padding: 11px 13px 9px; }
-  .card-title { font-size: 11px; }
+  .card { border-radius: 14px; margin-bottom: 14px; }
+  .card-header { padding: 14px 16px 12px; }
+  .card-title { font-size: 13px; gap: 7px; }
 
   /* ── Tablas → ocultar columnas secundarias, mostrar solo lo esencial ── */
   .table-wrap { border-radius: 0; margin: 0 -0px; }
@@ -1210,11 +1210,12 @@ textarea.form-control { min-height:72px; resize:vertical; }
   .crono-desc { font-size: 10.5px; }
 
   /* ── Dashboard KPI ── */
-  .dashboard-kpi-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px; }
-  .dash-kpi { padding: 13px 12px 11px; border-radius: 11px; }
-  .dash-kpi-icon { width: 30px; height: 30px; font-size: 14px; border-radius: 8px; }
-  .dash-kpi-label { font-size: 9px; }
-  .dash-kpi-value { font-size: 22px; }
+  .dashboard-kpi-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px; }
+  .dash-kpi { padding: 16px 14px 14px; border-radius: 14px; }
+  .dash-kpi-icon { width: 36px; height: 36px; font-size: 17px; border-radius: 10px; margin-bottom: 8px; }
+  .dash-kpi-label { font-size: 10.5px; margin-bottom: 2px; }
+  .dash-kpi-value { font-size: 28px; }
+  .dash-kpi-sub { font-size: 10px; margin-top: 3px; }
   .dash-charts-2col { grid-template-columns: 1fr !important; }
   .dash-bottom-2col { grid-template-columns: 1fr !important; }
 
@@ -1225,8 +1226,8 @@ textarea.form-control { min-height:72px; resize:vertical; }
   .topbar-actions { gap: 4px; }
 
   /* ── Botones de acción ── */
-  .btn { min-height: 38px; font-size: 11.5px; }
-  .btn-sm { min-height: 32px; font-size: 10.5px; padding: 4px 10px; }
+  .btn { min-height: 44px; font-size: 13px; padding: 10px 16px; }
+  .btn-sm { min-height: 38px; font-size: 12px; padding: 6px 12px; }
   .form-actions { gap: 6px; }
   .form-actions .btn { flex: 1; justify-content: center; }
 
@@ -1283,16 +1284,16 @@ textarea.form-control { min-height:72px; resize:vertical; }
   .zona-chip { font-size: 9px; padding: 2px 7px; }
 
   /* ── Acceso rápido dashboard ── */
-  .dash-acceso-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 7px !important; }
-  .dash-acceso-item { padding: 14px 5px 11px !important; border-radius: 10px !important; }
-  .dash-acceso-icon { font-size: 18px !important; margin-bottom: 5px !important; }
-  .dash-acceso-label { font-size: 9px !important; }
+  .dash-acceso-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 8px !important; }
+  .dash-acceso-item { padding: 16px 5px 13px !important; border-radius: 12px !important; min-height: 76px; }
+  .dash-acceso-icon { font-size: 22px !important; margin-bottom: 7px !important; }
+  .dash-acceso-label { font-size: 10.5px !important; }
 
   /* ── Skeleton en mobile ── */
-  .skeleton-stat-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .skeleton-acceso-grid { grid-template-columns: repeat(4, 1fr); gap: 7px; }
+  .skeleton-stat-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .skeleton-acceso-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
   .skeleton-crono-grid { grid-template-columns: 1fr; }
-  .dashboard-kpi-grid .skeleton-kpi { padding: 12px 11px 10px; }
+  .dashboard-kpi-grid .skeleton-kpi { padding: 16px 14px 14px; }
 
   /* ── Calendario del panel ── */
   #dash-calendario { padding: 6px 8px 8px !important; }
@@ -2261,8 +2262,8 @@ textarea.form-control { min-height:72px; resize:vertical; }
 /* ══ BETTER MOBILE TABLES ══ */
 @media(max-width:720px) {
   .table-mobile-hide { display: none !important; }
-  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .table-wrap table { min-width: max-content; }
+  .table-wrap table thead th:nth-child(n+4),
+  .table-wrap table tbody td:nth-child(n+4) { display: none; }
 }
 
 /* ══ SECTION CONTENT padding ══ */
