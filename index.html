@@ -2275,6 +2275,9 @@ textarea.form-control { min-height:72px; resize:vertical; }
   .table-mobile-hide { display: none !important; }
   .table-wrap table thead th:nth-child(n+4),
   .table-wrap table tbody td:nth-child(n+4) { display: none; }
+  /* Fortalecedores: mostrar hasta col 7 (ocultar solo "Contacto" via .table-mobile-hide) */
+  .table-wrap-forts table thead th:nth-child(n+4),
+  .table-wrap-forts table tbody td:nth-child(n+4) { display: table-cell; }
 }
 
 /* ══ SECTION CONTENT padding ══ */
@@ -3176,8 +3179,8 @@ textarea.form-control { min-height:72px; resize:vertical; }
             <span class="card-title"><i class="ti ti-id-badge-2"></i>Registro de Fortalecedores</span>
             <button class="btn btn-sm btn-primary" onclick="openModal()"><i class="ti ti-plus"></i> Agregar</button>
           </div>
-          <div class="table-wrap">
-            <table><thead><tr><th>#</th><th>Nombre</th><th>DNI</th><th>Programa</th><th>Contacto</th><th>Estado</th><th>Acc.</th></tr></thead>
+          <div class="table-wrap table-wrap-forts">
+            <table><thead><tr><th>#</th><th>Nombre</th><th>DNI</th><th>Programa</th><th class="table-mobile-hide">Contacto</th><th>Estado</th><th>Acc.</th></tr></thead>
             <tbody id="body-fortalecedores"></tbody></table>
           </div>
         </div>
@@ -5715,7 +5718,7 @@ function renderFortalecedores(filtro='') {
       <td style="font-weight:600;font-size:12px">${f.nombre}</td>
       <td style="font-size:11px;color:var(--text2);font-family:var(--font-mono)">${f.dni||'–'}</td>
       <td><span class="badge ${programaBadge(f.programa)}" style="font-size:9px">${f.programa}</span></td>
-      <td style="font-size:11px;color:var(--text2)">${f.contacto||'–'}</td>
+      <td class="table-mobile-hide" style="font-size:11px;color:var(--text2)">${f.contacto||'–'}</td>
       <td>${f.activo?'<span class="badge badge-green">Activo</span>':'<span class="badge badge-red">Inactivo</span>'}</td>
       <td><div style="display:flex;gap:4px">
         <button class="btn btn-sm" onclick="openEdit('fortalecedores',${f.id})"><i class="ti ti-edit"></i></button>
