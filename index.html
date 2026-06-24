@@ -205,6 +205,13 @@ tbody tr:hover { background:rgba(0,87,184,.025); }
 tbody td { padding:10px 12px; color:var(--text2); vertical-align:middle; }
 tbody td:first-child { color:var(--text); font-weight:600; }
 
+/* stat cards como filtro de zona */
+.stat-card.sc-filter { transition: box-shadow var(--transition), transform var(--transition), opacity var(--transition); }
+.stat-card.sc-filter:hover { transform: translateY(-2px); box-shadow: var(--shadow-3); }
+.stat-card.sc-filter:active { transform: scale(.97); }
+.stat-card.sc-filter.sc-active { box-shadow: 0 0 0 2.5px currentColor, var(--shadow-2); }
+.stat-card.sc-filter:not(.sc-active) { opacity: .72; }
+
 /* zona chips */
 .zona-chip { display:inline-flex; align-items:center; font-size:9.5px; font-weight:700; padding:2px 8px; border-radius:20px; white-space:nowrap; }
 .zona-norte  { background:rgba(0,87,184,.08);  color:#0057B8; border:1px solid rgba(0,87,184,.18); }
@@ -218,6 +225,10 @@ tbody td:first-child { color:var(--text); font-weight:600; }
 .badge-amber  { background:var(--amber-dim); color:var(--amber); border:1px solid rgba(217,119,6,.2); }
 .badge-red    { background:var(--red-dim);   color:var(--red);   border:1px solid rgba(200,32,32,.18); }
 .badge-blue   { background:var(--cyan-dim);  color:#0057B8;      border:1px solid var(--cyan-border); }
+.badge-cyan   { background:var(--cyan-dim);  color:#0057B8;      border:1px solid var(--cyan-border); }
+.badge-orange { background:var(--orange-dim);color:#FF6600;      border:1px solid rgba(255,102,0,.2); }
+.badge-pink   { background:var(--pink-dim);  color:#E8005A;      border:1px solid rgba(232,0,90,.2); }
+.badge-teal   { background:rgba(13,148,136,.09); color:#0D9488;  border:1px solid rgba(13,148,136,.2); }
 .badge-purple { background:rgba(124,58,237,.09); color:#7C3AED;  border:1px solid rgba(124,58,237,.2); }
 .badge-gray   { background:var(--dark4);     color:var(--text3); border:1px solid var(--border); }
 .change-tag { display:inline-flex; align-items:center; gap:4px; font-size:10.5px; font-weight:600; color:var(--amber); background:var(--amber-dim); padding:2px 8px; border-radius:6px; }
@@ -2889,42 +2900,10 @@ textarea.form-control { min-height:72px; resize:vertical; }
         <span class="section-eyebrow"><i class="ti ti-building-community" style="font-size:11px"></i> Centros Vecinales · Capital · Gestión y horarios</span>
         <div class="stats-grid" id="stats-centros"></div>
 
-        <div class="zona-tabs" id="zona-tabs">
-          <div class="zona-tab active" data-zona="" onclick="filtrarZona(this,'')">
-            <div class="zona-tab-icon"><i class="ti ti-map-2"></i></div>
-            <span class="zona-tab-label">Todas</span>
-            <span class="zona-tab-count" id="ztc-all"></span>
-          </div>
-          <div class="zona-tab" data-zona="Norte" onclick="filtrarZona(this,'Norte')">
-            <div class="zona-tab-icon"><i class="ti ti-arrow-up"></i></div>
-            <span class="zona-tab-label">Norte</span>
-            <span class="zona-tab-count" id="ztc-norte"></span>
-          </div>
-          <div class="zona-tab" data-zona="Este" onclick="filtrarZona(this,'Este')">
-            <div class="zona-tab-icon"><i class="ti ti-arrow-right"></i></div>
-            <span class="zona-tab-label">Este</span>
-            <span class="zona-tab-count" id="ztc-este"></span>
-          </div>
-          <div class="zona-tab" data-zona="Sur" onclick="filtrarZona(this,'Sur')">
-            <div class="zona-tab-icon"><i class="ti ti-arrow-down"></i></div>
-            <span class="zona-tab-label">Sur</span>
-            <span class="zona-tab-count" id="ztc-sur"></span>
-          </div>
-          <div class="zona-tab" data-zona="Oeste" onclick="filtrarZona(this,'Oeste')">
-            <div class="zona-tab-icon"><i class="ti ti-arrow-left"></i></div>
-            <span class="zona-tab-label">Oeste</span>
-            <span class="zona-tab-count" id="ztc-oeste"></span>
-          </div>
-        </div>
-
         <div class="card">
           <div class="card-header">
             <span class="card-title"><i class="ti ti-building-community"></i><span id="centros-title">Centros Vecinales — Capital</span></span>
             <div style="display:flex;gap:8px;align-items:center">
-              <select class="form-control" style="width:auto;font-size:11px;padding:5px 24px 5px 8px" id="filtro-zona-centros" onchange="filtrarZonaSelect(this.value)">
-                <option value="">Todas las zonas</option>
-                <option>Norte</option><option>Este</option><option>Sur</option><option>Oeste</option>
-              </select>
               <button class="btn btn-sm btn-primary" id="btn-add-centro" onclick="currentTab='centros';openModal()"><i class="ti ti-plus"></i> Nuevo Centro</button>
             </div>
           </div>
@@ -3192,29 +3171,10 @@ textarea.form-control { min-height:72px; resize:vertical; }
       <div class="section-tab" id="tab-fortalecedores">
         <span class="section-eyebrow"><i class="ti ti-users-group" style="font-size:11px"></i> Equipo educativo · Fortalecedores por programa y zona</span>
         <div class="stats-grid" id="stats-forts"></div>
-        <div class="card" style="margin-bottom:14px">
-          <div class="card-header"><span class="card-title"><i class="ti ti-users-group"></i>Fortalecedores Capital — Por Programa</span></div>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:0">
-            <div style="padding:13px 16px;text-align:center;border-right:1px solid var(--border)"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">Programa FES</div><div style="font-size:26px;font-weight:900;color:var(--orange);font-family:var(--font-mono)" id="cnt-fes">–</div></div>
-            <div style="padding:13px 16px;text-align:center;border-right:1px solid var(--border)"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">Fam. Riojanas</div><div style="font-size:26px;font-weight:900;color:var(--cyan);font-family:var(--font-mono)" id="cnt-fam">–</div></div>
-            <div style="padding:13px 16px;text-align:center;border-right:1px solid var(--border)"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">Form. Comunit.</div><div style="font-size:26px;font-weight:900;color:var(--cyan);font-family:var(--font-mono)" id="cnt-form">–</div></div>
-            <div style="padding:13px 16px;text-align:center"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px">Planta Perm.</div><div style="font-size:26px;font-weight:900;color:var(--green);font-family:var(--font-mono)" id="cnt-planta">–</div></div>
-          </div>
-          <div style="background:var(--dark4);margin:0 16px 14px;border-radius:9px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border)">
-            <span style="font-size:12px;font-weight:700;color:var(--text2)">🎓 Total equipo educativo — Capital</span>
-            <span style="font-size:22px;font-weight:900;color:var(--cyan);font-family:var(--font-mono)" id="cnt-total-cap">–</span>
-          </div>
-        </div>
         <div class="card">
           <div class="card-header">
             <span class="card-title"><i class="ti ti-id-badge-2"></i>Registro de Fortalecedores</span>
-            <div style="display:flex;gap:8px;align-items:center">
-              <select class="form-control" style="width:auto;font-size:11px;padding:5px 24px 5px 8px" id="filtro-programa" onchange="renderFortalecedores()">
-                <option value="">Todos los programas</option>
-                <option>FES</option><option>Familia Riojanas</option><option>Formadores Comunitarios</option><option>Planta Permanente</option>
-              </select>
-              <button class="btn btn-sm btn-primary" onclick="openModal()"><i class="ti ti-plus"></i> Agregar</button>
-            </div>
+            <button class="btn btn-sm btn-primary" onclick="openModal()"><i class="ti ti-plus"></i> Agregar</button>
           </div>
           <div class="table-wrap">
             <table><thead><tr><th>#</th><th>Nombre</th><th>DNI</th><th>Programa</th><th>Contacto</th><th>Estado</th><th>Acc.</th></tr></thead>
@@ -4429,7 +4389,7 @@ const getZona   = id => (state.centros.find(x=>x.id==id)||{}).zona||'';
 const getFortCount = id => state.fortalecedores.filter(f=>f.centroId==id&&f.activo).length;
 const centrosOpts = sel => [...state.centros].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es')).map(c=>`<option value="${c.id}" ${c.id==sel?'selected':''}>${c.nombre}</option>`).join('');
 const zonaClass = z => ({Norte:'zona-norte',Este:'zona-este',Sur:'zona-sur',Oeste:'zona-oeste'}[z]||'');
-const programaBadge = p => ({'FES':'badge-orange','Familias Riojanas':'badge-cyan','Familia Riojanas':'badge-cyan','Formadores Comunitarios':'badge-green','Planta Permanente':'badge-amber','Sub. Sec. N.A.':'badge-purple','Sub. Sec. Deportes':'badge-teal','PROSOCA':'badge-pink'}[p]||'badge-gray');
+const programaBadge = p => ({'FES':'badge-orange','Familias Riojanas':'badge-pink','Familia Riojanas':'badge-pink','Formadores Comunitarios':'badge-green','Planta Permanente':'badge-amber','Sub. Sec. N.A.':'badge-purple','Sub. Sec. Deportes':'badge-teal','PROSOCA':'badge-blue'}[p]||'badge-gray');
 
 // Semanas disponibles
 // ── Semana: utilidades de fecha ──────────────────
@@ -4641,44 +4601,24 @@ function updateBadges() {
   setBadge('badge-notas', (state.notas||[]).length + (nPend?' ●':''));
 }
 
-function filtrarZona(el, zona) {
+function filtrarZonaCard(zona) {
   zonaFiltro = zona;
-  document.querySelectorAll('#zona-tabs .zona-tab').forEach(t=>t.classList.remove('active','active-norte','active-este','active-sur','active-oeste'));
-  if(zona) el.classList.add('active-'+zona.toLowerCase());
-  else el.classList.add('active');
   document.getElementById('centros-title').textContent = zona ? `Centros Vecinales — Zona ${zona}` : 'Centros Vecinales — Capital';
-  // Sincronizar select
-  const sel = document.getElementById('filtro-zona-centros');
-  if(sel) sel.value = zona;
-  _updateZonaCounts();
+  // Re-render stats para reflejar estado activo en las cards
+  renderStats();
   renderCentros(searchVal);
+}
+
+function filtrarZona(el, zona) {
+  filtrarZonaCard(zona);
 }
 
 function _updateZonaCounts() {
-  const c = state.centros || [];
-  const set = (id, val) => { const el=document.getElementById(id); if(el) el.textContent=val; };
-  set('ztc-all',   c.length);
-  set('ztc-norte', c.filter(x=>x.zona==='Norte').length);
-  set('ztc-este',  c.filter(x=>x.zona==='Este').length);
-  set('ztc-sur',   c.filter(x=>x.zona==='Sur').length);
-  set('ztc-oeste', c.filter(x=>x.zona==='Oeste').length);
+  // Los conteos ahora viven en las stat-cards; no-op.
 }
 
 function filtrarZonaSelect(zona) {
-  zonaFiltro = zona;
-  // Sincronizar zona-tabs visuales
-  const tabs = document.querySelectorAll('#zona-tabs .zona-tab');
-  tabs.forEach(t => t.classList.remove('active','active-norte','active-este','active-sur','active-oeste'));
-  tabs.forEach(t => {
-    if(t.dataset.zona === zona) {
-      if(zona) t.classList.add('active-' + zona.toLowerCase());
-      else t.classList.add('active');
-    }
-  });
-  if(!zona) { const all = document.querySelector('#zona-tabs .zona-tab[data-zona=""]'); if(all) all.classList.add('active'); }
-  document.getElementById('centros-title').textContent = zona ? `Centros Vecinales — Zona ${zona}` : 'Centros Vecinales — Capital';
-  _updateZonaCounts();
-  renderCentros(searchVal);
+  filtrarZonaCard(zona);
 }
 
 function filtrarZonaTerr(el, zona) {
@@ -4700,12 +4640,13 @@ function renderStats() {
     const este=state.centros.filter(c=>c.zona==='Este').length;
     const sur=state.centros.filter(c=>c.zona==='Sur').length;
     const oeste=state.centros.filter(c=>c.zona==='Oeste').length;
+    const _scActive = zonaFiltro || '';
     sc.innerHTML=`
-      <div class="stat-card cyan"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-building-community"></i></div><div class="stat-label">Total Capital</div><div class="stat-value">${total}</div></div>
-      <div class="stat-card orange"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-map-2"></i></div><div class="stat-label">Norte</div><div class="stat-value">${norte}</div></div>
-      <div class="stat-card amber"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-map-2"></i></div><div class="stat-label">Este</div><div class="stat-value">${este}</div></div>
-      <div class="stat-card green"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-map-2"></i></div><div class="stat-label">Sur</div><div class="stat-value">${sur}</div></div>
-      <div class="stat-card pink"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-map-2"></i></div><div class="stat-label">Oeste</div><div class="stat-value">${oeste}</div></div>`;
+      <div class="stat-card cyan sc-filter${_scActive===''?' sc-active':''}" id="sc-all" onclick="filtrarZonaCard('')" style="cursor:pointer"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-building-community"></i></div><div class="stat-label">Total Capital</div><div class="stat-value">${total}</div></div>
+      <div class="stat-card orange sc-filter${_scActive==='Norte'?' sc-active':''}" id="sc-norte" onclick="filtrarZonaCard('Norte')" style="cursor:pointer"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-arrow-up"></i></div><div class="stat-label">Norte</div><div class="stat-value">${norte}</div></div>
+      <div class="stat-card amber sc-filter${_scActive==='Este'?' sc-active':''}" id="sc-este" onclick="filtrarZonaCard('Este')" style="cursor:pointer"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-arrow-right"></i></div><div class="stat-label">Este</div><div class="stat-value">${este}</div></div>
+      <div class="stat-card green sc-filter${_scActive==='Sur'?' sc-active':''}" id="sc-sur" onclick="filtrarZonaCard('Sur')" style="cursor:pointer"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-arrow-down"></i></div><div class="stat-label">Sur</div><div class="stat-value">${sur}</div></div>
+      <div class="stat-card pink sc-filter${_scActive==='Oeste'?' sc-active':''}" id="sc-oeste" onclick="filtrarZonaCard('Oeste')" style="cursor:pointer"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-arrow-left"></i></div><div class="stat-label">Oeste</div><div class="stat-value">${oeste}</div></div>`;
   }
 
   // Stats territorio
@@ -4740,23 +4681,22 @@ function renderStats() {
 
   const sf = document.getElementById('stats-forts');
   if(sf){
+    if(typeof window._fortProgFiltro === 'undefined') window._fortProgFiltro = '';
+    const _sfActive = window._fortProgFiltro||'';
+    const PROGS_CONOCIDOS = ['FES','Familias Riojanas','Familia Riojanas','Formadores Comunitarios','Planta Permanente'];
     const act=state.fortalecedores.filter(f=>f.activo).length;
-    const fes=state.fortalecedores.filter(f=>f.programa==='FES').length;
-    const otras=state.fortalecedores.filter(f=>f.programa!=='FES').length;
-    sf.innerHTML=`
-      <div class="stat-card orange"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-users"></i></div><div class="stat-label">Registrados Cap.</div><div class="stat-value">${act}</div></div>
-      <div class="stat-card green"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-user-check"></i></div><div class="stat-label">Prog. FES</div><div class="stat-value">${fes}</div></div>
-      <div class="stat-card cyan"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-layout-grid"></i></div><div class="stat-label">Otros Prog.</div><div class="stat-value">${otras}</div></div>`;
-    const el=id=>document.getElementById(id);
     const pFes=state.fortalecedores.filter(f=>f.programa==='FES'&&f.activo).length;
-    const pFam=state.fortalecedores.filter(f=>f.programa==='Familia Riojanas'&&f.activo).length;
+    const pFam=state.fortalecedores.filter(f=>(f.programa==='Familias Riojanas'||f.programa==='Familia Riojanas')&&f.activo).length;
     const pForm=state.fortalecedores.filter(f=>f.programa==='Formadores Comunitarios'&&f.activo).length;
     const pPl=state.fortalecedores.filter(f=>f.programa==='Planta Permanente'&&f.activo).length;
-    if(el('cnt-fes')) el('cnt-fes').textContent=pFes||'–';
-    if(el('cnt-fam')) el('cnt-fam').textContent=pFam||'–';
-    if(el('cnt-form')) el('cnt-form').textContent=pForm||'–';
-    if(el('cnt-planta')) el('cnt-planta').textContent=pPl||'–';
-    if(el('cnt-total-cap')) el('cnt-total-cap').textContent=act||'–';
+    const pOtros=state.fortalecedores.filter(f=>f.activo&&!PROGS_CONOCIDOS.includes((f.programa||'').trim())).length;
+    sf.innerHTML=`
+      <div class="stat-card cyan sc-filter${_sfActive===''?' sc-active':''}" id="sf-all" onclick="setFortProgFiltro('')" style="cursor:pointer"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-users"></i></div><div class="stat-label">Todos</div><div class="stat-value">${act}</div></div>
+      <div class="stat-card orange sc-filter${_sfActive==='FES'?' sc-active':''}" id="sf-fes" onclick="setFortProgFiltro('FES')" style="cursor:pointer"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-user-check"></i></div><div class="stat-label">FES</div><div class="stat-value">${pFes}</div></div>
+      <div class="stat-card pink sc-filter${_sfActive==='Familias Riojanas'?' sc-active':''}" id="sf-fam" onclick="setFortProgFiltro('Familias Riojanas')" style="cursor:pointer"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-heart"></i></div><div class="stat-label">Fam. Riojanas</div><div class="stat-value">${pFam}</div></div>
+      <div class="stat-card green sc-filter${_sfActive==='Formadores Comunitarios'?' sc-active':''}" id="sf-form" onclick="setFortProgFiltro('Formadores Comunitarios')" style="cursor:pointer"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-school"></i></div><div class="stat-label">Form. Comunit.</div><div class="stat-value">${pForm}</div></div>
+      <div class="stat-card amber sc-filter${_sfActive==='Planta Permanente'?' sc-active':''}" id="sf-planta" onclick="setFortProgFiltro('Planta Permanente')" style="cursor:pointer"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-id-badge-2"></i></div><div class="stat-label">Planta Perm.</div><div class="stat-value">${pPl}</div></div>
+      <div class="stat-card purple sc-filter${_sfActive==='__OTROS__'?' sc-active':''}" id="sf-otros" onclick="setFortProgFiltro('__OTROS__')" style="cursor:pointer"><div class="stat-accent"></div><div class="stat-icon"><i class="ti ti-layout-grid"></i></div><div class="stat-label">Otros</div><div class="stat-value">${pOtros}</div></div>`;
   }
 
   const sch = document.getElementById('stats-chicos');
@@ -5749,13 +5689,21 @@ function renderInterior(filtro='') {
   </tr>`;
 }
 
+function setFortProgFiltro(prog) {
+  window._fortProgFiltro = prog;
+  renderStats();
+  renderFortalecedores();
+}
+
 function renderFortalecedores(filtro='') {
   const tbody = document.getElementById('body-fortalecedores');
   if(!tbody) return;
-  const prog = document.getElementById('filtro-programa')?.value||'';
+  const prog = window._fortProgFiltro||'';
+  const PROGS_CONOCIDOS_F = ['FES','Familias Riojanas','Familia Riojanas','Formadores Comunitarios','Planta Permanente'];
   let data = [...state.fortalecedores].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
   if(filtro) data = data.filter(f=>f.nombre.toLowerCase().includes(filtro)||getNombre(f.centroId).toLowerCase().includes(filtro));
-  if(prog) data = data.filter(f=>f.programa===prog);
+  if(prog==='__OTROS__') data = data.filter(f=>!PROGS_CONOCIDOS_F.includes((f.programa||'').trim()));
+  else if(prog) data = data.filter(f=>f.programa===prog);
   if(!data.length){ tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><i class="ti ti-${(filtro||prog)?'user-search':'user-plus'}"></i><p>${(filtro||prog)?'Ningún fortalecedor coincide con los filtros aplicados':'Todavía no cargaste fortalecedores'}</p>${(filtro||prog)?'<small>Probá con otro nombre o programa</small>':'<small>Usá "+ Nuevo" para registrar el primero</small>'}</div></td></tr>`; return; }
   const totalFortData = data;
   const limiteF = (window._fortsLimite||30);
@@ -7205,7 +7153,7 @@ function buildForm() {
             <label>Programa</label>
             <select class="form-control" id="f-programa">
               <option ${f.programa==='FES'||!f.programa?'selected':''}>FES</option>
-              <option ${f.programa==='Familia Riojanas'?'selected':''}>Familia Riojanas</option>
+              <option ${(f.programa==='Familias Riojanas'||f.programa==='Familia Riojanas')?'selected':''}>Familias Riojanas</option>
               <option ${f.programa==='Formadores Comunitarios'?'selected':''}>Formadores Comunitarios</option>
               <option ${f.programa==='Planta Permanente'?'selected':''}>Planta Permanente</option>
             </select>
