@@ -7360,10 +7360,16 @@ function buildForm() {
           <!-- Foto del centro -->
           <div class="form-group">
             <label><i class="ti ti-camera" style="font-size:11px;margin-right:4px"></i>Foto del centro <span style="font-weight:500;text-transform:none;letter-spacing:0;color:var(--text3)">(opcional)</span></label>
-            <input type="file" accept="image/*" id="foto-centro-input" style="display:none" onchange="onFotoCentroSelected(this)">
-            <button type="button" id="foto-centro-upload-btn" class="foto-upload-btn" style="${c.foto?'display:none':''}" onclick="document.getElementById('foto-centro-input').click()">
-              <i class="ti ti-camera" style="font-size:16px"></i> Sacar foto / elegir imagen
-            </button>
+            <input type="file" accept="image/*" capture="environment" id="foto-centro-input-cam" style="display:none" onchange="onFotoCentroSelected(this)">
+            <input type="file" accept="image/*" id="foto-centro-input-gal" style="display:none" onchange="onFotoCentroSelected(this)">
+            <div id="foto-centro-upload-btn" style="${c.foto?'display:none':'display:flex'};gap:8px;">
+              <button type="button" class="foto-upload-btn" style="flex:1" onclick="document.getElementById('foto-centro-input-cam').click()">
+                <i class="ti ti-camera" style="font-size:16px"></i> Sacar foto
+              </button>
+              <button type="button" class="foto-upload-btn" style="flex:1" onclick="document.getElementById('foto-centro-input-gal').click()">
+                <i class="ti ti-photo" style="font-size:16px"></i> Elegir imagen
+              </button>
+            </div>
             <div class="foto-preview-wrap ${c.foto?'has-foto':''}" id="foto-centro-preview-wrap">
               <img id="foto-centro-preview-img" src="${c.foto||''}" alt="Foto centro" class="foto-preview-img" style="max-height:180px" onclick="if(this.src)verFotoEvidencia(this.src,event)">
               <button type="button" class="foto-remove-btn" onclick="quitarFotoCentro()" title="Quitar foto"><i class="ti ti-x"></i></button>
