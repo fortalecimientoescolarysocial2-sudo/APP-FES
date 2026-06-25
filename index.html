@@ -5648,12 +5648,28 @@ function renderCentros(filtro='') {
           position:relative;
         " onmousedown="this.style.transform='scale(.99)'" onmouseup="this.style.transform=''" ontouchstart="this.style.transform='scale(.99)'" ontouchend="this.style.transform=''">
 
-          <!-- Franja de color zona -->
+          ${c.foto ? `
+          <!-- Foto banner -->
+          <div style="position:relative;height:130px;overflow:hidden;border-bottom:1.5px solid var(--border)">
+            <img src="${c.foto.replace(/'/g,"&#39;")}" alt="${c.nombre.replace(/'/g,"&#39;")}" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.0) 40%,rgba(0,0,0,.55) 100%)"></div>
+            <!-- Zona strip sobre foto -->
+            <div style="position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:5px">
+              <span style="background:${zc.main};color:#fff;font-size:9px;font-weight:800;padding:3px 9px;border-radius:20px;letter-spacing:.04em;text-transform:uppercase">${c.zona}</span>
+              ${c.activo
+                ?`<span style="background:rgba(31,143,66,.85);color:#fff;font-size:9px;font-weight:700;padding:3px 8px;border-radius:20px"><i class="ti ti-circle-filled" style="font-size:6px"></i> Activo</span>`
+                :`<span style="background:rgba(217,119,6,.85);color:#fff;font-size:9px;font-weight:700;padding:3px 8px;border-radius:20px"><i class="ti ti-tool" style="font-size:9px"></i> Refacc.</span>`
+              }
+            </div>
+            <!-- Nombre superpuesto en la parte baja de la foto -->
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:10px 13px 9px">
+              <div style="font-weight:700;font-size:13.5px;color:#fff;line-height:1.3;text-shadow:0 1px 3px rgba(0,0,0,.5)">${c.nombre}</div>
+              ${c.barrio?`<div style="font-size:10px;color:rgba(255,255,255,.8);margin-top:2px;display:flex;align-items:center;gap:3px"><i class="ti ti-map-pin" style="font-size:10px"></i>${c.barrio}</div>`:''}
+            </div>
+          </div>` : `
+          <!-- Sin foto: franja de color + header con avatar -->
           <div style="height:3px;background:${zc.main};opacity:.85"></div>
-
-          <!-- Cuerpo principal -->
           <div style="padding:13px 14px 12px;display:flex;align-items:flex-start;gap:12px">
-
             <!-- Avatar con iniciales -->
             <div style="
               width:44px;height:44px;border-radius:13px;
@@ -5664,7 +5680,6 @@ function renderCentros(filtro='') {
               flex-shrink:0;font-family:'JetBrains Mono',monospace;
               letter-spacing:-1px;
             ">${initials}</div>
-
             <!-- Info central -->
             <div style="flex:1;min-width:0">
               <div style="font-weight:700;font-size:13.5px;color:var(--text);line-height:1.35;margin-bottom:4px;padding-right:4px">${c.nombre}</div>
@@ -5673,7 +5688,6 @@ function renderCentros(filtro='') {
                 ${c.barrio?`<span style="font-size:10px;color:var(--text3);display:flex;align-items:center;gap:2px"><i class="ti ti-map-pin" style="font-size:10px"></i>${c.barrio}</span>`:''}
               </div>
             </div>
-
             <!-- Estado badge -->
             <div style="flex-shrink:0;padding-top:1px">
               ${c.activo
@@ -5681,7 +5695,7 @@ function renderCentros(filtro='') {
                 :`<span style="display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;background:rgba(217,119,6,.1);color:#d97706;border:1px solid rgba(217,119,6,.22);padding:3px 8px;border-radius:20px"><i class="ti ti-tool" style="font-size:9px"></i>Refacc.</span>`
               }
             </div>
-          </div>
+          </div>`}
 
           <!-- Separador + datos secundarios -->
           <div style="margin:0 14px;border-top:1px solid var(--border)"></div>
@@ -7293,6 +7307,7 @@ function buildForm() {
   }
   if(currentTab === 'centros') {
     const c = editId ? state.centros.find(x=>x.id==editId) : {};
+    _fotoCentroData = null; // reset; la foto existente se lee de c.foto al guardar
     const dias = c.dias || {};
     const ds = (d) => dias[d] || {activo:false, horaInicio:'15:00', horaFin:'18:00'};
     mt.textContent = editId ? 'Editar Centro' : 'Nuevo Centro Vecinal';
@@ -7340,6 +7355,19 @@ function buildForm() {
             <select class="form-control" id="f-fort">
               <option value="">— Sin asignar —</option>
             </select>
+          </div>
+
+          <!-- Foto del centro -->
+          <div class="form-group">
+            <label><i class="ti ti-camera" style="font-size:11px;margin-right:4px"></i>Foto del centro <span style="font-weight:500;text-transform:none;letter-spacing:0;color:var(--text3)">(opcional)</span></label>
+            <input type="file" accept="image/*" capture="environment" id="foto-centro-input" style="display:none" onchange="onFotoCentroSelected(this)">
+            <button id="foto-centro-upload-btn" class="foto-upload-btn" style="${c.foto?'display:none':''}" onclick="document.getElementById('foto-centro-input').click()">
+              <i class="ti ti-camera" style="font-size:16px"></i> Sacar foto / elegir imagen
+            </button>
+            <div class="foto-preview-wrap ${c.foto?'has-foto':''}" id="foto-centro-preview-wrap">
+              <img id="foto-centro-preview-img" src="${c.foto||''}" alt="Foto centro" class="foto-preview-img" style="max-height:180px" onclick="if(this.src)verFotoEvidencia(this.src,event)">
+              <button class="foto-remove-btn" onclick="quitarFotoCentro()" title="Quitar foto"><i class="ti ti-x"></i></button>
+            </div>
           </div>
         </div>
       </div>
@@ -7837,6 +7865,49 @@ function cerrarFotoLightbox() {
   document.body.style.overflow = '';
 }
 
+// ── Foto de Centro Vecinal ────────────────────────────────────────────────
+let _fotoCentroData = null;
+
+function onFotoCentroSelected(input) {
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      const MAX = 1200;
+      let w = img.width, h = img.height;
+      if(w > MAX || h > MAX) {
+        if(w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else       { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      _fotoCentroData = canvas.toDataURL('image/jpeg', 0.80);
+      const prev = document.getElementById('foto-centro-preview-wrap');
+      const prevImg = document.getElementById('foto-centro-preview-img');
+      const btn = document.getElementById('foto-centro-upload-btn');
+      if(prevImg) prevImg.src = _fotoCentroData;
+      if(prev) prev.classList.add('has-foto');
+      if(btn) btn.style.display = 'none';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function quitarFotoCentro() {
+  _fotoCentroData = null;
+  const prev = document.getElementById('foto-centro-preview-wrap');
+  const prevImg = document.getElementById('foto-centro-preview-img');
+  const btn = document.getElementById('foto-centro-upload-btn');
+  if(prevImg) prevImg.src = '';
+  if(prev) prev.classList.remove('has-foto');
+  if(btn) btn.style.display = 'flex';
+}
+
 // ── Chip de motivo rápido
 function _chipMotivo(el, texto) {
   document.querySelectorAll('.motivo-chip').forEach(c => c.classList.remove('sel'));
@@ -8038,19 +8109,21 @@ function saveCentro() {
     };
   });
 
+  const existing = editId ? (state.centros.find(x=>x.id==editId)||{}) : {};
   const obj={
     nombre:n,
     zona:document.getElementById('f-zona').value,
-    barrio:document.getElementById('f-barrio').value,
-    direccion:document.getElementById('f-direccion').value,
-    mapsUrl:document.getElementById('f-maps').value,
-    referenteNombre:document.getElementById('f-ref-nombre').value,
-    referenteContacto:document.getElementById('f-ref-contacto').value,
+    barrio:document.getElementById('f-barrio')?.value||'',
+    direccion:document.getElementById('f-dir')?.value||existing.direccion||'',
+    mapsUrl:existing.mapsUrl||'',
+    referenteNombre:existing.referenteNombre||'',
+    referenteContacto:existing.referenteContacto||'',
     dias: dias,
-    horario:document.getElementById('f-horario').value,
-    cambioHorario:document.getElementById('f-cambio').checked,
+    horario:document.getElementById('f-horario')?.value||'',
+    cambioHorario:document.getElementById('f-cambio')?.checked||false,
     nuevoHorario:document.getElementById('f-nuevo-horario')?.value||'',
-    activo:document.getElementById('f-activo').value==='1'
+    activo:document.getElementById('f-activo')?.value==='1',
+    foto: _fotoCentroData || existing.foto || ''
   };
   
   let registro;
